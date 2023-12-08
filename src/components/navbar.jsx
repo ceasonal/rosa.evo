@@ -13,7 +13,7 @@ import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 
-const pages = ["Products", "Customization", "Brochure", "AboutUs", "ContactUs"];
+const pages = ["Products", "Customization", "Brochure", "About Us", "Contact Us"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -27,7 +27,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "inherit", color: "#4D1F08", boxShadow: "none", }}>
+    <AppBar position="static" style={{ backgroundColor: "inherit", color: "#4D1F08", boxShadow: "none" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
