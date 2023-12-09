@@ -23,12 +23,13 @@ export default function Blogcard(props) {
             <Chip
               label={props.category}
               variant="outlined"
-              style={{ marginBottom: 10, borderColor: "#ff5733" }}
+              style={{ marginBottom: 10, borderColor: "#754e37", fontFamily: "monospace"}}
+              
             />
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "monospace" }}>
               {props.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2">
               {props.desc.slice(0, 180)}...
             </Typography>
             <br />
@@ -50,7 +51,7 @@ export default function Blogcard(props) {
                   }}
                 />
                 <div>
-                  <Typography variant="subtitle" style={{ color: "#ff5733" }}>
+                  <Typography variant="subtitle" style={{ color: "#754e37" }}>
                     {props.author}
                   </Typography>
                   <br />
@@ -60,7 +61,7 @@ export default function Blogcard(props) {
                 </div>
               </div>
               <span style={{ marginLeft: "5px" }}>
-                <Link to={`/blog/${props.id}`} style={{ color: "#ff5733" }}>
+                <Link to={`/blog/${props.id}`} style={{ color: "#754e37" }}>
                   <ArrowRightAltIcon />
                 </Link>
               </span>

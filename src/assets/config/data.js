@@ -9,7 +9,7 @@ export const blogList = [
       date: "October 05, 2023",
       authoricon:
         "https://cdn.discordapp.com/attachments/1070680673049923694/1160566269087596574/e73d50dab94fcb7332fb6f9a69f4d1de.png?ex=65352090&is=6522ab90&hm=784d657ea4ae0b4c6d170b032913737a9d7de50074da2fec29b5c5af13769dee&",
-      author: "john doe",
+      author: "John Doe",
       comments: [
         "Well said",
         "Of all the languages you decided to speak facts",
@@ -26,7 +26,7 @@ export const blogList = [
       date: "October 09, 2023",
       authoricon:
         "https://cdn.discordapp.com/attachments/1070680673049923694/1160566269087596574/e73d50dab94fcb7332fb6f9a69f4d1de.png?ex=65352090&is=6522ab90&hm=784d657ea4ae0b4c6d170b032913737a9d7de50074da2fec29b5c5af13769dee&",
-      author: "john doe",
+      author: "John Doe",
       comments: [
         "JavaScript's versatility and wide range of applications are truly unmatched. It's the backbone of modern web development!",
         "I've built my career on JavaScript, and I couldn't agree more. It's the go-to language for front-end and back-end development.",

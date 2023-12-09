@@ -4,11 +4,14 @@ import Footer from "../components/footer";
 import Blogcard from "../components/blogCard";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { blogList } from "../assets/config/data";
+import Slider from "../components/slider"
 import { Box, Typography, Link, Grid } from "@mui/material";
 const Home = () => {
   return (
     <>
       <Nav />
+
+      {/* BANNER */}
       <Box
         sx={{
           color: "#4D1F08",
@@ -31,7 +34,7 @@ const Home = () => {
           }}
         >
           Hand Crafted Jewellery With A Mothers Touch
-        </Typography>
+        </Typography> 
         <Box
           sx={{
             display: "flex",
@@ -78,6 +81,7 @@ const Home = () => {
             <ArrowRightAltIcon />
           </Typography>
         </Link>
+  {/* About Us */}
         <Box
           sx={{
             backgroundColor: "#E0CDC2",
@@ -104,17 +108,33 @@ const Home = () => {
                 <Typography variant="h4">About us</Typography>
                 <Typography variant="h6" sx={{ wordWrap: "break-word" }}>
                   "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                  amet, consectetur, adipisci velit..." "There is no one who
-                  loves pain itself, who seeks after it and wants to have it,
-                  simply because it is pain..."
-                  <Link>
-                  <Typography>Continue Reading...</Typography>
-                  </Link>
+                  amet, consectetur, adipisci velit..."
+                  <Link
+          href="https://www.example.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ textDecoration: "none", color: "#4D1F08" }}
+        >
+          <Typography
+            sx={{
+              fontFamily: "monospace",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              marginRight: 6,
+            }}
+          >
+            Continue Reading
+            <ArrowRightAltIcon />
+          </Typography>
+        </Link>
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </Box>
+           {/* BLOGS */}
         <Box
           sx={{
             marginTop: 5,
@@ -126,7 +146,6 @@ const Home = () => {
             Our Blogs
           </Typography>
           <Box style={{ marginLeft: 50 }}>
-            {" "}
             <Grid container spacing={3}>
               {blogList.map((post) => (
                 <Grid item key={post.id} xs={12} sm={6} md={4}>
@@ -143,6 +162,19 @@ const Home = () => {
                 </Grid>
               ))}
             </Grid>
+          </Box>
+          {/* Top Comments */}
+          <Box
+          sx={{
+            marginTop: 5,
+            padding: 3,
+            backgroundColor: "#E0CDC2"
+          }}
+          >
+            <Typography variant="h4" fontFamily="monospace" marginBottom={3}>
+              Top Customer Reviews
+            </Typography>
+            <Slider/>
           </Box>
         </Box>
       </Box>
