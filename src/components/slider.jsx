@@ -268,6 +268,7 @@ const CommentSlider = () => {
                   href={comment.user.social.instagram}
                   target="_blank"
                   sx={{ marginLeft: 1 }}
+                  rel="noopener noreferrer"
                 >
                   <InstagramIcon />
                 </IconButton>
