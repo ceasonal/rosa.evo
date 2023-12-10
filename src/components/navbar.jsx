@@ -13,7 +13,7 @@ import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 
-const pages = ["Products", "Customization", "Brochure", "About Us", "Contact Us"];
+const pages = ["Products", "Brochure", "About Us", "Contact Us"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
