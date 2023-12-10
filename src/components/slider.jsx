@@ -43,7 +43,6 @@ const topComments = [
     comment: "Very Epic Products! Must buy.",
     value: 4
 },
-// Add more comments as needed
 ];
 
 const CommentSlider = () => {
@@ -174,4 +173,3 @@ const CommentSlider = () => {
 };
 
 export default CommentSlider;
-

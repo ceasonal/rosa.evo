@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 import Blogcard from "../components/blogCard";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { blogList } from "../assets/config/data";
-import Slider from "../components/slider"
+import Slider from "../components/slider";
 import { Box, Typography, Link, Grid } from "@mui/material";
 const Home = () => {
   return (
@@ -34,7 +34,7 @@ const Home = () => {
           }}
         >
           Hand Crafted Jewellery With A Mothers Touch
-        </Typography> 
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -81,7 +81,7 @@ const Home = () => {
             <ArrowRightAltIcon />
           </Typography>
         </Link>
-  {/* About Us */}
+        {/* About Us */}
         <Box
           sx={{
             backgroundColor: "#E0CDC2",
@@ -105,36 +105,46 @@ const Home = () => {
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={{ textAlign: "left", marginLeft: 4 }}>
-                <Typography variant="h4" fontFamily="monospace" fontWeight="bold">About us</Typography>
-                <Typography variant="h6" fontFamily="monospace" sx={{ wordWrap: "break-word" }}>
+                <Typography
+                  variant="h4"
+                  fontFamily="monospace"
+                  fontWeight="bold"
+                >
+                  About us
+                </Typography>
+                <Typography
+                  variant="h6"
+                  fontFamily="monospace"
+                  sx={{ wordWrap: "break-word" }}
+                >
                   "Neque porro quisquam est qui dolorem ipsum quia dolor sit
                   amet, consectetur, adipisci velit..."
                   <Link
-          href="https://www.example.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ textDecoration: "none", color: "#4D1F08" }}
-        >
-          <Typography
-            sx={{
-              fontFamily: "monospace",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              marginRight: 6,
-            }}
-          >
-            Continue Reading
-            <ArrowRightAltIcon />
-          </Typography>
-        </Link>
+                    href="https://www.example.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ textDecoration: "none", color: "#4D1F08" }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: "monospace",
+                        fontWeight: 600,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-end",
+                        marginRight: 6,
+                      }}
+                    >
+                      Continue Reading
+                      <ArrowRightAltIcon />
+                    </Typography>
+                  </Link>
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </Box>
-           {/* BLOGS */}
+        {/* BLOGS */}
         <Box
           sx={{
             marginTop: 5,
@@ -142,40 +152,51 @@ const Home = () => {
             textAlign: "center", // Center the content
           }}
         >
-          <Typography variant="h4" fontFamily="monospace" marginBottom={3} fontWeight="bold">
+          <Typography
+            variant="h4"
+            fontFamily="monospace"
+            marginBottom={3}
+            fontWeight="bold"
+          >
             Our Blogs
           </Typography>
           <Box sx={{ margin: "0 auto", maxWidth: 1200 }}>
-        <Grid container spacing={3} justifyContent="center">
-          {blogList.map((post) => (
-            <Grid item key={post.id} xs={12} sm={6} md={4}>
-              <Blogcard
-                id={post.id}
-                title={post.title}
-                desc={post.desc.slice(0, 50)}
-                category={post.category}
-                cover={post.cover}
-                date={post.date}
-                authorIcon={post.authoricon}
-                author={post.author}
-              />
+            <Grid container spacing={3} justifyContent="center">
+              {blogList.map((post) => (
+                <Grid item key={post.id} xs={12} sm={6} md={4}>
+                  <Blogcard
+                    id={post.id}
+                    title={post.title}
+                    desc={post.desc.slice(0, 50)}
+                    category={post.category}
+                    cover={post.cover}
+                    date={post.date}
+                    authorIcon={post.authoricon}
+                    author={post.author}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Box>
+          </Box>
+          </Box>
           {/* Top Comments */}
-          <Box
-          sx={{
-            marginTop: 5,
-            padding: 3,
-            backgroundColor: "#E0CDC2"
-          }}
+        <Box
+            sx={{
+              marginTop: 5,
+              padding: 3,
+              backgroundColor: "#E0CDC2",
+            }}
           >
-            <Typography variant="h4" fontFamily="monospace" marginBottom={3} fontWeight="bold">
+            <Typography
+              variant= "h4"
+              fontFamily= "monospace"
+              marginBottom= {3}
+              fontWeight= "bold"
+              textAlign= "center"
+            >
               Top Customer Reviews
             </Typography>
-            <Slider/>
-          </Box>
+            <Slider />
         </Box>
       </Box>
       <Footer />
