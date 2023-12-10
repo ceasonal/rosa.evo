@@ -34,8 +34,8 @@ const topComments = [
 {
     id: 4,
       user: {
-        name: "Ligma Suckma",
-        avatar: "https://source.unsplash.com/50x50/?man",
+        name: "Alia Doe",
+        avatar: "https://source.unsplash.com/50x50/?person",
         social: {
           instagram: "https://instagram.com/janesmith",
         },
