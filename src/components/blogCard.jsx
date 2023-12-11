@@ -11,7 +11,7 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 export default function Blogcard(props) {
   return (
     <div className="container grid3">
-      <Card key={props.id} sx={{ maxWidth: 345 }} className="box boxItems">
+      <Card key={props.id} sx={{ maxWidth: 345 , boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"}} className="box boxItems">
         <CardActionArea>
           <CardMedia
             component="img"

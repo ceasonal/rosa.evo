@@ -173,7 +173,7 @@ const Home = () => {
           >
             Our Blogs
           </Typography>
-          <Box sx={{ margin: "0 auto", maxWidth: 1200 }}>
+          <Box sx={{ margin: "0 auto", maxWidth: 1200,  }}>
             <Grid container spacing={3} justifyContent="center">
               {blogList.map((post) => (
                 <Grid item key={post.id} xs={12} sm={6} md={4}>
