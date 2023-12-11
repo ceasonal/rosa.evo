@@ -45,20 +45,33 @@ const Home = () => {
             marginBottom: 3,
           }}
         >
-          <img
-            src="https://cdn.discordapp.com/attachments/1140959205986148372/1182703647377862756/WhatsApp_Image_2021-10-07_at_7.14.49_PM.jpg?ex=6585a99b&is=6573349b&hm=1d8498b21fa8c7f2bdf43b762a63681fdf461e458caf829d67627b92f295d739&"
-            alt="Image 1"
-            style={{ width: "30%" }} // Adjust the width and height as needed
-          />
+        <img
+  src="https://cdn.discordapp.com/attachments/1140959205986148372/1182703647377862756/WhatsApp_Image_2021-10-07_at_7.14.49_PM.jpg?ex=6585a99b&is=6573349b&hm=1d8498b21fa8c7f2bdf43b762a63681fdf461e458caf829d67627b92f295d739&"
+  alt="Image 1"
+  style={{
+    width: "30%",
+    borderRadius: 30,
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"
+  }}
+/>
+
           <img
             src="https://media.discordapp.net/attachments/1140959205986148372/1182746305685094470/WhatsApp_Image_2021-10-07_at_7.14.51_PM_1.jpg?ex=6585d155&is=65735c55&hm=664245c8fae1ac2b41b23faf09c30ea516a1e519d525d002a915d7bbed77da52&=&format=webp&width=354&height=472"
             alt="Image 2"
-            style={{ width: "30%" }} // Adjust the width and height as needed
+            style={{
+              width: "30%",
+              borderRadius: 30,
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"
+            }} 
           />
           <img
             src="https://media.discordapp.net/attachments/1140959205986148372/1182746610095095908/WhatsApp_Image_2021-10-17_at_5.33.25_PM.jpg?ex=6585d19e&is=65735c9e&hm=1fbf11a07a3fc24c0142bbd934d030d03ab4109ccc2b9ede655693c9077a63d1&=&format=webp&width=355&height=473"
             alt="Image 3"
-            style={{ width: "30%" }} // Adjust the width and height as needed
+            style={{
+              width: "30%",
+              borderRadius: 30,
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"
+            }} 
           />
         </Box>
         <Link
