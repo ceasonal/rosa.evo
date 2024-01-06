@@ -12,18 +12,21 @@ import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Pdf from '../assets/pdf/rosa_evo.pdf'
 import { Link } from "react-router-dom";
+import { saveAs } from "file-saver";
 
 const pages = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-  { name: "Brochure", path: "/brochure" },
+  { name: "Brochure",path: " "},
   { name: "About Us", path: "/about" },
   { name: "Contact Us", path: "/contact" },
 ];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [brochurePdf, setBrochurePdf] = React.useState(Pdf);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,6 +35,12 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const handleBrochureClick = () => {
+    // Use the file-saver library to trigger the download
+    saveAs(brochurePdf, "rosa_evo_brochure.pdf");
+    handleCloseNavMenu();
+  };
+  
 
   return (
     <AppBar position="static" style={{ backgroundColor: "inherit", color: "#4D1F08", boxShadow: "none" }}>
@@ -84,7 +93,12 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} to={page.path}>
+              <MenuItem
+              key={page.name}
+              onClick={page.name === "Brochure" ? handleBrochureClick : handleCloseNavMenu}
+              component={Link}
+              to={page.path}
+            >
                   <Typography textAlign="center" style={{ color: "#4D1F08", fontFamily: "monospace" }}>
                     {page.name}
                   </Typography>
@@ -116,7 +130,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={page.name === "Brochure" ? handleBrochureClick : handleCloseNavMenu}
                 component={Link}
                 to={page.path}
                 sx={{ my: 2, color: "#4D1F08", display: "block", textTransform: "none", fontSize: "14px" }}
