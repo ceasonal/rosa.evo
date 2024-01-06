@@ -20,7 +20,6 @@ const Footer = () => {
         py: { xs: 2, sm: 3 },
         borderTop: '1px solid',
         borderColor: 'divider',
-        marginTop: 5,
       }}
     >
       <Container maxWidth="lg">
