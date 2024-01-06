@@ -3,7 +3,8 @@ import Nav from "../components/navbar";
 import Footer from "../components/footer";
 import Blogcard from "../components/blogCard";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { blogList } from "../assets/config/data";
+import { blogList } from "../assets/config/blogdata";
+import aboutdata  from "../assets/config/aboutdata";
 import Slider from "../components/slider";
 import { Box, Typography, Link, Grid } from "@mui/material";
 const Home = () => {
@@ -124,17 +125,16 @@ const Home = () => {
                   fontFamily="monospace"
                   fontWeight="bold"
                 >
-                  About us
+                  {aboutdata.heading}
                 </Typography>
                 <Typography
                   variant="h6"
                   fontFamily="monospace"
                   sx={{ wordWrap: "break-word" }}
                 >
-                  "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                  amet, consectetur, adipisci velit..."
+                {aboutdata.content.slice(0,190)}...
                   <Link
-                    href="https://www.example.com"
+                    href="/about"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{ textDecoration: "none", color: "#4D1F08" }}
@@ -159,40 +159,39 @@ const Home = () => {
           </Grid>
         </Box>
         {/* BLOGS */}
-        <Box
-          sx={{
-            marginTop: 5,
-            padding: 3,
-            textAlign: "center", // Center the content
-          }}
-        >
-          <Typography
-            variant="h4"
-            fontFamily="monospace"
-            marginBottom={3}
-            fontWeight="bold"
-          >
-            Our Blogs
-          </Typography>
-          <Box sx={{ margin: "0 auto", maxWidth: 1200 }}>
-            <Grid container spacing={3} justifyContent="center">
-              {blogList.map((post) => (
-                <Grid item key={post.id} xs={12} sm={6} md={4}>
-                  <Blogcard
-                    id={post.id}
-                    title={post.title}
-                    desc={post.desc.slice(0, 50)}
-                    category={post.category}
-                    cover={post.cover}
-                    date={post.date}
-                    authorIcon={post.authoricon}
-                    author={post.author}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </Box>
+<Box
+  sx={{
+    marginTop: 5,
+    padding: 3,
+    textAlign: "center", // Center the content
+  }}
+>
+  <Typography
+    variant="h4"
+    fontFamily="monospace"
+    marginBottom={3}
+    fontWeight="bold"
+  >
+    Our Blogs
+  </Typography>
+  <Grid container spacing={3} justifyContent="center" sx={{ margin: "0 auto" }}>
+    {blogList.map((post) => (
+      <Grid item key={post.id} xs={12} sm={6} md={4}>
+        <Blogcard
+          id={post.id}
+          title={post.title}
+          desc={post.desc.slice(0, 50)}
+          category={post.category}
+          cover={post.cover}
+          date={post.date}
+          authorIcon={post.authoricon}
+          author={post.author}
+        />
+      </Grid>
+    ))}
+  </Grid>
+</Box>
+
         {/* Top Comments */}
         <Box
           sx={{
