@@ -21,7 +21,7 @@ const pages = [
   { name: "Products", path: "/products" },
   { name: "Brochure"},
   { name: "About Us", path: "/about" },
-  { name: "Contact Us", path: "/contact" },
+  // { name: "Contact Us", path: "/contact" },
 ];
 
 function ResponsiveAppBar() {

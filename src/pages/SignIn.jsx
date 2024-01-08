@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link }from "@mui/material"
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -21,7 +21,14 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" to="https://mui.com/" sx={{
+                    color: "#be9269",
+                    textDecoration: "none",
+                    "&:hover": {
+                      color: "#685043",
+                      textDecoration: "underline",
+                    },
+                  }}>
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -74,8 +81,12 @@ export default function SignInSide() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1  }}>
-            <img src='https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&' alt='' width={80}/>
+          <Avatar sx={{ m: 1 }}>
+            <img
+              src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&"
+              alt=""
+              width={80}
+            />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -96,22 +107,22 @@ export default function SignInSide() {
               autoComplete="email"
               autoFocus
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#957461",
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#957461',
                   },
-                  "&:hover fieldset": {
-                    borderColor: "#685043",
+                  '&:hover fieldset': {
+                    borderColor: '#685043',
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#685043",
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#685043',
                   },
                 },
-                "& .MuiInputLabel-root": {
-                  color: "#685043",
+                '& .MuiInputLabel-root': {
+                  color: '#685043',
                 },
-                "& .MuiInputBase-input": {
-                  color: "#462b1c",
+                '& .MuiInputBase-input': {
+                  color: '#462b1c',
                 },
               }}
             />
@@ -126,22 +137,22 @@ export default function SignInSide() {
               id="password"
               autoComplete="current-password"
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#957461",
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#957461',
                   },
-                  "&:hover fieldset": {
-                    borderColor: "#685043",
+                  '&:hover fieldset': {
+                    borderColor: '#685043',
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#685043",
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#685043',
                   },
                 },
-                "& .MuiInputLabel-root": {
-                  color: "#685043",
+                '& .MuiInputLabel-root': {
+                  color: '#685043',
                 },
-                "& .MuiInputBase-input": {
-                  color: "#462b1c",
+                '& .MuiInputBase-input': {
+                  color: '#462b1c',
                 },
               }}
             />
@@ -177,7 +188,7 @@ export default function SignInSide() {
             <Grid container>
               <Grid item xs>
                 <Link
-                  href="#"
+                  to="#/"
                   variant="body2"
                   sx={{
                     color: "#be9269",
@@ -193,9 +204,9 @@ export default function SignInSide() {
               </Grid>
               <Grid item>
                 <Link
-                  href="#"
+                  href="#/signup"
                   variant="body2"
-                  sx={{
+                  style={{
                     color: "#be9269",
                     textDecoration: "none",
                     "&:hover": {

@@ -178,24 +178,11 @@ function SignUp() {
 
             <Grid container>
               <Grid item xs>
-                <Link
-                  href="#"
-                  variant="body2"
-                  sx={{
-                    color: '#be9269',
-                    textDecoration: 'none',
-                    '&:hover': {
-                      color: '#685043',
-                      textDecoration: 'underline',
-                    },
-                  }}
-                >
-                  Forgot password?
-                </Link>
+                {/* space */}
               </Grid>
               <Grid item>
                 <Link
-                  href="#"
+                  href="#/signin"
                   variant="body2"
                   sx={{
                     color: '#be9269',

@@ -38,12 +38,6 @@ const Footer = () => {
               Features
             </Link>
             <Link href="#" color="inherit" underline="none" display="block">
-              Integrations
-            </Link>
-            <Link href="#" color="inherit" underline="none" display="block">
-              Pricing
-            </Link>
-            <Link href="#" color="inherit" underline="none" display="block">
               FAQ
             </Link>
           </Grid>
@@ -53,15 +47,6 @@ const Footer = () => {
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block">
               About Us
-            </Link>
-            <Link href="#" color="inherit" underline="none" display="block">
-              Careers
-            </Link>
-            <Link href="#" color="inherit" underline="none" display="block">
-              Privacy Policy
-            </Link>
-            <Link href="#" color="inherit" underline="none" display="block">
-              Terms of Service
             </Link>
           </Grid>
           <Grid item xs={6} sm={3} md={2}>
@@ -77,6 +62,9 @@ const Footer = () => {
             <IconButton aria-label="Instagram" color="inherit" component="a" href={socialMediaLinks.instagram}>
               <InstagramIcon />
             </IconButton>
+            <Typography variant="subtitle1" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+              Contact: xxxxxx
+            </Typography>
           </Grid>
         </Grid>
         <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: { xs: 2, sm: 4 }, color: '#ffffff', md: 10 }}>

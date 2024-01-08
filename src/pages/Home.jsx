@@ -4,11 +4,13 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { blogList } from "../assets/config/blogdata";
 import  { aboutdata } from "../assets/config/aboutdata";
 import Slider from "../components/slider";
-import { Box, Typography, Grid } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Box, Typography, Grid, Link } from "@mui/material";
+import Navbar from "../components/navbar"
+import Footer from "../components/footer"
 const Home = () => {
   return (
     <>
+    <Navbar/>
       {/* BANNER */}
       <Box
         sx={{
@@ -73,7 +75,7 @@ const Home = () => {
           />
         </Box>
         <Link
-          to="/products"
+          to="#/products"
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none", color: "#4D1F08" }}
@@ -131,7 +133,7 @@ const Home = () => {
                 >
                 {aboutdata.content.slice(0,190)}...
                   <Link 
-                    to="/about"
+                    to="#/about"
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none", color: "#4D1F08" }}
                   >
@@ -273,6 +275,7 @@ const Home = () => {
         </Grid>
     </Grid>
         </Box>
+        <Footer/>
     </>
   );
 };

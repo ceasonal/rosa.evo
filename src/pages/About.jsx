@@ -8,8 +8,12 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Navbar from "../components/navbar"
+import Footer from "../components/footer"
 const About = () => {
   return (
+    <>
+    <Navbar />
     <Box
       sx={{
         color: "#4D1F08",
@@ -70,8 +74,7 @@ const About = () => {
                 height: "auto",
                 objectFit: "cover",
                 borderRadius: "16px",
-              }}
-            />
+              }} />
           </Box>
         </Grid>
       </Grid>
@@ -98,8 +101,7 @@ const About = () => {
                   height: "auto",
                   objectFit: "cover",
                   borderRadius: "16px",
-                }}
-              />
+                }} />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -136,25 +138,23 @@ const About = () => {
         <AboutUsCard
           icon={<ShoppingCart />}
           header="Wide Range Of Designs"
-          para="Choose from a diverse collection of unique and stylish resin jewelry designs"
-        />
+          para="Choose from a diverse collection of unique and stylish resin jewelry designs" />
         <AboutUsCard
           icon={<GavelIcon />}
           header="High Quality Materials"
-          para="Crafted with premium quality resin and durability materials for long-lasting beauty"
-        />
+          para="Crafted with premium quality resin and durability materials for long-lasting beauty" />
         <AboutUsCard
           icon={<AutoFixHighIcon />}
           header="Create Your Unique Piece"
-          para="Express yourself by customizing our jewelry or request to make a different product"
-        />
+          para="Express yourself by customizing our jewelry or request to make a different product" />
         <AboutUsCard
           icon={<AccountBalanceIcon />}
           header="Secure Online Shopping"
-          para="Shop with confidence knowing that your personal and payment information is protected with advanced security measures"
-        />
+          para="Shop with confidence knowing that your personal and payment information is protected with advanced security measures" />
       </Box>
     </Box>
+    <Footer/>
+    </>
   );
 };
 
