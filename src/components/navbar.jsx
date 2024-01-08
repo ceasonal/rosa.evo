@@ -19,7 +19,7 @@ import { saveAs } from "file-saver";
 const pages = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-  { name: "Brochure",path: " "},
+  { name: "Brochure"},
   { name: "About Us", path: "/about" },
   { name: "Contact Us", path: "/contact" },
 ];
