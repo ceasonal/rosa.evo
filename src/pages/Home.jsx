@@ -75,7 +75,7 @@ const Home = () => {
           />
         </Box>
         <Link
-          to="#/products"
+          href="#/products"
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none", color: "#4D1F08" }}
@@ -133,7 +133,7 @@ const Home = () => {
                 >
                 {aboutdata.content.slice(0,190)}...
                   <Link 
-                    to="#/about"
+                    href="#/about"
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none", color: "#4D1F08" }}
                   >

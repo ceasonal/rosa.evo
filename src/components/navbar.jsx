@@ -13,7 +13,7 @@ import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import Pdf from "../assets/pdf/rosa_evo.pdf";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 import { saveAs } from "file-saver";
 
 const pages = [
@@ -173,8 +173,8 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link
-              href="#/signin"
-              sx={{
+              to="/signin"
+              style={{
                 color: "#4D1F08",
               }}
             >
