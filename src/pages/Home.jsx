@@ -1,17 +1,14 @@
 import React from "react";
-import Nav from "../components/navbar";
-import Footer from "../components/footer";
 import Blogcard from "../components/blogCard";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { blogList } from "../assets/config/blogdata";
-import aboutdata  from "../assets/config/aboutdata";
+import  { aboutdata } from "../assets/config/aboutdata";
 import Slider from "../components/slider";
-import { Box, Typography, Link, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
+import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <>
-      <Nav />
-
       {/* BANNER */}
       <Box
         sx={{
@@ -76,10 +73,10 @@ const Home = () => {
           />
         </Box>
         <Link
-          href="https://www.example.com"
+          to="/products"
           target="_blank"
           rel="noopener noreferrer"
-          sx={{ textDecoration: "none", color: "#4D1F08" }}
+          style={{ textDecoration: "none", color: "#4D1F08" }}
         >
           <Typography
             sx={{
@@ -133,11 +130,10 @@ const Home = () => {
                   sx={{ wordWrap: "break-word" }}
                 >
                 {aboutdata.content.slice(0,190)}...
-                  <Link
-                    href="/about"
-                    target="_blank"
+                  <Link 
+                    to="/about"
                     rel="noopener noreferrer"
-                    sx={{ textDecoration: "none", color: "#4D1F08" }}
+                    style={{ textDecoration: "none", color: "#4D1F08" }}
                   >
                     <Typography
                       sx={{
@@ -159,39 +155,40 @@ const Home = () => {
           </Grid>
         </Box>
         {/* BLOGS */}
-<Box
-  sx={{
-    marginTop: 5,
-    padding: 3,
-    textAlign: "center", // Center the content
-  }}
->
-  <Typography
-    variant="h4"
-    fontFamily="monospace"
-    marginBottom={3}
-    fontWeight="bold"
-  >
-    Our Blogs
-  </Typography>
-  <Grid container spacing={3} justifyContent="center" sx={{ margin: "0 auto" }}>
-    {blogList.map((post) => (
-      <Grid item key={post.id} xs={12} sm={6} md={4}>
-        <Blogcard
-          id={post.id}
-          title={post.title}
-          desc={post.desc.slice(0, 50)}
-          category={post.category}
-          cover={post.cover}
-          date={post.date}
-          authorIcon={post.authoricon}
-          author={post.author}
-        />
-      </Grid>
-    ))}
-  </Grid>
-</Box>
-
+        <Box
+          sx={{
+            marginTop: 5,
+            padding: 3,
+            textAlign: "center", // Center the content
+          }}
+        >
+          <Typography
+            variant="h4"
+            fontFamily="monospace"
+            marginBottom={3}
+            fontWeight="bold"
+          >
+            Our Blogs
+          </Typography>
+          <Box sx={{ margin: "0 auto", maxWidth: 1200 }}>
+            <Grid container spacing={3} justifyContent="center">
+              {blogList.map((post) => (
+                <Grid item key={post.id} xs={12} sm={6} md={4}>
+                  <Blogcard
+                    id={post.id}
+                    title={post.title}
+                    desc={post.desc.slice(0, 50)}
+                    category={post.category}
+                    cover={post.cover}
+                    date={post.date}
+                    authorIcon={post.authoricon}
+                    author={post.author}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Box>
         {/* Top Comments */}
         <Box
           sx={{
@@ -211,7 +208,71 @@ const Home = () => {
           </Typography>
           <Slider />
         </Box>
-        <Footer />
+        {/* FAQ */}
+        <Box
+          sx={{
+            padding: 3,
+             // Center the content
+          }}
+        >
+<Grid container spacing={2}>
+      <Grid item xs={5}>
+        <Box p={4}>
+          <Typography variant="subtitle2" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold'}} >
+            FAQ
+          </Typography>
+          <Typography variant="h5" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold'}}  >
+            Common Questions
+          </Typography>
+          <Typography variant="body1" gutterBottom style={{fontFamily:'monospace',}} >
+            Here are some of the most common questions that we get.
+          </Typography>
+        </Box>
+      </Grid>
+
+      <Grid item xs={7}>
+      <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace' ,color:'#4D1F08' }}>
+          What is resin jewelry?
+        </Typography>
+        <Typography variant="body1" style={{ marginTop: '8px' }}>
+          Resin jewelry is made by pouring liquid resin into molds and allowing it to harden. It can be used to create
+          various types of jewelry, such as earrings, necklaces, and bracelets.
+        </Typography>
+
+        <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace',color:'#4D1F08' }}>
+          Is resin jewelry durable?
+        </Typography>
+        <Typography variant="body1" style={{ marginTop: '8px' }}>
+          Resin jewelry is generally durable, but it can be more prone to scratches and cracks compared to other
+          materials. It is important to handle resin jewelry with care and avoid exposing it to harsh chemicals or
+          extreme temperatures.
+        </Typography>
+        <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace',color:'#4D1F08' }}>
+          How do I clean resin jewelry?
+        </Typography>
+        <Typography variant="body1" style={{ marginTop: '8px' }}>
+          To clean resin jewelry, gently wipe it with a soft cloth or use mild soap and water. Avoid using harsh
+          chemicals or abrasive materials that can damage the resin surface.
+        </Typography>
+
+        <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace',color:'#4D1F08' }}>
+          Can I customize resin jewelry?
+        </Typography>
+        <Typography variant="body1" style={{ marginTop: '8px' }}>
+          Yes, many resin jewelry pieces can be customized. Some sellers offer options to choose colors, shapes, or even
+          add personalized elements like initials or birthstones.
+        </Typography>
+
+        <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace',color:'#4D1F08' }}>
+          How long does it take to receive my order?
+        </Typography>
+        <Typography variant="body1" style={{ marginTop: '8px' }}>
+          The delivery time depends on various factors, such as your location and the seller's processing time. It is
+          best to check the estimated delivery time provided by the seller before placing your order.
+        </Typography>
+        </Grid>
+    </Grid>
+        </Box>
     </>
   );
 };
