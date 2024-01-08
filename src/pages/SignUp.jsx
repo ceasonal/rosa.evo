@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
-import Imagetest from '../assets/images/test1.jpg';
+import Imagetest from "../assets/images/test1.jpg";
 
 function SignUp() {
   const handleSubmit = (event) => {
@@ -17,14 +17,14 @@ function SignUp() {
     const data = new FormData(event.currentTarget);
     // Handle form submission logic
     console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
+      name: data.get("name"),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
+    <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
       <Grid
         item
@@ -33,9 +33,9 @@ function SignUp() {
         md={7}
         sx={{
           backgroundImage: `url(${Imagetest})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
       <Grid
@@ -46,15 +46,15 @@ function SignUp() {
         component={Paper}
         elevation={6}
         square
-        sx={{ backgroundColor: '#E9D7CC' }}
+        sx={{ backgroundColor: "#E9D7CC" }}
       >
         <Box
           sx={{
             my: 8,
             mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Avatar sx={{ m: 1 }}>
@@ -67,7 +67,12 @@ function SignUp() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -78,22 +83,22 @@ function SignUp() {
               autoComplete="name"
               autoFocus
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#957461',
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#957461",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#685043',
+                  "&:hover fieldset": {
+                    borderColor: "#685043",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#685043',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#685043",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  color: '#685043',
+                "& .MuiInputLabel-root": {
+                  color: "#685043",
                 },
-                '& .MuiInputBase-input': {
-                  color: '#462b1c',
+                "& .MuiInputBase-input": {
+                  color: "#462b1c",
                 },
               }}
             />
@@ -107,22 +112,22 @@ function SignUp() {
               name="email"
               autoComplete="email"
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#957461',
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#957461",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#685043',
+                  "&:hover fieldset": {
+                    borderColor: "#685043",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#685043',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#685043",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  color: '#685043',
+                "& .MuiInputLabel-root": {
+                  color: "#685043",
                 },
-                '& .MuiInputBase-input': {
-                  color: '#462b1c',
+                "& .MuiInputBase-input": {
+                  color: "#462b1c",
                 },
               }}
             />
@@ -137,28 +142,25 @@ function SignUp() {
               id="password"
               autoComplete="new-password"
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#957461',
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#957461",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#685043',
+                  "&:hover fieldset": {
+                    borderColor: "#685043",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#685043',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#685043",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  color: '#685043',
+                "& .MuiInputLabel-root": {
+                  color: "#685043",
                 },
-                '& .MuiInputBase-input': {
-                  color: '#462b1c',
+                "& .MuiInputBase-input": {
+                  color: "#462b1c",
                 },
               }}
             />
-
-        
-
 
             <Button
               type="submit"
@@ -167,9 +169,9 @@ function SignUp() {
               sx={{
                 mt: 3,
                 mb: 2,
-                backgroundColor: '#957461',
-                '&:hover': {
-                  backgroundColor: '#685043',
+                backgroundColor: "#957461",
+                "&:hover": {
+                  backgroundColor: "#685043",
                 },
               }}
             >
@@ -185,15 +187,15 @@ function SignUp() {
                   href="#/signin"
                   variant="body2"
                   sx={{
-                    color: '#be9269',
-                    textDecoration: 'none',
-                    '&:hover': {
-                      color: '#685043',
-                      textDecoration: 'underline',
+                    color: "#be9269",
+                    textDecoration: "none",
+                    "&:hover": {
+                      color: "#685043",
+                      textDecoration: "underline",
                     },
                   }}
                 >
-                  {'Already have an account? Sign In'}
+                  {"Already have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>

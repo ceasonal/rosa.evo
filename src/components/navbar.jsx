@@ -12,14 +12,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import Pdf from '../assets/pdf/rosa_evo.pdf'
-import { Link } from "react-router-dom";
+import Pdf from "../assets/pdf/rosa_evo.pdf";
+import { Link } from "@mui/material";
 import { saveAs } from "file-saver";
 
 const pages = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-  { name: "Brochure"},
+  { name: "Brochure" },
   { name: "About Us", path: "/about" },
   // { name: "Contact Us", path: "/contact" },
 ];
@@ -40,10 +40,16 @@ function ResponsiveAppBar() {
     saveAs(brochurePdf, "rosa_evo_brochure.pdf");
     handleCloseNavMenu();
   };
-  
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "inherit", color: "#4D1F08", boxShadow: "none" }}>
+    <AppBar
+      position="static"
+      style={{
+        backgroundColor: "inherit",
+        color: "#4D1F08",
+        boxShadow: "none",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -93,19 +99,35 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-              <MenuItem
-              key={page.name}
-              onClick={page.name === "Brochure" ? handleBrochureClick : handleCloseNavMenu}
-              component={Link}
-              to={page.path}
-            >
-                  <Typography textAlign="center" style={{ color: "#4D1F08", fontFamily: "monospace" }}>
+                <MenuItem
+                  key={page.name}
+                  onClick={
+                    page.name === "Brochure"
+                      ? handleBrochureClick
+                      : handleCloseNavMenu
+                  }
+                  component={Link}
+                  to={page.path}
+                >
+                  <Typography
+                    textAlign="center"
+                    style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                  >
                     {page.name}
                   </Typography>
                 </MenuItem>
               ))}
-              <MenuItem onClick={handleCloseNavMenu} component={Link} to="/account">
-                <Typography textAlign="center" style={{ color: "#4D1F08", fontFamily: "monospace" }}>Account</Typography>
+              <MenuItem
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to="/signin"
+              >
+                <Typography
+                  textAlign="center"
+                  style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                >
+                  Account
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -130,23 +152,40 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={page.name === "Brochure" ? handleBrochureClick : handleCloseNavMenu}
+                onClick={
+                  page.name === "Brochure"
+                    ? handleBrochureClick
+                    : handleCloseNavMenu
+                }
                 component={Link}
                 to={page.path}
-                sx={{ my: 2, color: "#4D1F08", display: "block", textTransform: "none", fontSize: "14px" }}
+                sx={{
+                  my: 2,
+                  color: "#4D1F08",
+                  display: "block",
+                  textTransform: "none",
+                  fontSize: "14px",
+                }}
               >
                 {page.name}
               </Button>
             ))}
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              color="inherit"
+            <Link
+              href="#/signin"
+              sx={{
+                color: "#4D1F08",
+              }}
             >
-              <AccountCircle />
-            </IconButton>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Link>
           </Box>
           <IconButton
             size="large"
