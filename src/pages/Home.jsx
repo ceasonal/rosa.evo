@@ -218,7 +218,7 @@ const Home = () => {
           }}
         >
 <Grid container spacing={2}>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <Box p={4}>
           <Typography variant="subtitle2" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold'}} >
             FAQ
@@ -232,7 +232,7 @@ const Home = () => {
         </Box>
       </Grid>
 
-      <Grid item xs={7}>
+      <Grid item xs={6}>
       <Typography variant="h6" gutterBottom style={{ marginTop: '16px', fontWeight:'bold', fontFamily:'monospace' ,color:'#4D1F08' }}>
           What is resin jewelry?
         </Typography>
