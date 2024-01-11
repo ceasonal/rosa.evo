@@ -5,12 +5,10 @@ import { blogList } from "../assets/config/blogdata";
 import  { aboutdata } from "../assets/config/aboutdata";
 import Slider from "../components/slider";
 import { Box, Typography, Grid, Link } from "@mui/material";
-import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 const Home = () => {
   return (
     <>
-    <Navbar/>
       {/* BANNER */}
       <Box
         sx={{
@@ -123,19 +121,24 @@ const Home = () => {
                   variant="h4"
                   fontFamily="monospace"
                   fontWeight="bold"
+                  style={{ textDecoration: "underline" }} 
+                  marginBottom={1}
+                  color="#4D1F08"
                 >
                   {aboutdata.heading}
                 </Typography>
                 <Typography
                   variant="h6"
-                  fontFamily="monospace"
+                  fontFamily="sans"
                   sx={{ wordWrap: "break-word" }}
+                  color="#4D1F08" 
                 >
                 {aboutdata.content.slice(0,190)}...
+                </Typography>
                   <Link 
                     href="#/about"
                     rel="noopener noreferrer"
-                    style={{ textDecoration: "none", color: "#4D1F08" }}
+                    style={{ textDecoration: "none", color: "#4D1F08"}}
                   >
                     <Typography
                       sx={{
@@ -151,7 +154,6 @@ const Home = () => {
                       <ArrowRightAltIcon />
                     </Typography>
                   </Link>
-                </Typography>
               </Box>
             </Grid>
           </Grid>
@@ -169,6 +171,8 @@ const Home = () => {
             fontFamily="monospace"
             marginBottom={3}
             fontWeight="bold"
+            style={{ textDecoration: "underline" }}
+            color="#4D1F08"
           >
             Our Blogs
           </Typography>
@@ -205,6 +209,8 @@ const Home = () => {
             marginBottom={3}
             fontWeight="bold"
             textAlign="center"
+            style={{ textDecoration: "underline" }}
+            color="#4D1F08"
           >
             Top Customer Reviews
           </Typography>
@@ -220,13 +226,13 @@ const Home = () => {
 <Grid container spacing={2}>
       <Grid item xs={6}>
         <Box p={4}>
-          <Typography variant="subtitle2" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold'}} >
+          <Typography variant="subtitle2" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold', color:"#4D1F08"}} >
             FAQ
           </Typography>
-          <Typography variant="h5" gutterBottom style={{fontFamily:'monospace',fontWeight:'bold'}}  >
+          <Typography variant="h5" gutterBottom style={{fontFamily:'monospace', fontWeight:'bold', textDecoration:'underline', color:"#4D1F08"}}  >
             Common Questions
           </Typography>
-          <Typography variant="body1" gutterBottom style={{fontFamily:'monospace',}} >
+          <Typography variant="body1" gutterBottom style={{fontFamily:'monospace', color:"#4D1F08"}} >
             Here are some of the most common questions that we get.
           </Typography>
         </Box>

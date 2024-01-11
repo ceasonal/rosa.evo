@@ -3,50 +3,60 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { Link }from "@mui/material"
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-
 import Imagetest from "../assets/images/test.jpg";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" to="https://mui.com/" sx={{
-                    color: "#be9269",
-                    textDecoration: "none",
-                    "&:hover": {
-                      color: "#685043",
-                      textDecoration: "underline",
-                    },
-                  }}>
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { createClient } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+const supabase = createClient(
+  import.meta.env.VITE_REACT_APP_SUPABASE_URL,
+  import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
+);
+const SignInSide = ({setToken}) => {
+  let navigate = useNavigate()
 
+  const [formData,setFormData] = useState({
+        email:'',password:''
+  })
+  console.log(formData)
+
+  function handleChange(event){
+    setFormData((prevFormData)=>{
+      return{
+        ...prevFormData,
+        [event.target.name]:event.target.value
+      }
+
+    })
+
+  }
+async function handleSubmit(e){
+    e.preventDefault()
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password,
+          })
+
+      if (error) throw error
+      setToken(data)
+      console.log(data)
+      navigate('/')
+
+
+    //   alert('Check your email for verification link')
+
+      
+    } catch (error) {
+      alert(error)
+    }
+  }
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -105,6 +115,7 @@ export default function SignInSide() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={handleChange}
               autoFocus
               sx={{
                 '& .MuiOutlinedInput-root': {
@@ -136,6 +147,7 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
@@ -155,20 +167,6 @@ export default function SignInSide() {
                   color: '#462b1c',
                 },
               }}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="remember"
-                  sx={{
-                    "&.Mui-checked": {
-                      color: "#be9269",
-                    },
-                  }}
-                />
-              }
-              label="Remember me"
-              sx={{ color: "#685043" }}
             />
             <Button
               type="submit"
@@ -219,10 +217,11 @@ export default function SignInSide() {
                 </Link>
               </Grid>
             </Grid>
-            <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
       </Grid>
     </Grid>
   );
 }
+
+export default SignInSide;

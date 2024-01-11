@@ -5,28 +5,21 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "@mui/material";
-import Chip from "@mui/material/Chip";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 export default function Blogcard(props) {
   return (
     <div className="container grid3">
-      <Card key={props.id} sx={{ maxWidth: 345 , boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"}} className="box boxItems">
+      <Card key={props.id} sx={{ maxWidth: 400 , boxShadow: "0px 4px 8px rgba(0, 0, 0,)"}} className="box boxItems">
         <CardActionArea>
           <CardMedia
             component="img"
-            height="180"
+            height="200"
             image={props.cover}
             alt={props.title}
           />
           <CardContent>
-            <Chip
-              label={props.category}
-              variant="outlined"
-              style={{ marginBottom: 10, borderColor: "#754e37", fontFamily: "monospace"}}
-              
-            />
-            <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "monospace" }}>
+            <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "monospace", color:"#4D1F08" }}>
               {props.title}
             </Typography>
             <Typography variant="body2">
@@ -61,7 +54,7 @@ export default function Blogcard(props) {
                 </div>
               </div>
               <span style={{ marginLeft: "5px" }}>
-                <Link to={`/blog/${props.id}`} style={{ color: "#754e37" }}>
+                <Link href={`#/blog/${props.id}`} style={{ color: "#754e37" }}>
                   <ArrowRightAltIcon />
                 </Link>
               </span>

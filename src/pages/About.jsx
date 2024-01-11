@@ -8,12 +8,10 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 const About = () => {
   return (
     <>
-    <Navbar />
     <Box
       sx={{
         color: "#4D1F08",

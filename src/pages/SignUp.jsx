@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,17 +12,44 @@ import Typography from "@mui/material/Typography";
 
 import Imagetest from "../assets/images/test1.jpg";
 
-function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // Handle form submission logic
-    console.log({
-      name: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password"),
+const supabase = createClient(
+  import.meta.env.VITE_REACT_APP_SUPABASE_URL,
+  import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
+);
+
+const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleChange(e) {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [e.target.name]: e.target.value.trim(),
+      };
     });
-  };
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+          },
+        },
+      });
+      alert("Check your email for verification");
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -57,14 +85,8 @@ function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1 }}>
-            <img
-              src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&"
-              alt=""
-              width={80}
-            />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+          <Avatar s sx={{ m: 1, width: 80, height: 80 }}  src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&" />
+          <Typography component="h1" variant="h5"  fontFamily='monospace'>
             Sign Up
           </Typography>
           <Box
@@ -73,36 +95,17 @@ function SignUp() {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#957461",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#685043",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#685043",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "#685043",
-                },
-                "& .MuiInputBase-input": {
-                  color: "#462b1c",
-                },
-              }}
-            />
-
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                onChange={handleChange}
+              />
+            </Box>
             <TextField
               margin="normal"
               required
@@ -110,28 +113,8 @@ function SignUp() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#957461",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#685043",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#685043",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "#685043",
-                },
-                "& .MuiInputBase-input": {
-                  color: "#462b1c",
-                },
-              }}
+              onChange={handleChange}
             />
-
             <TextField
               margin="normal"
               required
@@ -139,29 +122,8 @@ function SignUp() {
               name="password"
               label="Password"
               type="password"
-              id="password"
-              autoComplete="new-password"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#957461",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#685043",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#685043",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "#685043",
-                },
-                "& .MuiInputBase-input": {
-                  color: "#462b1c",
-                },
-              }}
+              onChange={handleChange}
             />
-
             <Button
               type="submit"
               fullWidth
@@ -177,13 +139,8 @@ function SignUp() {
             >
               Sign Up
             </Button>
-
-            <Grid container>
-              <Grid item xs>
-                {/* space */}
-              </Grid>
-              <Grid item>
-                <Link
+          </Box>
+            <Link
                   href="#/signin"
                   variant="body2"
                   sx={{
@@ -197,9 +154,6 @@ function SignUp() {
                 >
                   {"Already have an account? Sign In"}
                 </Link>
-              </Grid>
-            </Grid>
-          </Box>
         </Box>
       </Grid>
     </Grid>
