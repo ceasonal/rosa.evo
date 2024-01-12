@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "@mui/material"
+import { Link } from "@mui/material";
 import { blogList } from "../assets/config/blogdata";
 import Typography from "@mui/material/Typography";
 import Footer from "../components/footer";
@@ -134,35 +134,59 @@ const Blog = () => {
               </>
             )}
             {blog.id === 1 && (
-                <>
-              <Typography variant="h6" gutterBottom fontFamily="monospace" fontWeight="bold" color="#4D1F08">
-               Ready to turn your vision into reality? Connect with us on
-            </Typography>
-            <Link href="https://www.instagram.com/rosa.evo/" target="" rel="noopener noreferrer" color="primary" sx={{
+              <>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  fontFamily="monospace"
+                  fontWeight="bold"
+                  color="#4D1F08"
+                >
+                  Ready to turn your vision into reality? Connect with us on
+                </Typography>
+                <Link
+                  href="https://www.instagram.com/rosa.evo/"
+                  target=""
+                  rel="noopener noreferrer"
+                  color="primary"
+                  sx={{
                     color: "#be9269",
                     textDecoration: "none",
                     "&:hover": {
                       color: "#685043",
                       textDecoration: "underline",
                     },
-                  }}>
-      Instagram
-    </Link>{' '}
-    or through{' '}
-    <Link href="tel:+9100021321312" color="primary" sx={{
+                  }}
+                >
+                  Instagram
+                </Link>{" "}
+                or through{" "}
+                <Link
+                  href="tel:+9100021321312"
+                  color="primary"
+                  sx={{
                     color: "#be9269",
                     textDecoration: "none",
                     "&:hover": {
                       color: "#685043",
                       textDecoration: "underline",
                     },
-                  }}>
-      WhatsApp
-    </Link>   
-    <section><Typography variant="body2" paragraph fontFamily="sans" color="#4D1F08">
-    Our team is excited to embark on this creative journey with you and craft a resin masterpiece that is uniquely yours.
-  </Typography></section>  
-                </>
+                  }}
+                >
+                  WhatsApp
+                </Link>
+                <section>
+                  <Typography
+                    variant="body2"
+                    paragraph
+                    fontFamily="sans"
+                    color="#4D1F08"
+                  >
+                    Our team is excited to embark on this creative journey with
+                    you and craft a resin masterpiece that is uniquely yours.
+                  </Typography>
+                </section>
+              </>
             )}
             <Typography
               variant="subtitle2"

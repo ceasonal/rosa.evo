@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Container, IconButton, Typography, Avatar, Box } from "@mui/material";
-import Rating from '@mui/material/Rating';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import Rating from "@mui/material/Rating";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
@@ -16,7 +16,7 @@ const topComments = [
       },
     },
     comment: "This is an amazing website! I love the content and design.",
-    value: 5
+    value: 5,
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const topComments = [
       },
     },
     comment: "The information provided here is very useful. Keep it up!",
-    value: 4.5
+    value: 4.5,
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const topComments = [
       },
     },
     comment: "Very Epic Products! Must buy.",
-    value: 4
+    value: 4,
   },
 ];
 
@@ -54,7 +54,9 @@ const CommentSlider = () => {
   };
 
   const handleNextClick = () => {
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, topComments.length - 1));
+    setActiveIndex((prevIndex) =>
+      Math.min(prevIndex + 1, topComments.length - 1)
+    );
   };
 
   const handleDotClick = (index) => {
@@ -91,7 +93,7 @@ const CommentSlider = () => {
             scrollBehavior: "smooth",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",  // Centering the content
+            justifyContent: "center", // Centering the content
             width: "100%",
             marginLeft: "auto",
             marginRight: "auto",
@@ -111,7 +113,11 @@ const CommentSlider = () => {
               marginBottom: 1,
             }}
           >
-            <Avatar src={topComments[activeIndex].user.avatar} alt={topComments[activeIndex].user.name} sx={{ marginBottom: 1 }} />
+            <Avatar
+              src={topComments[activeIndex].user.avatar}
+              alt={topComments[activeIndex].user.name}
+              sx={{ marginBottom: 1 }}
+            />
             <Box
               sx={{
                 display: "flex",
@@ -141,12 +147,22 @@ const CommentSlider = () => {
                 marginBottom: 2,
               }}
             >
-              <Rating name="read-only" value={topComments[activeIndex].value} readOnly precision={0.5} />
+              <Rating
+                name="read-only"
+                value={topComments[activeIndex].value}
+                readOnly
+                precision={0.5}
+              />
             </Box>
-            <Typography variant="body2">{topComments[activeIndex].comment}</Typography>
+            <Typography variant="body2">
+              {topComments[activeIndex].comment}
+            </Typography>
           </Box>
         </Box>
-        <IconButton onClick={handleNextClick} disabled={activeIndex === topComments.length - 1}>
+        <IconButton
+          onClick={handleNextClick}
+          disabled={activeIndex === topComments.length - 1}
+        >
           <KeyboardArrowRightIcon />
         </IconButton>
       </Box>

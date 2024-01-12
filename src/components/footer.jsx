@@ -1,37 +1,54 @@
-import React from 'react';
-import { Box, Container, Grid, Link, Typography, IconButton } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import React from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  Link,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Replace these with your own social media URLs
 const socialMediaLinks = {
-  facebook: '#',
-  twitter: '#',
-  instagram: '#',
+  facebook: "#",
+  twitter: "#",
+  instagram: "#",
 };
 
 const Footer = () => {
   return (
     <Box
       sx={{
-        bgcolor: '#957461',
-        color: '#ffffff',
+        bgcolor: "#957461",
+        color: "#ffffff",
         py: { xs: 2, sm: 3 },
-        borderTop: '1px solid',
-        borderColor: 'divider',
+        borderTop: "1px solid",
+        borderColor: "divider",
       }}
     >
       <Container maxWidth="lg">
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item xs={12} sm={3} md={2}>
-            <Typography variant="h6" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+            <Typography
+              variant="h6"
+              color="text.primary"
+              gutterBottom
+              sx={{ color: "#ffffff" }}
+            >
               rosa.evo
             </Typography>
             {/* Add your logo component or image here */}
           </Grid>
           <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="subtitle1" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+            <Typography
+              variant="subtitle1"
+              color="text.primary"
+              gutterBottom
+              sx={{ color: "#ffffff" }}
+            >
               PRODUCT
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block">
@@ -42,7 +59,12 @@ const Footer = () => {
             </Link>
           </Grid>
           <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="subtitle1" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+            <Typography
+              variant="subtitle1"
+              color="text.primary"
+              gutterBottom
+              sx={{ color: "#ffffff" }}
+            >
               COMPANY
             </Typography>
             <Link href="#" color="inherit" underline="none" display="block">
@@ -50,24 +72,54 @@ const Footer = () => {
             </Link>
           </Grid>
           <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="subtitle1" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+            <Typography
+              variant="subtitle1"
+              color="text.primary"
+              gutterBottom
+              sx={{ color: "#ffffff" }}
+            >
               SOCIAL MEDIA
             </Typography>
-            <IconButton aria-label="Facebook" color="inherit" component="a" href={socialMediaLinks.facebook}>
+            <IconButton
+              aria-label="Facebook"
+              color="inherit"
+              component="a"
+              href={socialMediaLinks.facebook}
+            >
               <FacebookIcon />
             </IconButton>
-            <IconButton aria-label="Twitter" color="inherit" component="a" href={socialMediaLinks.twitter}>
+            <IconButton
+              aria-label="Twitter"
+              color="inherit"
+              component="a"
+              href={socialMediaLinks.twitter}
+            >
               <TwitterIcon />
             </IconButton>
-            <IconButton aria-label="Instagram" color="inherit" component="a" href={socialMediaLinks.instagram}>
+            <IconButton
+              aria-label="Instagram"
+              color="inherit"
+              component="a"
+              href={socialMediaLinks.instagram}
+            >
               <InstagramIcon />
             </IconButton>
-            <Typography variant="subtitle1" color="text.primary" gutterBottom sx={{ color: '#ffffff' }}>
+            <Typography
+              variant="subtitle1"
+              color="text.primary"
+              gutterBottom
+              sx={{ color: "#ffffff" }}
+            >
               Contact: xxxxxx
             </Typography>
           </Grid>
         </Grid>
-        <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: { xs: 2, sm: 4 }, color: '#ffffff', md: 10 }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          align="center"
+          sx={{ pt: { xs: 2, sm: 4 }, color: "#ffffff", md: 10 }}
+        >
           © 2024 Company Co. All rights reserved.
         </Typography>
       </Container>

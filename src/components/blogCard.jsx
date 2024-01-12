@@ -10,7 +10,11 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 export default function Blogcard(props) {
   return (
     <div className="container grid3">
-      <Card key={props.id} sx={{ maxWidth: 400 , boxShadow: "0px 4px 8px rgba(0, 0, 0,)"}} className="box boxItems">
+      <Card
+        key={props.id}
+        sx={{ maxWidth: 400, boxShadow: "0px 4px 8px rgba(0, 0, 0,)" }}
+        className="box boxItems"
+      >
         <CardActionArea>
           <CardMedia
             component="img"
@@ -19,7 +23,12 @@ export default function Blogcard(props) {
             alt={props.title}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "monospace", color:"#4D1F08" }}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              style={{ fontFamily: "monospace", color: "#4D1F08" }}
+            >
               {props.title}
             </Typography>
             <Typography variant="body2">
