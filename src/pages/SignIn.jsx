@@ -3,13 +3,15 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link }from "@mui/material"
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Imagetest from "../assets/images/test.jpg";
 import { createClient } from "@supabase/supabase-js";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -17,53 +19,60 @@ const supabase = createClient(
   import.meta.env.VITE_REACT_APP_SUPABASE_URL,
   import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
 );
-const SignInSide = ({setToken}) => {
-  let navigate = useNavigate()
 
-  const [formData,setFormData] = useState({
-        email:'',password:''
-  })
-  console.log(formData)
+const SignInSide = ({ setToken }) => {
+  const navigate = useNavigate();
 
-  function handleChange(event){
-    setFormData((prevFormData)=>{
-      return{
-        ...prevFormData,
-        [event.target.name]:event.target.value
-      }
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-    })
+  const [error, setError] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  }
-async function handleSubmit(e){
-    e.preventDefault()
+  const handleChange = (event) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [event.target.name]: event.target.value,
+    }));
+    setError("");
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: formData.email,
-            password: formData.password,
-          })
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
 
-      if (error) throw error
-      setToken(data)
-      console.log(data)
-      navigate('/')
+      if (error) throw error;
 
-
-    //   alert('Check your email for verification link')
-
-      
+      setToken(data);
+      navigate("/");
     } catch (error) {
-      alert(error)
+      console.error("Sign In Error:", error);
+      setError(error.message || "An error occurred during sign in");
+      setOpenSnackbar(true);
     }
-  }
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
       <Grid
         item
         xs={false}
-        sm={2}
+        sm={4}
         md={7}
         sx={{
           backgroundImage: `url(${Imagetest})`,
@@ -105,7 +114,7 @@ async function handleSubmit(e){
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{ mt: 3 }}
           >
             <TextField
               margin="normal"
@@ -117,25 +126,8 @@ async function handleSubmit(e){
               autoComplete="email"
               onChange={handleChange}
               autoFocus
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#957461',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#685043',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#685043',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#685043',
-                },
-                '& .MuiInputBase-input': {
-                  color: '#462b1c',
-                },
-              }}
+              variant="outlined"
+              sx={{ mb: 2 }}
             />
 
             <TextField
@@ -148,32 +140,14 @@ async function handleSubmit(e){
               id="password"
               autoComplete="current-password"
               onChange={handleChange}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#957461',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#685043',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#685043',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#685043',
-                },
-                '& .MuiInputBase-input': {
-                  color: '#462b1c',
-                },
-              }}
+              variant="outlined"
+              sx={{ mb: 2 }}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{
-                mt: 3,
                 mb: 2,
                 backgroundColor: "#957461",
                 "&:hover": {
@@ -183,10 +157,10 @@ async function handleSubmit(e){
             >
               Sign In
             </Button>
-            <Grid container>
+            <Grid container spacing={1}>
               <Grid item xs>
                 <Link
-                  to="#/"
+                  href="#/"
                   variant="body2"
                   sx={{
                     color: "#be9269",
@@ -204,7 +178,7 @@ async function handleSubmit(e){
                 <Link
                   href="#/signup"
                   variant="body2"
-                  style={{
+                  sx={{
                     color: "#be9269",
                     textDecoration: "none",
                     "&:hover": {
@@ -219,9 +193,23 @@ async function handleSubmit(e){
             </Grid>
           </Box>
         </Box>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+        >
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            onClose={handleSnackbarClose}
+            severity="error"
+          >
+            {error}
+          </MuiAlert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
-}
+};
 
 export default SignInSide;

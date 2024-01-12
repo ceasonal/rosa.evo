@@ -9,13 +9,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import Pdf from "../assets/pdf/rosa_evo.pdf";
 import { Link } from "react-router-dom";
 import { saveAs } from "file-saver";
-import { useNavigate } from "react-router-dom";
 
 const pages = [
   { name: "Home", path: "/" },
@@ -47,22 +45,22 @@ const ResponsiveAppBar = ({ token }) => {
     saveAs(brochurePdf, "rosa_evo_brochure.pdf");
     handleCloseNavMenu();
   };
+
   const handleLogOut = () => {
     sessionStorage.removeItem("token");
     window.location.reload();
-    navigate('/')
   };
 
   return (
     <AppBar
       position="static"
-      style={{
+      sx={{
         backgroundColor: "inherit",
         color: "#4D1F08",
         boxShadow: "none",
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ backgroundColor: "inherit" }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -110,7 +108,7 @@ const ResponsiveAppBar = ({ token }) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {pages.map((page) => [
                 <MenuItem
                   key={page.name}
                   onClick={
@@ -127,17 +125,18 @@ const ResponsiveAppBar = ({ token }) => {
                   >
                     {page.name}
                   </Typography>
-                </MenuItem>
-              ))}
-              {
-                token ? (
-                  <>
+                </MenuItem>,
+                // Use a comma to separate array elements
+              ])}
+              {token ? (
+                <>
                   <MenuItem
                     onClick={() => {
                       handleCloseNavMenu();
                       handleLogOut();
-                    } }
+                    }}
                     component={Link}
+                    to="/"
                   >
                     <Typography
                       textAlign="center"
@@ -145,35 +144,46 @@ const ResponsiveAppBar = ({ token }) => {
                     >
                       Sign Out
                     </Typography>
-                  </MenuItem><MenuItem
-                    onClick={() => {
-                      handleCloseNavMenu();
-                    } }
-                    component={Link}
-                  >
-                      <Typography
-                        textAlign="center"
-                        style={{ color: "#4D1F08", fontFamily: "monospace" }}
-                      >
-                        Profile
-                      </Typography>
-                    </MenuItem>
-                    </>
-                ) : (
+                  </MenuItem>
                   <MenuItem
                     onClick={handleCloseNavMenu}
                     component={Link}
-                    to="/signin"
+                    to="/profile"
                   >
                     <Typography
                       textAlign="center"
                       style={{ color: "#4D1F08", fontFamily: "monospace" }}
                     >
-                      Sign In
+                      Profile
                     </Typography>
                   </MenuItem>
-                )
-              }
+                  <MenuItem
+                    onClick={handleCloseNavMenu}
+                    component={Link}
+                    to="/cart"
+                  >
+                    <Typography
+                      textAlign="center"
+                      style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                    >
+                      Cart
+                    </Typography>
+                  </MenuItem>
+                </>
+              ) : (
+                <MenuItem
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to="/signin"
+                >
+                  <Typography
+                    textAlign="center"
+                    style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                  >
+                    Sign In
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <Typography
@@ -217,74 +227,89 @@ const ResponsiveAppBar = ({ token }) => {
             ))}
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          {token ? (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+            {token ? (
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    component={Link}
+                    to={"/profile"}
+                    onClick={handleClose}
+                  >
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      handleLogOut();
+                    }}
+                    component={Link}
+                    to={"/"}
+                  >
+                    Logout
+                  </MenuItem>
+                </Menu>
+                <Link
+                  to="/cart"
+                  style={{
+                    color: "#4D1F08",
+                  }}
+                >
+                  <IconButton
+                    size="large"
+                    aria-label="show no. of cart items"
+                    color="inherit"
+                  >
+                    {/* <Badge badgeContent={17} color="error"> */}
+                    <ShoppingCart />
+                    {/* </Badge> */}
+                  </IconButton>
+                </Link>
+              </div>
+            ) : (
+              <Link
+                to="/signin"
+                style={{
+                  color: "#4D1F08",
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={
-                  () => {
-                    handleClose();
-                    handleLogOut();
-                  }
-                }>Logout</MenuItem>
-              </Menu>
-            </div>
-          ):
-          (
-            <Link
-              to="/signin"
-              style={{
-                color: "#4D1F08",
-              }}
-            >
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Link>
-          )
-        }
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Link>
+            )}
           </Box>
-          <IconButton
-            size="large"
-            aria-label="show no. of cart items"
-            color="inherit"
-          >
-            {/* <Badge badgeContent={17} color="error"> */}
-              <ShoppingCart />
-            {/* </Badge> */}
-          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 
 export default ResponsiveAppBar;

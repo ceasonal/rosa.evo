@@ -9,13 +9,18 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import Imagetest from "../assets/images/test1.jpg";
 
 const supabase = createClient(
   import.meta.env.VITE_REACT_APP_SUPABASE_URL,
   import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
 );
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -24,30 +29,124 @@ const SignUp = () => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
   function handleChange(e) {
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [e.target.name]: e.target.value.trim(),
-      };
-    });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value.trim(),
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [e.target.name]: "",
+    }));
   }
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Simple form validation
+    let formIsValid = true;
+    const newErrors = { ...errors };
+
+    if (!formData.name) {
+      newErrors.name = "Name is required";
+      formIsValid = false;
+    } else if (/\d/.test(formData.name)) {
+      newErrors.name = "Name should not contain numbers";
+      formIsValid = false;
+    } else if (formData.name.length > 50) {
+      newErrors.name = "Name should not exceed 50 characters";
+      formIsValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+      formIsValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is not in a valid format";
+      formIsValid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      formIsValid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long";
+      formIsValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!formIsValid) {
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Please fix the errors in the form.");
+      setOpenSnackbar(true);
+      return;
+    }
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // Check if the email already exists
+      const { error: signInError } = await supabase.auth.signInWithOtp({
         email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            name: formData.name,
-          },
-        },
       });
-      alert("Check your email for verification");
+
+      if (signInError && signInError.code === "AUTH_USER_NOT_FOUND") {
+        // Email doesn't exist, proceed with sign-up
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              name: formData.name,
+            },
+          },
+        });
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Check your email for verification");
+        setOpenSnackbar(true);
+      } else if (signInError) {
+        // Other errors during sign-in attempt
+        throw signInError;
+      } else {
+        // Email already exists, display an error message
+        setSnackbarSeverity("error");
+        setSnackbarMessage(
+          "An account with this email already exists and is verified."
+        );
+        setOpenSnackbar(true);
+      }
     } catch (error) {
-      alert(error);
+      console.error("Sign Up Error:", error);
+
+      // Handle other sign-up errors
+      if (
+        error.code === "23505" &&
+        error.message.includes("auth_users_email_key")
+      ) {
+        setSnackbarSeverity("error");
+        setSnackbarMessage(
+          "An account with this email already exists and is verified."
+        );
+      } else {
+        setSnackbarSeverity("error");
+        setSnackbarMessage(error.message || "An error occurred during signup");
+      }
+      setOpenSnackbar(true);
     }
   }
 
@@ -57,7 +156,7 @@ const SignUp = () => {
       <Grid
         item
         xs={false}
-        sm={2}
+        sm={4}
         md={7}
         sx={{
           backgroundImage: `url(${Imagetest})`,
@@ -74,7 +173,12 @@ const SignUp = () => {
         component={Paper}
         elevation={6}
         square
-        sx={{ backgroundColor: "#E9D7CC" }}
+        sx={{
+          backgroundColor: "#E9D7CC",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <Box
           sx={{
@@ -85,8 +189,12 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar s sx={{ m: 1, width: 80, height: 80 }}  src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&" />
-          <Typography component="h1" variant="h5"  fontFamily='monospace'>
+          <Avatar
+            s
+            sx={{ m: 1, width: 80, height: 80 }}
+            src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&"
+          />
+          <Typography component="h1" variant="h5" fontFamily="monospace">
             Sign Up
           </Typography>
           <Box
@@ -95,7 +203,13 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -103,6 +217,8 @@ const SignUp = () => {
                 id="name"
                 label="Name"
                 name="name"
+                error={Boolean(errors.name)}
+                helperText={errors.name}
                 onChange={handleChange}
               />
             </Box>
@@ -113,6 +229,8 @@ const SignUp = () => {
               id="email"
               label="Email Address"
               name="email"
+              error={Boolean(errors.email)}
+              helperText={errors.email}
               onChange={handleChange}
             />
             <TextField
@@ -122,6 +240,8 @@ const SignUp = () => {
               name="password"
               label="Password"
               type="password"
+              error={Boolean(errors.password)}
+              helperText={errors.password}
               onChange={handleChange}
             />
             <Button
@@ -140,24 +260,33 @@ const SignUp = () => {
               Sign Up
             </Button>
           </Box>
-            <Link
-                  href="#/signin"
-                  variant="body2"
-                  sx={{
-                    color: "#be9269",
-                    textDecoration: "none",
-                    "&:hover": {
-                      color: "#685043",
-                      textDecoration: "underline",
-                    },
-                  }}
-                >
-                  {"Already have an account? Sign In"}
-                </Link>
+          <Link
+            href="#/signin"
+            variant="body2"
+            sx={{
+              color: "#be9269",
+              textDecoration: "none",
+              "&:hover": {
+                color: "#685043",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {"Already have an account? Sign In"}
+          </Link>
         </Box>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+        >
+          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
-}
+};
 
 export default SignUp;
