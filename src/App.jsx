@@ -4,8 +4,9 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Signin from './pages/SignIn';
 import Signup from './pages/SignUp';
-import Contact from './pages/Contact';
+import Forgotpass from './pages/ForgotPass';
 import Blogs from './pages/Blogs';
+// import Product from './pages/Prod'; 
 import Navbar from './components/navbar';
 import { useState, useEffect } from 'react';
 
@@ -25,14 +26,15 @@ function App() {
 
   return (
     <Router>
-      <Navbar token={token} /> {/* pass the token state as a prop to the Navbar component */}
+      <Navbar token={token} />
       <Routes>
         <Route path="/" element={<Home token={token} />} />
         <Route path="/signin" element={<Signin setToken={setToken} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/about" element={<About />} />
+        {/* <Route path="/products" element={<Product />} /> */}
         <Route exact path="/blog/:id" element={<Blogs />} />
-        <Route path="/contact" element={<Contact token={token} />} />
+        <Route path="/forgotpassword" element={<Forgotpass/>} />
       </Routes>
     </Router>
   );

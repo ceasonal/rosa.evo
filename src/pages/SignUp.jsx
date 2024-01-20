@@ -12,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Imagetest from "../assets/images/test1.jpg";
-
 const supabase = createClient(
   import.meta.env.VITE_REACT_APP_SUPABASE_URL,
   import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
@@ -39,7 +38,7 @@ const SignUp = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [e.target.name]: e.target.value.trim(),
@@ -48,7 +47,7 @@ const SignUp = () => {
       ...prevErrors,
       [e.target.name]: "",
     }));
-  }
+  };
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -59,11 +58,11 @@ const SignUp = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+  
     // Simple form validation
     let formIsValid = true;
     const newErrors = { ...errors };
-
+  
     if (!formData.name) {
       newErrors.name = "Name is required";
       formIsValid = false;
@@ -74,7 +73,7 @@ const SignUp = () => {
       newErrors.name = "Name should not exceed 50 characters";
       formIsValid = false;
     }
-
+  
     if (!formData.email) {
       newErrors.email = "Email is required";
       formIsValid = false;
@@ -82,7 +81,7 @@ const SignUp = () => {
       newErrors.email = "Email is not in a valid format";
       formIsValid = false;
     }
-
+  
     if (!formData.password) {
       newErrors.password = "Password is required";
       formIsValid = false;
@@ -90,67 +89,81 @@ const SignUp = () => {
       newErrors.password = "Password must be at least 6 characters long";
       formIsValid = false;
     }
-
+  
     setErrors(newErrors);
-
+  
     if (!formIsValid) {
       setSnackbarSeverity("error");
       setSnackbarMessage("Please fix the errors in the form.");
       setOpenSnackbar(true);
       return;
     }
+  
     try {
-      // Check if the email already exists
-      const { error: signInError } = await supabase.auth.signInWithOtp({
+      // Check if email is already in use with Supabase
+      const { data, error } = await supabase.auth.signInWithOtp({
         email: formData.email,
       });
-
-      if (signInError && signInError.code === "AUTH_USER_NOT_FOUND") {
-        // Email doesn't exist, proceed with sign-up
-        const { data, error } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            data: {
-              name: formData.name,
-            },
-          },
-        });
-        setSnackbarSeverity("success");
-        setSnackbarMessage("Check your email for verification");
-        setOpenSnackbar(true);
-      } else if (signInError) {
-        // Other errors during sign-in attempt
-        throw signInError;
-      } else {
-        // Email already exists, display an error message
+  
+      if (error) {
         setSnackbarSeverity("error");
-        setSnackbarMessage(
-          "An account with this email already exists and is verified."
-        );
+        setSnackbarMessage("An error occurred while checking the email.");
         setOpenSnackbar(true);
+        return;
+      }
+  
+      if (data.length > 0) {
+        // Email is already registered
+  
+        // Check if the email is verified
+        const isEmailVerified = data[0].email_verified;
+  
+        if (isEmailVerified) {
+          setSnackbarSeverity("error");
+          setSnackbarMessage("Email is already in use and verified.");
+          setOpenSnackbar(true);
+        } else {
+          const { user, error } = await supabase.auth.signUp({
+            email: formData.email,
+            password: formData.password,
+          });
+  
+          if (error) {
+            setSnackbarSeverity("error");
+            setSnackbarMessage(error.message);
+            setOpenSnackbar(true);
+            return;
+          }
+  
+          if (user) {
+            const { error } = await supabase.from("users").insert([
+              {
+                id: user.id,
+                name: formData.name,
+                email: formData.email,
+              },
+            ]);
+  
+            if (error) {
+              setSnackbarSeverity("error");
+              setSnackbarMessage(error.message);
+              setOpenSnackbar(true);
+              return;
+            }
+  
+            setSnackbarSeverity("success");
+            setSnackbarMessage("Account created successfully!");
+            setOpenSnackbar(true);
+          }
+        }
       }
     } catch (error) {
-      console.error("Sign Up Error:", error);
-
-      // Handle other sign-up errors
-      if (
-        error.code === "23505" &&
-        error.message.includes("auth_users_email_key")
-      ) {
-        setSnackbarSeverity("error");
-        setSnackbarMessage(
-          "An account with this email already exists and is verified."
-        );
-      } else {
-        setSnackbarSeverity("error");
-        setSnackbarMessage(error.message || "An error occurred during signup");
-      }
+      setSnackbarSeverity("error");
+      setSnackbarMessage(error.message);
       setOpenSnackbar(true);
     }
   }
-
-  return (
+      return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
       <Grid
@@ -190,7 +203,6 @@ const SignUp = () => {
           }}
         >
           <Avatar
-            s
             sx={{ m: 1, width: 80, height: 80 }}
             src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&"
           />
