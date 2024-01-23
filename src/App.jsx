@@ -6,7 +6,7 @@ import Signin from './pages/SignIn';
 import Signup from './pages/SignUp';
 import Forgotpass from './pages/ForgotPass';
 import Blogs from './pages/Blogs';
-// import Product from './pages/Prod'; 
+import Product from './pages/Prod'; 
 import Navbar from './components/navbar';
 import { useState, useEffect } from 'react';
 
@@ -32,7 +32,7 @@ function App() {
         <Route path="/signin" element={<Signin setToken={setToken} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/products" element={<Product />} /> */}
+        <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
         <Route path="/forgotpassword" element={<Forgotpass/>} />
       </Routes>

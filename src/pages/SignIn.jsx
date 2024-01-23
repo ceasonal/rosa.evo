@@ -9,16 +9,16 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Imagetest from "../assets/images/test.jpg";
-import { createClient } from "@supabase/supabase-js";
+import supabase from '../assets/config/SupabaseClient';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const supabase = createClient(
-  import.meta.env.VITE_REACT_APP_SUPABASE_URL,
-  import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
-);
+// const supabase = createClient(
+//   import.meta.env.VITE_REACT_APP_SUPABASE_URL,
+//   import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
+// );
 
 const SignInSide = ({ setToken }) => {
   const navigate = useNavigate();

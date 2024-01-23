@@ -1,56 +1,39 @@
-// import React from 'react';
-// import { Grid, Card, CardMedia, CardContent, Typography, styles } from '@mui/material';
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import CardActionArea from '@mui/material/CardActionArea';
 
-// const useStyles = styles((theme) => ({
-//   card: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'space-between',
-//     height: '100%',
-//   },
-//   cardMedia: {
-//     paddingTop: '56.25%', // 16:9 ratio
-//   },
-//   cardContent: {
-//     flexGrow: 1,
-//   },
-// }));
+const ProductDisplay = ({ product }) => {
+  console.log(product);
 
-// const ProductDisplay = ({ products }) => {
-//   const classes = useStyles();
+  return (
+    <Grid item xs={12} sm={6} md={4}>
+      <Card sx={{ maxWidth: 345, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px' }}>
+        <CardActionArea>
+          <Card sx={{ maxWidth: 245, display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', marginTop: 3 }}>
+            <CardMedia
+              component="img"
+              height="50%"
+              image={product.image || 'default-image-url'}
+              style={{ objectFit: 'contain' }}
+              alt={product.name || 'Product Name'} 
+            />
+          </Card>
+          <CardContent sx={{ textAlign: 'center', mt: 2, padding: 2 }}>
+            <Typography gutterBottom variant="h6" component="div">
+              {product.name || 'Product Name'}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              ${product.price || 'Price'} 
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
+  );
+};
 
-//   if (!products || products.length === 0) {
-//     return <div>No products to display.</div>;
-//   }
-
-//   return (
-//     <Grid container spacing={2}>
-//       {products.map((product) => (
-//         <Grid item xs={12} sm={6} md={4} key={product.id}>
-//           <Card className={classes.card}>
-//             <CardMedia
-//               className={classes.cardMedia}
-//               component="img"
-//               alt={product.name}
-//               height="140"
-//               image={product.image || 'default-image-url'}
-//             />
-//             <CardContent className={classes.cardContent}>
-//               <Typography gutterBottom variant="h6" component="div">
-//                 {product.name}
-//               </Typography>
-//               <Typography variant="subtitle1" color="text.secondary">
-//                 Price: ${product.price}
-//               </Typography>
-//               <Typography variant="body2" color="text.secondary">
-//                 {product.description}
-//               </Typography>
-//             </CardContent>
-//           </Card>
-//         </Grid>
-//       ))}
-//     </Grid>
-//   );
-// };
-
-// export default ProductDisplay;
+export default ProductDisplay;
