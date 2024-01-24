@@ -3,13 +3,16 @@ import Prodcomp from "../components/prodmini";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import supabase from "../assets/config/SupabaseClient";
+import Skeleton from '@mui/material/Skeleton';
 
 const Prod = () => {
   const [fetchErrors, setFetchErrors] = useState(null);
   const [displayProducts, setdisplayProducts] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDisplayProducts = async () => {
+      setLoading(true);
       const response = await supabase.from("DisplayProducts").select("*");
 
       console.log(response);
@@ -25,6 +28,7 @@ const Prod = () => {
         setdisplayProducts(DisplayProducts);
         setFetchErrors(null);
       }
+      setLoading(false);
     };
     fetchDisplayProducts();
   }, []);
@@ -34,14 +38,22 @@ const Prod = () => {
       <Box sx={{ margin: "0 auto", maxWidth: 1200 }}>
         {fetchErrors && <p>{fetchErrors}</p>}
         <Grid container spacing={3} justifyContent="center">
-          {displayProducts && (
-            <>
-              {displayProducts.map((product) => (
-                <>
-                <Prodcomp id={product.id} product={product} /> 
-                </>
-              ))}
-            </>
+          {loading ? (
+            Array.from(new Array(12)).map((_, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <Skeleton variant="rectangular" width={210} height={118} />
+                <Skeleton />
+                <Skeleton width="60%" />
+              </Grid>
+            ))
+          ) : (
+            displayProducts && (
+              <>
+                {displayProducts.map((product) => (
+                  <Prodcomp id={product.id} product={product} />
+                ))}
+              </>
+            )
           )}
         </Grid>
       </Box>
@@ -50,49 +62,3 @@ const Prod = () => {
 };
 
 export default Prod;
-
-
-// import supabase from "../assets/config/SupabaseClient"
-// import { useEffect, useState } from "react"
-
-// const Prod = () =>{
-//   const [fetchErrors, setFetchErrors] = useState(null)
-//   const [displayProducts, setDisplayProducts] = useState(null)
-
-//   useEffect(()=>{
-//     const fetchDisplayProducts = async () =>{
-//       const { data, error } = await supabase
-//       .from('productDisplay')
-//       .select()
-
-//       if(error){
-//         setFetchErrors("Could not fetch products")
-   
-//         console.error(error)
-//       }
-//       if(data) {
-//         console.log(data)
-//         setDisplayProducts(data)
-//         setFetchErrors(null)
-//       }
-//     }
-//     fetchDisplayProducts()
-//   },[])
-
-//   return(
-//     <>
-//       {fetchErrors && (<p>{fetchErrors}</p>)}
-//       {displayProducts && (
-//         <>
-//           {displayProducts.map(product => (
-//             <div>
-//               <h2>{product.name}</h2>
-//             </div>
-//           ))}
-//         </>
-//       )}
-//     </>
-//   )
-// }
-
-// export default Prod;
