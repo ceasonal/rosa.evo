@@ -13,16 +13,15 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useState } from "react";
 
-const Forgotpass = () => {
+const UpdatePass = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    pass: "",
   });
 
   const [error, setError] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [showAdditionalText, setShowAdditionalText] = useState(false);
 
   const handleChange = (event) => {
     setFormData((prevFormData) => ({
@@ -43,22 +42,22 @@ const Forgotpass = () => {
     e.preventDefault();
 
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(
-        formData.email,
-        {
-          redirectTo: "http://127.0.0.1:5173/#/updatepassword",
-        }
-      );
+      if (formData.pass.length < 6) {
+        throw new Error("Password should be at least 6 characters long");
+      }
+
+      const { data, error } = await supabase.auth.updateUser({
+        password: formData.pass,
+      });
 
       if (error) throw error;
 
       setSnackbarSeverity("success");
-      setSnackbarMessage("Password reset email sent!");
+      setSnackbarMessage("Password Updated Successfully!");
       setOpenSnackbar(true);
-      setShowAdditionalText(true);
     } catch (error) {
       setSnackbarSeverity("error");
-      setSnackbarMessage(error.error_description || error.message);
+      setSnackbarMessage(error.message);
       setOpenSnackbar(true);
     }
   };
@@ -108,7 +107,7 @@ const Forgotpass = () => {
             />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Forgot Password
+            Update Password
           </Typography>
           <Box
             component="form"
@@ -120,14 +119,16 @@ const Forgotpass = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="pass"
+              label="Password"
+              name="pass"
+              autoComplete="new-password"
               onChange={handleChange}
               autoFocus
               variant="outlined"
               sx={{ mb: 2 }}
+              error={error !== ""}
+              helperText={error}
             />
             <Button
               type="submit"
@@ -141,15 +142,8 @@ const Forgotpass = () => {
                 },
               }}
             >
-              Reset Password
+              Update Password
             </Button>
-            {showAdditionalText && (
-              <Typography variant="body2" color="textSecondary" align="center">
-                If your email matches an existing account, we will send you a
-                recovery email within a few minutes. If you have not received
-                your email, check your spam folder.
-              </Typography>
-            )}
           </Box>
         </Box>
         <Snackbar
@@ -171,4 +165,4 @@ const Forgotpass = () => {
   );
 };
 
-export default Forgotpass;
+export default UpdatePass;

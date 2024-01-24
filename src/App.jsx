@@ -5,6 +5,7 @@ import About from './pages/About';
 import Signin from './pages/SignIn';
 import Signup from './pages/SignUp';
 import Forgotpass from './pages/ForgotPass';
+import Updatepss from './pages/UpdatePass';
 import Blogs from './pages/Blogs';
 import Product from './pages/Prod'; 
 import Navbar from './components/navbar';
@@ -31,10 +32,11 @@ function App() {
         <Route path="/" element={<Home token={token} />} />
         <Route path="/signin" element={<Signin setToken={setToken} />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpassword" element={<Forgotpass/>} />
+        <Route path="/updatepassword" element={<Updatepss />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
-        <Route path="/forgotpassword" element={<Forgotpass/>} />
       </Routes>
     </Router>
   );

@@ -93,10 +93,11 @@ const Home = () => {
           </Typography>
         </Link>
       </Box>
-      {/* About Us */}
+      {/* Our Story */}
       <Box
         sx={{
-          backgroundColor: "#E0CDC2",
+          // backgroundColor: "#E0CDC2",
+          backgroundColor: "rgba(224, 205, 194, 0.3)",
           marginTop: 5,
           padding: 3,
           textAlign: "center", // Center the content
@@ -105,7 +106,7 @@ const Home = () => {
         <Grid container spacing={2} alignItems="center" justifyContent="center">
           <Grid item xs={12} md={4}>
             <img
-              src="https://cdn.discordapp.com/attachments/1140959205986148372/1182748543681826856/iii.png?ex=6585d36b&is=65735e6b&hm=a8c43e2506c7570613a765f94c5988edfa42b1023c2bc4bd5346697141b6deed&"
+              src="https://cdn.discordapp.com/attachments/1140959205986148372/1183384642246680647/iii-removebg-preview.png?ex=65bf82d4&is=65ad0dd4&hm=87b5ee369c74d1e9c0a27153b22c803b3acfe369e11f7d2dfe5710aba911c00b&"
               alt="logo"
               style={{ width: "100%" }}
             />
@@ -195,7 +196,8 @@ const Home = () => {
         sx={{
           marginTop: 5,
           padding: 3,
-          backgroundColor: "#E0CDC2",
+          // backgroundColor: "#E0CDC2",
+          backgroundColor: "rgba(224, 205, 194, 0.3)",
         }}
       >
         <Typography

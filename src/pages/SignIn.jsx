@@ -9,16 +9,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Imagetest from "../assets/images/test.jpg";
-import supabase from '../assets/config/SupabaseClient';
+import supabase from "../assets/config/SupabaseClient";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-// const supabase = createClient(
-//   import.meta.env.VITE_REACT_APP_SUPABASE_URL,
-//   import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
-// );
 
 const SignInSide = ({ setToken }) => {
   const navigate = useNavigate();
@@ -89,7 +84,10 @@ const SignInSide = ({ setToken }) => {
         component={Paper}
         elevation={6}
         square
-        sx={{ backgroundColor: "#E9D7CC" }}
+        sx={{
+          backgroundColor: "#f5f5ef",
+          backgroundImage: "linear-gradient(62deg, #f5f5ef 0%, #e9d7cc 100%);",
+        }}
       >
         <Box
           sx={{
@@ -160,7 +158,7 @@ const SignInSide = ({ setToken }) => {
             <Grid container spacing={1}>
               <Grid item xs>
                 <Link
-                  href="#/"
+                  href="#/forgotpassword"
                   variant="body2"
                   sx={{
                     color: "#be9269",

@@ -20,7 +20,8 @@ const About = () => {
       >
         <Box
           sx={{
-            backgroundColor: "#E0CDC2",
+            // backgroundColor: "#E0CDC2",
+            backgroundColor: "rgba(224, 205, 194, 0.2)",
             padding: 3,
           }}
         >
@@ -78,7 +79,13 @@ const About = () => {
           </Grid>
         </Grid>
 
-        <Box sx={{ backgroundColor: "#E0CDC2", padding: 4, mt: 3 }}>
+        <Box
+          sx={{
+            backgroundColor: "rgba(224, 205, 194, 0.3)",
+            padding: 4,
+            mt: 3,
+          }}
+        >
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <Box

@@ -1,8 +1,8 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  /* background-color: #f5f5ef; */
-/* background-image: linear-gradient(62deg, #f5f5ef 0%, #e9d7cc 100%); */
-background-color: #E9D7CC;
+  background-color: #f5f5ef; 
+ background-image: linear-gradient(62deg, #f5f5ef 0%, #e9d7cc 100%);
+/* background-color: #E9D7CC; */
 }
 /* width */
 ::-webkit-scrollbar {

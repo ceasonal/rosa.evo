@@ -27,7 +27,7 @@ const Blog = () => {
           justifyContent: "center",
           minHeight: "100vh",
           padding: 2,
-          backgroundColor: "#E0CDC2",
+          backgroundColor: "rgba(224, 205, 194, 0.3)",
           marginBottom: 3,
         }}
       >
@@ -69,7 +69,7 @@ const Blog = () => {
                   width: "80px",
                   height: "80px",
                   borderRadius: "50%",
-                  border: "5px solid #E0CDC2",
+                  border: "5px solid rgba(224, 205, 194, 0.3)",
                 }}
               />
               <Typography
