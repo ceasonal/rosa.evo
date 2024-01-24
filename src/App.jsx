@@ -8,6 +8,7 @@ import Forgotpass from './pages/ForgotPass';
 import Updatepss from './pages/UpdatePass';
 import Blogs from './pages/Blogs';
 import Product from './pages/Prod'; 
+import ProductDisplay from './pages/ProductDisplay';
 import Navbar from './components/navbar';
 import { useState, useEffect } from 'react';
 
@@ -36,7 +37,9 @@ function App() {
         <Route path="/updatepassword" element={<Updatepss />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Product />} />
+        <Route path="/product/:id" element={<ProductDisplay />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
+
       </Routes>
     </Router>
   );

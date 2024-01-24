@@ -5,12 +5,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import CardActionArea from '@mui/material/CardActionArea';
+import { Link } from 'react-router-dom';
 
 const ProductDisplay = ({ product }) => {
   console.log(product);
 
   return (
     <Grid item xs={12} sm={6} md={4}>
+      <Link to={`/product/${product.id}`}>
       <Card sx={{ maxWidth: 345, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px' }}>
         <CardActionArea>
           <Card sx={{ maxWidth: 245, display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', marginTop: 3 }}>
@@ -32,6 +34,7 @@ const ProductDisplay = ({ product }) => {
           </CardContent>
         </CardActionArea>
       </Card>
+      </Link>
     </Grid>
   );
 };

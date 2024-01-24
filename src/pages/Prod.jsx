@@ -37,7 +37,9 @@ const Prod = () => {
           {displayProducts && (
             <>
               {displayProducts.map((product) => (
-                <Prodcomp id={product.id} product={product} />
+                <>
+                <Prodcomp id={product.id} product={product} /> 
+                </>
               ))}
             </>
           )}
