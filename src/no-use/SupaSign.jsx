@@ -10,24 +10,7 @@ import Imagetest from "../assets/images/test1.jpg";
 import { Auth } from '@supabase/auth-ui-react';
 import { useNavigate } from "react-router-dom";
 
-const supabase = createClient(
-  import.meta.env.VITE_REACT_APP_SUPABASE_URL,
-  import.meta.env.VITE_REACT_APP_SUPABASE_PUBLIC_KEY
-);
-
 const Supasign = () => {
-  const navigate = useNavigate();
-
-  // Define the callback for onAuthStateChange
-  const handleAuthStateChange = (event, session) => {
-    console.log('Auth state changed:', event, session);
-
-    // Check for the signed-in event and navigate accordingly
-    if (event === 'SIGNED_IN') {
-      console.log('User signed in, navigating to home page.');
-      navigate('/');
-    }
-  };
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
