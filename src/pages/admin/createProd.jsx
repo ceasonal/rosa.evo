@@ -1,4 +1,7 @@
 import supabase from '../../assets/config/SupabaseClient'
+import { useState } from 'react'
+import { Box } from '@mui/system'
+
 
 function createProd() {
   const [name, setName]  =useState('')
