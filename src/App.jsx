@@ -12,7 +12,7 @@ import ProductDisplay from './pages/ProductDisplay';
 import Navbar from './components/navbar';
 import Dashboard from './pages/admin/Dashboard';
 import Order from './pages/admin/Order';
-import createProd from './pages/admin/createProd';
+import CreateProd from './pages/admin/createProd';
 
 function App() {
   const [token, setToken] = useState(false);
@@ -45,7 +45,7 @@ function App() {
         <Route exact path="/blog/:id" element={<Blogs />} />
         <Route path="/admin/dashboard" element={<Dashboard />}>
           <Route path="/admin/dashboard/order" element={<Order />} />
-          <Route path="/admin/dashboard/create" element={<createProd />} />
+          <Route path="/admin/dashboard/create" element={<CreateProd />} />
         </Route>
         <Route
           path="/admin/*"
