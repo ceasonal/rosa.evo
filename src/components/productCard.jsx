@@ -15,11 +15,11 @@ const useStyles = makeStyles({
   },
   media: {
     height: 0,
-    paddingTop: '100%', // 16:9
+    paddingTop: '100%',
   },
 });
 
-const ProductDisplay = ({ product }) => {
+const productCard = ({ product }) => {
   const classes = useStyles();
 
   return (
@@ -39,9 +39,6 @@ const ProductDisplay = ({ product }) => {
               <Typography variant="body2" color="#4D1F08">
                 ${product.price || 'Price'} 
               </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
-                {product.description || 'Product Description'} 
-              </Typography> */}
             </CardContent>
           </CardActionArea>
         </Card>
@@ -50,4 +47,4 @@ const ProductDisplay = ({ product }) => {
   );
 };
 
-export default ProductDisplay;
+export default productCard;

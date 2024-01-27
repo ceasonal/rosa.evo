@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.17",
     "@mui/styled-engine-sc": "^6.0.0-alpha.5",
     "@mui/styles": "^5.15.6",
+    "@mui/x-charts": "^6.19.1",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.39.2",
@@ -24,6 +25,8 @@
     "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-image-magnifiers": "^1.4.0",
+    "react-medium-image-zoom": "^5.1.10",
     "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.1"
   },

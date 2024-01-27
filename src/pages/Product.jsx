@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Prodcomp from "../components/prodmini";
+import ProductCard from "../components/productCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import supabase from "../assets/config/SupabaseClient";
 import Skeleton from "@mui/material/Skeleton";
+import Footer from "../components/footer";
 import { Select, MenuItem } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { FormControl } from "@mui/material";
@@ -12,7 +13,7 @@ const Prod = () => {
   const [fetchErrors, setFetchErrors] = useState(null);
   const [displayProducts, setDisplayProducts] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [types, setTypes] = useState("All");
+  const [categories, setCategories] = useState("All");
   const [price, setPrice] = useState("Highest-Lowest");
   const [custom, setCustom] = useState("All");
 
@@ -20,8 +21,8 @@ const Prod = () => {
     const { name, value } = event.target;
 
     switch (name) {
-      case "types":
-        setTypes(value);
+      case "category":
+        setCategories(value);
         break;
       case "price":
         setPrice(value);
@@ -40,12 +41,12 @@ const Prod = () => {
       let query = supabase.from("DisplayProducts").select("*");
 
       // Apply filters based on selected options
-      if (types !== "All") {
-        query = query.eq('type', types);
-      }else if(types=="earring"){
-        query=query.eq('type',types)
-      }else if(types=="necklace"){
-        query=query.eq('type',types)
+      if (categories !== "All") {
+        query = query.eq('category', categories);
+      }else if(categories=="earring"){
+        query=query.eq('category',categories)
+      }else if(categories=="necklace"){
+        query=query.eq('category',categories)
       }
   
       if (price === 'Highest-Lowest') {
@@ -75,7 +76,7 @@ const Prod = () => {
     };
 
     fetchDisplayProducts();
-  }, [types, price, custom]);
+  }, [categories, price, custom]);
 
   return (
     <>
@@ -105,13 +106,13 @@ const Prod = () => {
               >
                 <Grid item xs={12} sm={6} md={4}>
                 <FormControl sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}>
-                    <InputLabel id="jewel-types">Types</InputLabel>
+                    <InputLabel id="jewel-categories">categories</InputLabel>
                     <Select
-                      labelId="select-jewel-types"
-                      id="jewel-types"
-                      name="types"
-                      value={types}
-                      label="Type"
+                      labelId="select-jewel-categories"
+                      id="jewel-categories"
+                      name="category"
+                      value={categories}
+                      label="category"
                       onChange={handleChange}
                     >
                       <MenuItem value="All">All</MenuItem>
@@ -162,7 +163,7 @@ const Prod = () => {
               {displayProducts && displayProducts.length > 0 ? (
                 <>
                 {displayProducts.map((product) => (
-                  <Prodcomp id={product.id} product={product} key={product.id} />
+                  <ProductCard id={product.id} product={product} key={product.id} />
                 ))}
                 </>
               ) : (
@@ -176,6 +177,7 @@ const Prod = () => {
           )}
         </Grid>
       </Box>
+      <Footer />
     </>
   );
 };
