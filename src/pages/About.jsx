@@ -1,14 +1,13 @@
-import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
 import AboutUsCard from "../components/choosecard";
 import { aboutdata, missiondata } from "../assets/config/aboutdata";
 import img1 from "../assets/images/test.jpg";
 import img2 from "../assets/images/test1.jpg";
+import Footer from "../components/footer";
+import { Box, Grid, Typography } from "@mui/material";
 import GavelIcon from "@mui/icons-material/Gavel";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import Footer from "../components/footer";
 const About = () => {
   return (
     <>

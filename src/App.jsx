@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Signin from './pages/SignIn';
@@ -13,6 +13,8 @@ import Navbar from './components/navbar';
 import Dashboard from './pages/admin/Dashboard';
 import Order from './pages/admin/Order';
 import CreateProd from './pages/admin/createProd';
+import UpdateProd from './pages/admin/updateProd';
+import AdminWelcome from './pages/admin/AdminWelcome';
 
 function App() {
   const [token, setToken] = useState(false);
@@ -44,8 +46,12 @@ function App() {
         <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
         <Route path="/admin/dashboard" element={<Dashboard />}>
+          <Route path="" element={<AdminWelcome />}>
+            <Route path="" element={<Outlet />} />
+          </Route>
           <Route path="/admin/dashboard/order" element={<Order />} />
           <Route path="/admin/dashboard/create" element={<CreateProd />} />
+          <Route path="/admin/dashboard/update" element={<UpdateProd />} />
         </Route>
         <Route
           path="/admin/*"

@@ -1,11 +1,11 @@
 import React from "react";
 import Blogcard from "../components/blogCard";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { blogList } from "../assets/config/blogdata";
 import { aboutdata } from "../assets/config/aboutdata";
 import Slider from "../components/slider";
-import { Box, Typography, Grid, Link } from "@mui/material";
 import Footer from "../components/footer";
+import { Box, Typography, Grid, Link } from "@mui/material";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 const Home = () => {
   return (
     <>

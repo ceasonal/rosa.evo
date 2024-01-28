@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/productCard";
+import Footer from "../components/footer";
+import supabase from "../assets/config/SupabaseClient";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import supabase from "../assets/config/SupabaseClient";
 import Skeleton from "@mui/material/Skeleton";
-import Footer from "../components/footer";
-import { Select, MenuItem } from "@mui/material";
-import { InputLabel } from "@mui/material";
-import { FormControl } from "@mui/material";
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 const Prod = () => {
   const [fetchErrors, setFetchErrors] = useState(null);
@@ -42,21 +40,21 @@ const Prod = () => {
 
       // Apply filters based on selected options
       if (categories !== "All") {
-        query = query.eq('category', categories);
-      }else if(categories=="earring"){
-        query=query.eq('category',categories)
-      }else if(categories=="necklace"){
-        query=query.eq('category',categories)
-      }
-  
-      if (price === 'Highest-Lowest') {
-        query = query.order('price', { ascending: false });
-      } else if (price === 'Lowest-Highest') {
-        query = query.order('price', { ascending: true });
+        query = query.eq("category", categories);
+      } else if (categories == "earring") {
+        query = query.eq("category", categories);
+      } else if (categories == "necklace") {
+        query = query.eq("category", categories);
       }
 
-      if (custom !== 'All') {
-        query = query.eq('customizable', custom === 'customizable');
+      if (price === "Highest-Lowest") {
+        query = query.order("price", { ascending: false });
+      } else if (price === "Lowest-Highest") {
+        query = query.order("price", { ascending: true });
+      }
+
+      if (custom !== "All") {
+        query = query.eq("customizable", custom === "customizable");
       }
 
       const response = await query;
@@ -101,11 +99,13 @@ const Prod = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginTop: 5,
-                  marginLeft:2,
+                  marginLeft: 2,
                 }}
               >
                 <Grid item xs={12} sm={6} md={4}>
-                <FormControl sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}>
+                  <FormControl
+                    sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
+                  >
                     <InputLabel id="jewel-categories">categories</InputLabel>
                     <Select
                       labelId="select-jewel-categories"
@@ -121,9 +121,11 @@ const Prod = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-    
+
                 <Grid item xs={12} sm={6} md={4}>
-                <FormControl sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}>
+                  <FormControl
+                    sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
+                  >
                     <InputLabel id="price-points">Price</InputLabel>
                     <Select
                       labelId="select-price-point"
@@ -139,9 +141,11 @@ const Prod = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-    
+
                 <Grid item xs={12} sm={6} md={4}>
-                  <FormControl sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}>
+                  <FormControl
+                    sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
+                  >
                     <InputLabel id="select-custom">Custom</InputLabel>
                     <Select
                       labelId="select-custom-option"
@@ -154,22 +158,32 @@ const Prod = () => {
                     >
                       <MenuItem value="All">All</MenuItem>
                       <MenuItem value="customizable">Customizable</MenuItem>
-                      <MenuItem value="notCustomizable">Not Customizable</MenuItem>
+                      <MenuItem value="notCustomizable">
+                        Not Customizable
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
               </Grid>
-    
+
               {displayProducts && displayProducts.length > 0 ? (
                 <>
-                {displayProducts.map((product) => (
-                  <ProductCard id={product.id} product={product} key={product.id} />
-                ))}
+                  {displayProducts.map((product) => (
+                    <ProductCard
+                      id={product.id}
+                      product={product}
+                      key={product.id}
+                    />
+                  ))}
                 </>
               ) : (
                 <Grid container spacing={3} justifyContent="center">
                   <Box sx={{ marginTop: 5 }}>
-                    <img src="https://www.ssmed.in/images/notfound.png" alt="no-product-found" style={{ maxWidth: "100%" }}/>
+                    <img
+                      src="https://www.ssmed.in/images/notfound.png"
+                      alt="no-product-found"
+                      style={{ maxWidth: "100%" }}
+                    />
                   </Box>
                 </Grid>
               )}

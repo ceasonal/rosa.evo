@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "@mui/material";
 import { blogList } from "../assets/config/blogdata";
-import Typography from "@mui/material/Typography";
 import Footer from "../components/footer";
+import { Link } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 const Blog = () => {
