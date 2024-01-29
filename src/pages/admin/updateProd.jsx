@@ -14,7 +14,7 @@ import supabase from "../../assets/config/SupabaseClient";
 const UpdateProd = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [sold_out, setSold_out] = useState("");
@@ -26,10 +26,12 @@ const UpdateProd = () => {
     // Fetch existing product details based on the provided id
     const fetchProductDetails = async () => {
       try {
+        const productId = parseInt(id, 10);
+        
         const { data, error } = await supabase
           .from("DisplayProducts")
           .select("*")
-          .eq("id", id)
+          .eq("id", productId)
           .single();
 
         if (error) {
@@ -37,7 +39,13 @@ const UpdateProd = () => {
           setTimeout(() => {
             setFormError(null);
           }, 5000);
-          setFormCorrect(null); // Clear success message
+          setFormCorrect(null);
+          setName("");
+          setPrice("");
+          setDescription("");
+          setCategory("");
+          setSold_out("");
+          setImage("");
           return;
         }
 
@@ -79,7 +87,7 @@ const UpdateProd = () => {
     e.preventDefault();
 
     const currentName = name.trim();
-    const currentPrice = price.toString().trim();
+    const currentPrice = price ? price.toString().trim() : "";
     const currentDescription = description.trim();
     const currentCategory = category.trim();
     const currentSoldOut = String(sold_out);
@@ -240,6 +248,7 @@ const UpdateProd = () => {
           >
             <MenuItem value="earrings">Earrings</MenuItem>
             <MenuItem value="necklace">Necklace</MenuItem>
+            <MenuItem value="set">Set</MenuItem>
           </Select>
         </FormControl>
 

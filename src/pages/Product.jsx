@@ -13,7 +13,8 @@ const Prod = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState("All");
   const [price, setPrice] = useState("Highest-Lowest");
-  const [custom, setCustom] = useState("All");
+  // const [custom, setCustom] = useState("All");
+  const [SoldOut, setSoldOut] = useState("False");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,8 +26,11 @@ const Prod = () => {
       case "price":
         setPrice(value);
         break;
-      case "custom":
-        setCustom(value);
+      // case "custom":
+      //   setCustom(value);
+        // break;
+      case "sold_out":
+        setSoldOut(value);
         break;
       default:
         break;
@@ -38,12 +42,13 @@ const Prod = () => {
       setLoading(true);
       let query = supabase.from("DisplayProducts").select("*");
 
-      // Apply filters based on selected options
       if (categories !== "All") {
         query = query.eq("category", categories);
-      } else if (categories == "earring") {
+      } else if (categories == "earrings") {
         query = query.eq("category", categories);
       } else if (categories == "necklace") {
+        query = query.eq("category", categories);
+      } else if (categories == "set") {
         query = query.eq("category", categories);
       }
 
@@ -53,8 +58,14 @@ const Prod = () => {
         query = query.order("price", { ascending: true });
       }
 
-      if (custom !== "All") {
-        query = query.eq("customizable", custom === "customizable");
+      // if (custom !== "All") {
+      //   query = query.eq("customizable", custom === "customizable");
+      // }
+
+      if (SoldOut !== "False") {
+        query = query.in("sold_out", ["TRUE"]);
+      } else if (SoldOut !== "True") {
+        query = query.in("sold_out", ["FALSE"]);
       }
 
       const response = await query;
@@ -74,7 +85,7 @@ const Prod = () => {
     };
 
     fetchDisplayProducts();
-  }, [categories, price, custom]);
+  }, [categories, price, SoldOut]);
 
   return (
     <>
@@ -117,7 +128,8 @@ const Prod = () => {
                     >
                       <MenuItem value="All">All</MenuItem>
                       <MenuItem value="necklace">Necklace</MenuItem>
-                      <MenuItem value="earring">Earring</MenuItem>
+                      <MenuItem value="earrings">Earring</MenuItem>
+                      <MenuItem value="set">Set</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -142,7 +154,7 @@ const Prod = () => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
+                {/* <Grid item xs={12} sm={6} md={4}>
                   <FormControl
                     sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
                   >
@@ -163,6 +175,27 @@ const Prod = () => {
                       </MenuItem>
                     </Select>
                   </FormControl>
+                </Grid> */}
+
+                  <Grid item xs={12} sm={6} md={4}>
+                  <FormControl
+                    sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
+                  >
+                    <InputLabel id="select-sold_out">In Stock</InputLabel>
+                    <Select
+                      labelId="select-sold_out"
+                      id="select-sold_out"
+                      name="sold_out"
+                      value={SoldOut}
+                      label="sold_out"
+                      autoWidth
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="False">Available</MenuItem>
+                      <MenuItem value="True">Sold Out</MenuItem>
+                    </Select>
+                  </FormControl>
+
                 </Grid>
               </Grid>
 

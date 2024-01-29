@@ -143,6 +143,7 @@ const CreateProd = () => {
           >
             <MenuItem value="earrings">Earrings</MenuItem>
             <MenuItem value="necklace">Necklace</MenuItem>
+            <MenuItem value="set">Set</MenuItem>
           </Select>
         </FormControl>
 

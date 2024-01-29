@@ -104,7 +104,7 @@ const ProductDetails = () => {
                     textAlign: { xs: "center", md: "start" },
                   }}
                 >
-                  <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
+                 <Typography variant="h4" sx={{ mb: 2, textAlign: "center", fontSize: { xs: "1.8rem", md: "2.5rem" } }}>
                     Rosa.evo
                   </Typography>
                   <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
@@ -126,7 +126,7 @@ const ProductDetails = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    sx={{ mb: 2, padding: { xs: "8px 16px", md: "12px 24px" } }}
+                    sx={{ mb: 2, padding: { xs: "8px 16px", md: "12px 24px" }, fontSize: { xs: "0.9rem", md: "1.2rem" } }}
                   >
                     <ShoppingCartIcon />
                     ADD TO CART
@@ -150,13 +150,7 @@ const ProductDetails = () => {
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit. Suspendisse malesuada lacus ex, sit
-                        amet blandit leo lobortis eget.
-                      </Typography>
+                      <Typography>{productDetails.description}</Typography>
                     </AccordionDetails>
                   </Accordion>
                   <Accordion
@@ -179,11 +173,9 @@ const ProductDetails = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit. Suspendisse malesuada lacus ex, sit
-                        amet blandit leo lobortis eget.
+                        We offer shipping within India via Bluedart or
+                        Delhivery courier service. Delivery time may vary from
+                        8-9 days depending on location & product availability.
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
@@ -207,11 +199,8 @@ const ProductDetails = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit. Suspendisse malesuada lacus ex, sit
-                        amet blandit leo lobortis eget.
+                      For online orders you can pay through the following methods:
+                      credit cards, debit cads/ netbanking.
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
