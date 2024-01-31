@@ -1,4 +1,8 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { saveAs } from "file-saver";
+import Pdf from "../assets/pdf/rosa_evo.pdf";
+import CartButton from "../pages/Cart";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,10 +14,13 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import Pdf from "../assets/pdf/rosa_evo.pdf";
-import { Link } from "react-router-dom";
-import { saveAs } from "file-saver";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import InfoIcon from '@mui/icons-material/Info';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const pages = [
   { name: "Home", path: "/" },
@@ -22,7 +29,12 @@ const pages = [
   { name: "About Us", path: "/about" },
   // { name: "Contact Us", path: "/contact" },
 ];
-
+const iconMap = {
+  Home: <HomeIcon sx={{color:"#4D1F08"}} />,
+  Products: <StorefrontIcon sx={{color:"#4D1F08"}}/>,
+  Brochure: <PictureAsPdfIcon sx={{color:"#4D1F08"}}/>,
+  "About Us": <InfoIcon sx={{color:"#4D1F08"}}/>,
+};
 const ResponsiveAppBar = ({ token }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -119,9 +131,15 @@ const ResponsiveAppBar = ({ token }) => {
                   component={Link}
                   to={page.path}
                 >
+                  {iconMap[page.name] && (
+              <>
+                {iconMap[page.name]} {/* Display icon if available */}
+                 {/* Add space between icon and text */}
+              </>
+            )}
                   <Typography
                     textAlign="center"
-                    style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                    style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                   >
                     {page.name}
                   </Typography>
@@ -138,9 +156,10 @@ const ResponsiveAppBar = ({ token }) => {
                     component={Link}
                     to="/"
                   >
+                    <LogoutIcon sx={{color:"#4D1F08"}}/>
                     <Typography
                       textAlign="center"
-                      style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                     >
                       Sign Out
                     </Typography>
@@ -150,21 +169,20 @@ const ResponsiveAppBar = ({ token }) => {
                     component={Link}
                     to="/profile"
                   >
+                    <AccountCircleIcon sx={{color:"#4D1F08"}}/>
                     <Typography
                       textAlign="center"
-                      style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                      style={{ color: "#4D1F08", fontFamily: "monospace",marginLeft:20 }}
                     >
                       Profile
                     </Typography>
                   </MenuItem>
                   <MenuItem
-                    onClick={handleCloseNavMenu}
-                    component={Link}
-                    to="/cart"
-                  >
+                    onClick={handleCloseNavMenu}>
+                      <CartButton/>
                     <Typography
                       textAlign="center"
-                      style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                     >
                       Cart
                     </Typography>
@@ -176,9 +194,10 @@ const ResponsiveAppBar = ({ token }) => {
                   component={Link}
                   to="/signin"
                 >
+                  <LoginIcon sx={{color:"#4D1F08"}}/>
                   <Typography
                     textAlign="center"
-                    style={{ color: "#4D1F08", fontFamily: "monospace" }}
+                    style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                   >
                     Sign In
                   </Typography>
@@ -272,22 +291,7 @@ const ResponsiveAppBar = ({ token }) => {
                     Logout
                   </MenuItem>
                 </Menu>
-                <Link
-                  to="/cart"
-                  style={{
-                    color: "#4D1F08",
-                  }}
-                >
-                  <IconButton
-                    size="large"
-                    aria-label="show no. of cart items"
-                    color="inherit"
-                  >
-                    {/* <Badge badgeContent={17} color="error"> */}
-                    <ShoppingCart />
-                    {/* </Badge> */}
-                  </IconButton>
-                </Link>
+                    <CartButton/>
               </div>
             ) : (
               <Link

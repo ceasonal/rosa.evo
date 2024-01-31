@@ -42,7 +42,7 @@ function App() {
         <Route path="/forgotpassword" element={<Forgotpass />} />
         <Route path="/updatepassword" element={<Updatepss />} />
         <Route path="/about" element={<About />} />
-        <Route path="/products/:id" element={<ProductDisplay />} />
+        <Route path="/products/:id" element={<ProductDisplay token={token} />} />
         <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
         <Route path="/admin/dashboard" element={<Dashboard />}>

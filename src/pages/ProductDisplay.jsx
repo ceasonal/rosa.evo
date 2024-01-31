@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DescriptionIcon from "@mui/icons-material/Description";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import MuiAlert from "@mui/material/Alert";
 import {
   Accordion,
   AccordionDetails,
@@ -16,10 +17,23 @@ import {
 import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Magnifier } from "react-image-magnifiers";
-const ProductDetails = () => {
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import Close from "@mui/icons-material/Close";
+const ProductDetails = ({ token }) => {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [expanded, setExpanded] = useState("panel1");
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setIsSnackbarOpen(false);
+  };
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -46,6 +60,26 @@ const ProductDetails = () => {
 
     fetchProductDetails();
   }, [id]);
+
+  // use local storage
+  const addToCart = (product) => {
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      const existingProduct = cart.find((item) => item.id === product.id);
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } else {
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([{ ...product, quantity: 1 }])
+      );
+    }
+  };
 
   return (
     <>
@@ -104,7 +138,14 @@ const ProductDetails = () => {
                     textAlign: { xs: "center", md: "start" },
                   }}
                 >
-                 <Typography variant="h4" sx={{ mb: 2, textAlign: "center", fontSize: { xs: "1.8rem", md: "2.5rem" } }}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      mb: 2,
+                      textAlign: "center",
+                      fontSize: { xs: "1.8rem", md: "2.5rem" },
+                    }}
+                  >
                     Rosa.evo
                   </Typography>
                   <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
@@ -118,19 +159,59 @@ const ProductDetails = () => {
                     {productDetails.category}
                   </Typography>
                   <Typography variant="h5" sx={{ mb: 3, color: "#282c3e" }}>
-                    ${productDetails.price}
+                    Rs. {productDetails.price}
                   </Typography>
                   <Typography variant="h5" sx={{ mb: 2 }}>
                     PRICES DO NOT INCLUDE GST AND SHIPPING
                   </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ mb: 2, padding: { xs: "8px 16px", md: "12px 24px" }, fontSize: { xs: "0.9rem", md: "1.2rem" } }}
-                  >
-                    <ShoppingCartIcon />
-                    ADD TO CART
-                  </Button>
+                  {token ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<ShoppingCartIcon />}
+                      onClick={() => addToCart(productDetails)}
+                    >
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<ShoppingCartIcon />}
+                        onClick={() => setIsSnackbarOpen(true)}
+                      >
+                        Add to Cart
+                      </Button>
+                      <Snackbar
+                        open={isSnackbarOpen}
+                        autoHideDuration={3000}
+                        onClose={handleSnackbarClose}
+                        message="Please login to add to cart"
+                        action={
+                          <>
+                            <IconButton
+                              size="small"
+                              aria-label="close"
+                              color="inherit"
+                              onClick={handleSnackbarClose}
+                            >
+                              <Close fontSize="small" />
+                            </IconButton>
+                          </>
+                        }
+                      >
+                        <MuiAlert
+                          elevation={6}
+                          variant="filled"
+                          onClose={handleSnackbarClose}
+                          severity="error"
+                        >
+                          Please login to add to cart
+                        </MuiAlert>
+                      </Snackbar>
+                    </>
+                  )}
                   <Accordion
                     expanded={expanded === "panel1"}
                     onChange={handleChange("panel1")}
@@ -173,9 +254,9 @@ const ProductDetails = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        We offer shipping within India via Bluedart or
-                        Delhivery courier service. Delivery time may vary from
-                        8-9 days depending on location & product availability.
+                        We offer shipping within India via Bluedart or Delhivery
+                        courier service. Delivery time may vary from 8-9 days
+                        depending on location & product availability.
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
@@ -199,8 +280,8 @@ const ProductDetails = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                      For online orders you can pay through the following methods:
-                      credit cards, debit cads/ netbanking.
+                        For online orders you can pay through the following
+                        methods: credit cards, debit cads/ netbanking.
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
