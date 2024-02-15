@@ -178,14 +178,11 @@ const ResponsiveAppBar = ({ token }) => {
                     </Typography>
                   </MenuItem>
                   <MenuItem
-                    onClick={handleCloseNavMenu}>
-                      <CartButton/>
-                    <Typography
-                      textAlign="center"
-                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                    }}
                     >
-                      Cart
-                    </Typography>
+                    <CartButton/>
                   </MenuItem>
                 </>
               ) : (

@@ -91,6 +91,12 @@ const Cart = () => {
         sx={{ color: "#4D1F08", cursor: "pointer" }}
       >
         <ShoppingCart />
+        <Typography
+                      textAlign="center"
+                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
+                    >
+                      Cart
+                    </Typography>
       </Badge>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <Paper sx={{ p: 2, width: "300px" }}>
