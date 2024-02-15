@@ -4,6 +4,7 @@ import  supabase  from "../assets/config/SupabaseClient";
 import { ShoppingCart, Clear } from "@mui/icons-material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Stack } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { Button, Drawer, Badge, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, Paper, Divider } from "@mui/material";
 const Cart = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -83,22 +84,25 @@ const Cart = () => {
     };
   };
   const { subtotal, shipping, tax, total } = getTotalPrice();
+  const isMobileScreens = useMediaQuery("(max-width:599px)");
   return (
     <>
-   <Badge
-        badgeContent={cartItems.length}
-        color="error"
-        onClick={handleDrawerOpen}
-        sx={{ color: "#4D1F08", cursor: "pointer" }}
-      >
-        <ShoppingCart />
-        <Typography
-          textAlign="center"
-          style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
-        >
-          Cart
-        </Typography>
-      </Badge>
+  <Badge
+  badgeContent={cartItems.length}
+  color="error"
+  onClick={handleDrawerOpen}
+  sx={{ color: "#4D1F08", cursor: "pointer" }}
+>
+  <ShoppingCart />
+  {isMobileScreens && ( // Inverted logic
+    <Typography
+      textAlign="center"
+      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
+    >
+      Cart
+    </Typography>
+  )}
+</Badge>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
       <div style={{ overflowX: 'hidden', display: 'flex', justifyContent: 'center' }}>
     <Paper
