@@ -94,7 +94,7 @@ const Cart = () => {
   sx={{ color: "#4D1F08", cursor: "pointer" }}
 >
   <ShoppingCart />
-  {isMobileScreens && ( // Inverted logic
+  {isMobileScreens && (
     <Typography
       textAlign="center"
       style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
