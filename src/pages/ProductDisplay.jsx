@@ -20,6 +20,7 @@ import { Magnifier } from "react-image-magnifiers";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Close from "@mui/icons-material/Close";
+
 const ProductDetails = ({ token }) => {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState(null);
@@ -61,24 +62,50 @@ const ProductDetails = ({ token }) => {
     fetchProductDetails();
   }, [id]);
 
-  // use local storage
-  const addToCart = (product) => {
-    let cart = localStorage.getItem("cart");
-    if (cart) {
-      cart = JSON.parse(cart);
-      const existingProduct = cart.find((item) => item.id === product.id);
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      } else {
-        cart.push({ ...product, quantity: 1 });
-      }
-      localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-      localStorage.setItem(
-        "cart",
-        JSON.stringify([{ ...product, quantity: 1 }])
-      );
+  // according to userid uuid add to table called cart the product id and the user id
+  const addToCart = async (product) => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      // if productuuid already exists in table then dont add to cart else add to cart
+      const { data: cartData, error: cartError } = await supabase
+        .from("cart")
+        .select("*")
+        .eq("prod_uuid", product.disp_uuid)
+        .eq("user_id", user.id)
+        .single();
+        if (cartData && !cartError) {
+          console.log("Product already exists in cart");
+          return;
+        }
+        let res = await supabase.from("cart").upsert([{ prod_name: product.name, user_id: user.id, prod_price: product.price, prod_image: product.image, prod_uuid: product.disp_uuid }]);
+        console.log("Added to cart");
+    } catch (e) {
+      console.log(e);
     }
+
+    //   const { data, error } = await supabase
+    //     .from("cart")
+    //     .insert([
+    //       {
+    //         prod_name: product.name,
+    //         user_id: user.id,
+    //         prod_price: product.price,  
+    //         prod_image: product.image,
+    //         prod_uuid: product.disp_uuid,
+    //       },
+    //     ]);
+  
+    //   if (error) {
+    //     console.error("Error adding to cart:", error);
+    //   } else {
+    //     console.log("Added to cart");
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   return (
