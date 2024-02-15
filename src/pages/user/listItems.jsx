@@ -1,0 +1,50 @@
+import * as React from 'react';
+import { Link } from "react-router-dom";
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
+export const mainListItems = (
+  <React.Fragment>
+    <ListItemButton component={Link} to="/admin/dashboard">
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <DashboardIcon />
+      </ListItemIcon >
+      <ListItemText primary="Dashboard" />
+    </ListItemButton>
+  </React.Fragment>
+);
+
+
+export const secondaryListItems = (
+  <React.Fragment>
+       <ListItemButton component={Link} to="/user/dashboard/details">
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <ManageAccountsIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Details" />
+    </ListItemButton>
+    
+    <ListItemButton component={Link} to="/user/dashboard/orders">
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <LocalShippingIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Orders" />
+    </ListItemButton>
+  </React.Fragment>
+);
+
+export const thirdListItems = (
+  <React.Fragment>
+    <ListItemButton>
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <LogoutIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Log Out" />
+    </ListItemButton>
+  </React.Fragment>
+);

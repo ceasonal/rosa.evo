@@ -10,6 +10,7 @@ import Blogs from './pages/Blogs';
 import Product from './pages/Product'; 
 import ProductDisplay from './pages/ProductDisplay';
 import Navbar from './components/navbar';
+import UserDashboard from './pages/user/Dashboard';
 import Dashboard from './pages/admin/Dashboard';
 import Order from './pages/admin/Order';
 import CreateProd from './pages/admin/createProd';
@@ -45,6 +46,9 @@ function App() {
         <Route path="/products/:id" element={<ProductDisplay token={token} />} />
         <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
+        <Route path="/user/dashboard" element={<UserDashboard />}>
+          <Route path="" element={<Outlet />} />
+        </Route>
         <Route path="/admin/dashboard" element={<Dashboard />}>
           <Route path="" element={<AdminWelcome />}>
             <Route path="" element={<Outlet />} />
@@ -53,10 +57,6 @@ function App() {
           <Route path="/admin/dashboard/create" element={<CreateProd />} />
           <Route path="/admin/dashboard/update" element={<UpdateProd />} />
         </Route>
-        <Route
-          path="/admin/*"
-          element={<Navigate to="/admin/dashboard" />}
-        />
       </Routes>
     </Router>
   );
