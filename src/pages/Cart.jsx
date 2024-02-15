@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Button, Drawer, Badge, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, Paper, Divider } from "@mui/material";
-import { ShoppingCart, Delete } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import  supabase  from "../assets/config/SupabaseClient";
-
+import { ShoppingCart, Clear } from "@mui/icons-material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Stack } from "@mui/material";
+import { Button, Drawer, Badge, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, Paper, Divider } from "@mui/material";
 const Cart = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -84,7 +85,7 @@ const Cart = () => {
   const { subtotal, shipping, tax, total } = getTotalPrice();
   return (
     <>
-      <Badge
+   <Badge
         badgeContent={cartItems.length}
         color="error"
         onClick={handleDrawerOpen}
@@ -92,71 +93,99 @@ const Cart = () => {
       >
         <ShoppingCart />
         <Typography
-                      textAlign="center"
-                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
-                    >
-                      Cart
-                    </Typography>
+          textAlign="center"
+          style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
+        >
+          Cart
+        </Typography>
       </Badge>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
-        <Paper sx={{ p: 2, width: "300px" }}>
-          <Button onClick={handleDrawerClose} sx={{ mb: 2 }}>
-            Close
-          </Button>
-          <Typography variant="h5" align="center" mb={2}>
-            Cart
+      <div style={{ overflowX: 'hidden', display: 'flex', justifyContent: 'center' }}>
+    <Paper
+      sx={{
+        p: 2,
+        width: '100%',
+        maxWidth: '80vw',
+        minWidth: '300px', 
+        '@media (min-width: 600px)': {
+          maxWidth: '50vw',
+          minWidth: '400px',
+        },
+      }}
+    >
+    <Button onClick={handleDrawerClose} sx={{ mb: 2 }}>
+      Close
+    </Button>
+    <Typography variant="h5" align="center" mb={2}>
+      Cart
+    </Typography>
+    {cartItems.length > 0 ? (
+      <List>
+        {cartItems.map((item) => (
+          <div key={item.id}>
+           <ListItem alignItems="center" sx={{ mb: 2 }}>
+  <ListItemAvatar sx={{ marginRight: 2 }}>
+    <Avatar alt={item.prod_name} src={item.prod_image} variant="rounded" sx={{ width: 80, height: 80 }} />
+  </ListItemAvatar>
+  <Stack direction="row" alignItems="center" justifyContent="space-between" flex={1}>
+    <Stack direction="column" spacing={0}>
+      <ListItemText primary={item.prod_name} />
+      <Typography variant="h6" sx={{ paddingLeft: 2 }}>
+        ${item.prod_price}
+      </Typography>
+    </Stack>
+    <IconButton onClick={() => handleDeleteItem(item.id)}>
+      <Clear />
+    </IconButton>
+  </Stack>
+</ListItem>
+            <Divider />
+          </div>
+        ))}
+        <ListItem alignItems="flex-start" sx={{ mt: 1 }}>
+          <ListItemText primary="Subtotal" />
+          <Typography variant="subtitle1" align="right">
+            ${subtotal}
           </Typography>
-          {cartItems.length > 0 ? (
-            <List>
-              {cartItems.map((item) => (
-                <div key={item.id}>
-                  <ListItem alignItems="flex-start" sx={{ mb: 2 }}>
-                    <ListItemAvatar>
-                      <Avatar alt={item.prod_name} src={item.prod_image} />
-                    </ListItemAvatar>
-                    <ListItemText primary={item.prod_name} />
-                    <Typography variant="h6" align="right">${item.prod_price}</Typography>
-                    <IconButton onClick={() => handleDeleteItem(item.id)} color="error">
-                      <Delete />
-                    </IconButton>
-                  </ListItem>
-                  <Divider />
-                </div>
-              ))}
-        <ListItem alignItems="flex-start" sx={{ mt: 2 }}>
-                <ListItemText primary="Subtotal" />
-                <Typography variant="h6" align="right">${subtotal}</Typography>
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText primary="Shipping" />
-                <Typography variant="h6" align="right">${shipping}</Typography>
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText primary="Tax" />
-                <Typography variant="h6" align="right">${tax}</Typography>
-              </ListItem>
-              <Divider />
-              <ListItem alignItems="flex-start">
-                <ListItemText primary="Total" />
-                <Typography variant="h6" align="right">${total}</Typography>
-              </ListItem>
-              <Button
-                variant="contained"
-                color="primary"
-                component={Link}
-                to="/checkout"
-                sx={{ mt: 2, width: "100%" }}
-              >
-                Checkout
-              </Button>
-            </List>
-          ) : (
-            <Typography variant="body1" align="center">
-              No items in the cart. Please buy something!
-            </Typography>
-          )}
-        </Paper>
-      </Drawer>
+        </ListItem>
+        <ListItem alignItems="flex-start">
+          <ListItemText primary="Shipping" />
+          <Typography variant="subtitle1" align="right">
+            ${shipping}
+          </Typography>
+        </ListItem>
+        <ListItem alignItems="flex-start">
+          <ListItemText primary="Tax" />
+          <Typography variant="subtitle1" align="right">
+            ${tax}
+          </Typography>
+        </ListItem>
+        <Divider />
+        <ListItem alignItems="flex-start">
+          <ListItemText primary="Total" />
+          <Typography variant="subtitle1" align="right">
+            ${total}
+          </Typography>
+        </ListItem>
+        <Button
+          variant="contained"
+          color="primary"
+          component={Link}
+          to="/checkout"
+          endIcon={<ArrowForwardIcon />}
+          sx={{ mt: 2, width: '100%' }}
+        >
+          Checkout
+        </Button>
+      </List>
+    ) : (
+      <Typography variant="body1" align="center">
+        No items in the cart. Please buy something!
+      </Typography>
+    )}
+  </Paper>
+  </div>
+</Drawer>
 
     </>
   );
