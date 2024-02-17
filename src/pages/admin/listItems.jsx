@@ -7,7 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import UpdateIcon from '@mui/icons-material/Update';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const mainListItems = (
   <React.Fragment>
@@ -47,13 +47,22 @@ export const secondaryListItems = (
   </React.Fragment>
 );
 
-export const thirdListItems = (
+const thirdListItems = () =>{
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    sessionStorage.removeItem("token");
+    navigate('/')
+    window.location.reload();
+  };
+  return(
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton onClick={handleLogOut}>
       <ListItemIcon sx={{color:"#be9269"}}>
-        <LogoutIcon/>
+        <LogoutIcon />
       </ListItemIcon>
       <ListItemText primary="Log Out" />
     </ListItemButton>
   </React.Fragment>
-);
+  );
+}
+export default thirdListItems;

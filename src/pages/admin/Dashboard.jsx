@@ -14,7 +14,8 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems, thirdListItems } from "./listItems";
+import { mainListItems, secondaryListItems } from "./listItems";
+import ThirdListItems from "./listItems";
 import { Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -133,7 +134,7 @@ const Dashboard = () => {
             <Divider sx={{ my: 1, marginBottom:2 }} />
             {secondaryListItems}
             <Divider sx={{ my: 1, marginBottom:2 }} />
-            {thirdListItems}
+            {<ThirdListItems/>}
             </List>
         </Drawer>
         <Box

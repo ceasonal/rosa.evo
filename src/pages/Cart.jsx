@@ -28,9 +28,7 @@ const Cart = () => {
 
   const fetchCartItems = async () => {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user }, } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from('cart')
         .select('*')

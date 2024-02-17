@@ -10,7 +10,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to="/admin/dashboard">
+    <ListItemButton component={Link} to="/user/dashboard">
       <ListItemIcon sx={{color:"#be9269"}}>
         <DashboardIcon />
       </ListItemIcon >
@@ -29,7 +29,7 @@ export const secondaryListItems = (
       <ListItemText primary="Details" />
     </ListItemButton>
     
-    <ListItemButton component={Link} to="/user/dashboard/orders">
+    <ListItemButton component={Link} to="/user/dashboard/order">
       <ListItemIcon sx={{color:"#be9269"}}>
         <LocalShippingIcon/>
       </ListItemIcon>

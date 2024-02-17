@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-const SignInSide = ({ setToken }) => {
+const SignInSide = ({ setToken, setIsAdmin }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -51,9 +51,16 @@ const SignInSide = ({ setToken }) => {
       });
 
       if (error) throw error;
-
+      
       setToken(data);
-      navigate("/");
+
+      if(data.user.id === import.meta.env.VITE_ADMIN_USER) {
+        setIsAdmin(true);
+          navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+        console.log("user");
+      }
     } catch (error) {
       console.error("Sign In Error:", error);
       setError(error.message || "An error occurred during sign in");

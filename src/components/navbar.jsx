@@ -167,7 +167,7 @@ const ResponsiveAppBar = ({ token }) => {
                   <MenuItem
                     onClick={handleCloseNavMenu}
                     component={Link}
-                    to="/profile"
+                    to="/user/dashboard"
                   >
                     <AccountCircleIcon sx={{color:"#4D1F08"}}/>
                     <Typography
@@ -272,7 +272,7 @@ const ResponsiveAppBar = ({ token }) => {
                 >
                   <MenuItem
                     component={Link}
-                    to={"/profile"}
+                    to={"/user/dashboard"}
                     onClick={handleClose}
                   >
                     Profile

@@ -75,7 +75,11 @@ const Dashboard = () => {
   return (
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open} 
+        // sx={{
+        //   "& .MuiDrawer-paper": { backgroundColor:'red' },
+        // }}
+        >
           <Toolbar
             sx={{
               display: "flex",
