@@ -14,7 +14,7 @@ const CreditCardForm = () => {
     cvc: "",
     focus: "",
   });
-
+const [totalProdPrice, setTotalProdPrice] = useState(0);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let validatedValue = value;
@@ -58,6 +58,17 @@ const CreditCardForm = () => {
       }
       if (data) {
         setCartData(data);
+        let totalPrice = 0;
+        data.forEach((item) => {
+          totalPrice += item.prod_price;
+        });
+        // Add shipping and tax
+        const shipping = 200;
+        const tax = 30;
+        totalPrice += shipping + tax;
+        
+        // Set the total product price
+        setTotalProdPrice(totalPrice);
       }
     } catch (error) {
       console.log("error fetching cart items", error);
@@ -106,6 +117,7 @@ const CreditCardForm = () => {
           user_uuid: user.id,
           ordered_prods: cartData,
           user_details: userData,
+          total_price: totalProdPrice,
         },
       ]);
       if (error) {
