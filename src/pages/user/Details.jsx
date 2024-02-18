@@ -11,13 +11,14 @@ import supabase from "../../assets/config/SupabaseClient";
 export default function AddressForm() {
   // Initialize states
   const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [isoCode, setIsoCode] = useState("");
-  const [citiesInSelectedState, setCitiesInSelectedState] = useState([]);
+  const [city , setCity] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [formCompleted, setFormCompleted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [userDetails, setUserDetails] = useState(null); 
+  const [fname , setFname] = useState("");
+  const [lname , setLname] = useState("");
+  const [address , setAddress] = useState("");
+  const [type , setType] = useState("");
 
   // Function to handle state change
   const handleStateChange = (event) => {
@@ -27,19 +28,12 @@ export default function AddressForm() {
     ).isoCode;
     setSelectedState(stateName);
     console.log("Selected state:", code);
-
-    // Get cities of the selected state
-    const cities = City.getCitiesOfState("IN", code);
-    setCitiesInSelectedState(cities);
-    // Reset selected city and zip code
-    setSelectedCity("");
     setZipCode("");
+    setCity("");
   };
 
   // Function to handle city change
   const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-    // Reset zip code when city changes
     setZipCode("");
   };
 
@@ -47,32 +41,66 @@ export default function AddressForm() {
   useEffect(() => {
     if (
       selectedState !== "" &&
-      selectedCity !== "" &&
+      city !== "" &&
       zipCode !== "" &&
-      document.getElementById("firstName").value !== "" &&
-      document.getElementById("lastName").value !== "" &&
-      document.getElementById("address1").value !== "" &&
-      document.getElementById("phone").value !== ""
+      fname !== "" &&
+      lname !== "" &&
+      address !== "" &&
+      type !== "" &&
+      phoneNumber !== ""
     ) {
       setFormCompleted(true);
     } else {
       setFormCompleted(false);
     }
-  }, [selectedState, selectedCity, zipCode]);
+  }, [selectedState, city, zipCode, fname, lname, address, phoneNumber, type]);
+
+      // Fetch existing user details based on uuid automatically 
+      useEffect(() => {
+        const fetchUserDetails = async () => {
+          try {
+            const { data: { user } } = await supabase.auth.getUser();
+            const { data, error } = await supabase
+              .from("user")
+              .select("*")
+              .eq("user_uuid", user.id)
+              .single();
+            if (error) {
+              console.log(error);
+              return;
+            }
+            if (data) {
+              setFname(data.first_name);
+              setLname(data.last_name);
+              setAddress(data.address);
+              setPhoneNumber(data.phone);
+              setSelectedState(data.state);
+              setCity(data.city);
+              setZipCode(data.zip_code);
+              setType(data.type);
+            }
+          }
+          catch (error) {
+            console.log(error);
+          }
+        };
+        fetchUserDetails();
+      }, []);
 
   const handleSubmit = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const { data, error } = await supabase.from("user").upsert([
         {
-          first_name: document.getElementById("firstName").value,
-          last_name: document.getElementById("lastName").value,
-          address: document.getElementById("address1").value,
-          phone: document.getElementById("phone").value,
+          first_name: fname,
+          last_name: lname,
+          address: address,
+          phone: phoneNumber,
           state: selectedState,
-          city: selectedCity,
+          city: city,
           zip_code: zipCode,
           user_uuid: user.id,
+          type: type,
         },
       ]);
       if (error) {
@@ -89,40 +117,20 @@ export default function AddressForm() {
         Shipping address
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="type"
+            name="type"
+            label="type"
             fullWidth
-            autoComplete="given-name"
+            autoComplete="typeofname"
             variant="standard"
-          />
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+                    />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
           <TextField
             required
             id="phone"
@@ -139,10 +147,49 @@ export default function AddressForm() {
             }}
             value={phoneNumber}
             onChange={(e) => {
-              const enteredPhoneNumber = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+              const enteredPhoneNumber = e.target.value.replace(/\D/g, "");
               setPhoneNumber(enteredPhoneNumber);
             }}
-            inputProps={{ maxLength: 10 }} // Maximum length including country code (+91) is 12
+            inputProps={{ maxLength: 10 }} 
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="firstName"
+            name="firstName"
+            label="First name"
+            fullWidth
+            autoComplete="given-name"
+            variant="standard"
+            value={fname}
+            onChange={(e) => setFname(e.target.value)}
+                    />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="lastName"
+            name="lastName"
+            label="Last name"
+            fullWidth
+            autoComplete="family-name"
+            variant="standard"
+            value={lname}
+            onChange={(e) => setLname(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="address1"
+            name="address1"
+            label="Address line 1"
+            fullWidth
+            autoComplete="shipping address-line1"
+            variant="standard"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -165,24 +212,21 @@ export default function AddressForm() {
           </TextField>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            select
+        <TextField
             required
             id="city"
             name="city"
-            label="City"
+            label="city"
             fullWidth
+            autoComplete="state-city"
             variant="standard"
-            value={selectedCity}
-            onChange={handleCityChange}
-            disabled={!selectedState} // Disable city dropdown if state is not selected
-          >
-            {citiesInSelectedState.map((city) => (
-              <MenuItem key={city.name} value={city.name}>
-                {city.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value);
+              handleCityChange(e.target.value); // Call onCityChange function with the updated value
+            }}
+            disabled={!selectedState}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -195,15 +239,12 @@ export default function AddressForm() {
             variant="standard"
             value={zipCode}
             onChange={(e) => {
-              // Ensure only digits are entered
               const enteredZip = e.target.value.replace(/\D/g, "");
-              // Ensure only first 6 digits are considered
               const limitedZip = enteredZip.slice(0, 6);
-              // Update zip code state
               setZipCode(limitedZip);
             }}
-            disabled={!selectedCity} // Disable zip code input if city is not selected
-            inputProps={{ maxLength: 6 }} // Limit input to 6 characters visually
+            disabled={!city} 
+            inputProps={{ maxLength: 6 }} 
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -215,7 +256,7 @@ export default function AddressForm() {
             autoComplete="shipping country"
             variant="standard"
             value="India"
-            disabled // Disable country field
+            disabled 
           />
         </Grid>
         <Grid item xs={12}>
