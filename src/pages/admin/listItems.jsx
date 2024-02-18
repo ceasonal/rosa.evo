@@ -52,7 +52,7 @@ const thirdListItems = () =>{
   const handleLogOut = () => {
     sessionStorage.removeItem("token");
     navigate('/')
-    window.location.reload();
+    // window.location.reload();
   };
   return(
   <React.Fragment>

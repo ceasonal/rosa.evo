@@ -7,6 +7,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { useNavigate } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
@@ -38,13 +39,21 @@ export const secondaryListItems = (
   </React.Fragment>
 );
 
-export const thirdListItems = (
+const thirdListItems = () =>{
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    sessionStorage.removeItem("token");
+    navigate('/')
+  };
+  return(
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton onClick={handleLogOut}>
       <ListItemIcon sx={{color:"#be9269"}}>
-        <LogoutIcon/>
+        <LogoutIcon />
       </ListItemIcon>
       <ListItemText primary="Log Out" />
     </ListItemButton>
   </React.Fragment>
-);
+  );
+}
+export default thirdListItems;
