@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import supabase from "../assets/config/SupabaseClient";
+import PaymentButton from "../components/payment";
 import { ShoppingCart, Clear } from "@mui/icons-material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Stack } from "@mui/material";
@@ -67,38 +68,36 @@ const Cart = () => {
       .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
         console.log("Change received!", payload);
         fetchShippingAddress();
-
       })
       .subscribe();
 
     return () => {
       supabase.removeChannel("room2");
     };
-  }
-  , []);
-    const fetchShippingAddress = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        const { data, error } = await supabase
-          .from("user")
-          .select("type")
-          .eq("user_uuid", user.id)
-          .single();
-        if (error) {
-          throw error;
-        }
-        if (data && data.type) {
-          setShippingTypeExists(true); // Set state to true if shipping type exists
-          setShippingAddress(data.type);
-        } else {
-          setShippingTypeExists(false); // Set state to false if shipping type doesn't exist
-        }
-      } catch (error) {
-        console.error("Error fetching shipping address:", error.message);
+  }, []);
+  const fetchShippingAddress = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const { data, error } = await supabase
+        .from("user")
+        .select("type")
+        .eq("user_uuid", user.id)
+        .single();
+      if (error) {
+        throw error;
       }
-    };
+      if (data && data.type) {
+        setShippingTypeExists(true); // Set state to true if shipping type exists
+        setShippingAddress(data.type);
+      } else {
+        setShippingTypeExists(false); // Set state to false if shipping type doesn't exist
+      }
+    } catch (error) {
+      console.error("Error fetching shipping address:", error.message);
+    }
+  };
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
@@ -219,30 +218,32 @@ const Cart = () => {
                     </ListItem>
                   </div>
                 ))}
-                    <Divider />
-                    { shippingTypeExists && (
-                    <>
-                      <Typography variant="body1" sx={{ mt: 2, paddingLeft: 2 }}>
-                        Ship to
+                <Divider />
+                {shippingTypeExists && (
+                  <>
+                    <Typography variant="body1" sx={{ mt: 2, paddingLeft: 2 }}>
+                      Ship to
+                    </Typography>
+                    <div
+                      style={{ display: "flex", alignItems: "center", mt: 1 }}
+                    >
+                      <IconButton sx={{ mr: 1 }}>
+                        <HomeIcon />
+                      </IconButton>
+                      <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                        {shippingAddress}
                       </Typography>
-                      <div style={{ display: "flex", alignItems: "center", mt: 1 }}>
-                        <IconButton sx={{ mr: 1 }}>
-                          <HomeIcon />
-                        </IconButton>
-                        <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                          {shippingAddress}
-                        </Typography>
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </div>
-                    </>
-                  ) }
-                  {!shippingTypeExists && (
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </div>
+                  </>
+                )}
+                {!shippingTypeExists && (
                   <Button
                     variant="contained"
                     color="primary"
-                    sx={{ mt: 2, width: '100%' }}
+                    sx={{ mt: 2, width: "100%" }}
                     component={Link}
                     to="/user/dashboard/details"
                     onClick={handleDrawerClose}
@@ -260,13 +261,13 @@ const Cart = () => {
                 <ListItem alignItems="flex-start">
                   <ListItemText primary="Shipping" />
                   <Typography variant="subtitle1" align="right">
-                  Rs. {shipping}
+                    Rs. {shipping}
                   </Typography>
                 </ListItem>
                 <ListItem alignItems="flex-start">
                   <ListItemText primary="Tax" />
                   <Typography variant="subtitle1" align="right">
-                  Rs. {tax}
+                    Rs. {tax}
                   </Typography>
                 </ListItem>
                 <Divider />
@@ -277,17 +278,15 @@ const Cart = () => {
                   </Typography>
                 </ListItem>
                 <Divider />
-                <Button
-  variant="contained"
-  color="primary"
-  component={Link}
-  to="/checkout"
-  endIcon={<ArrowForwardIcon />}
-  sx={{ mt: 2, width: "100%" }}
-  disabled={!shippingTypeExists} // Disable the button if shipping type doesn't exist
->
-  Checkout
-</Button>
+                <PaymentButton
+                  variant="contained"
+                  color="primary"
+                  endIcon={<ArrowForwardIcon />}
+                  sx={{ mt: 2, width: "100%" }}
+                  disabled={!shippingTypeExists} // Disable the button if shipping type doesn't exist
+                >
+                  Checkout
+                </PaymentButton>
               </List>
             ) : (
               <Typography variant="body1" align="center">
