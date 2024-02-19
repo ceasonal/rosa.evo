@@ -12,11 +12,18 @@ import Divider from '@mui/material/Divider';
 import supabase from "../../assets/config/SupabaseClient";
 import Link from '@mui/material/Link';
 import { Button } from '@mui/material';
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 export default function Orders() {
   const [orderData, setOrderData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const fetchOrderData = async () => {
     try {
@@ -56,6 +63,7 @@ export default function Orders() {
       console.error("Error marking order as delivered:", error.message);
     }
   }
+
   React.useEffect(() => {
     markAsDelivered();
     supabase
@@ -71,6 +79,16 @@ export default function Orders() {
     };
   }, []);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
@@ -107,9 +125,29 @@ export default function Orders() {
                   <TableCell>{row.order_uuid}</TableCell>
                   <TableCell>{row.created_at}</TableCell>
                   <TableCell>{row.user_details[0].first_name}</TableCell>
-                  <TableCell>{`${row.user_details[0].state}, ${row.user_details[0].city}`}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined" onClick={handleClickOpen}>
+                      View
+                    </Button>
+                    <Dialog open={open} onClose={handleClose} fullScreen={fullScreen}>
+                      <DialogTitle>Address</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          State: {row.user_details[0].state}, City/Town: {row.user_details[0].city} <br />
+                          Zip: {row.user_details[0].zip_code}, Address: {row.user_details[0].address} <br />
+                          First Name: {row.user_details[0].first_name}, Last Name: {row.user_details[0].last_name} <br />
+                          Phone Number: {row.user_details[0].phone}
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          Close
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </TableCell>
                   <TableCell>{row.ordered_prods.map(product => product.prod_name).join(", ")}</TableCell>
-                  <TableCell>{`$${row.total_price}`}</TableCell>
+                  <TableCell>{`₹ ${row.total_price}`}</TableCell>
                   <TableCell>
                     <Chip
                       label={row.status}
@@ -117,15 +155,15 @@ export default function Orders() {
                     />
                   </TableCell>
                   <TableCell>
-                  <Button
-                        variant="contained"
-                        color="primary"
-                        disabled={row.status === "Delivered"}
-                        onClick={() => markAsDelivered(row.order_uuid, "Delivered")}
-                        sx={{ borderRadius: 16, textTransform: 'none', minWidth: 'auto', height: 32, py: 0 }}
-                      >
-                        Update
-                      </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={row.status === "Delivered"}
+                      onClick={() => markAsDelivered(row.order_uuid, "Delivered")}
+                      sx={{ borderRadius: 16, textTransform: 'none', minWidth: 'auto', height: 32, py: 0 }}
+                    >
+                      Update
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

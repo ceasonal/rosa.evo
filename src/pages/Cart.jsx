@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import supabase from "../assets/config/SupabaseClient";
 import PaymentButton from "../components/payment";
 import { ShoppingCart, Clear } from "@mui/icons-material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import EditIcon from "@mui/icons-material/Edit";
@@ -102,7 +102,7 @@ const Cart = () => {
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
   };
@@ -164,6 +164,7 @@ const Cart = () => {
         <div
           style={{
             overflowX: "hidden",
+            backgroundColor:'rgba(224, 205, 194, 0.3)',
             display: "flex",
             justifyContent: "center",
           }}
@@ -174,8 +175,12 @@ const Cart = () => {
               width: "100%",
               maxWidth: "80vw",
               minWidth: "300px",
-              // maxHeight: "100vh",
+              height: "100vh",
               overflow:'auto',
+              WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
+              "&::-webkit-scrollbar": {
+                display: "none", // Hide the scrollbar for WebKit browsers
+              },
             backgroundColor:'rgba(224, 205, 194, 0.3)',
               "@media (min-width: 600px)": {
                 maxWidth: "50vw",
@@ -191,7 +196,7 @@ const Cart = () => {
             </Typography>
             {cartItems.length > 0 ? (
                               <>
-              <List >
+              <List>
                 {cartItems.map((item) => (
                   <div key={item.id}>
                     <ListItem alignItems="center" sx={{ mb: 2 }}>
@@ -212,7 +217,7 @@ const Cart = () => {
                         <Stack direction="column" spacing={0}>
                           <ListItemText primary={item.prod_name} />
                           <Typography variant="h6" sx={{ paddingLeft: 2 }}>
-                            ${item.prod_price}
+                            ₹ {item.prod_price}
                           </Typography>
                         </Stack>
                         <IconButton onClick={() => handleDeleteItem(item.id)}>
@@ -259,26 +264,26 @@ const Cart = () => {
                 <ListItem alignItems="flex-start" sx={{ mt: 1 }}>
                   <ListItemText primary="Subtotal" />
                   <Typography variant="subtitle1" align="right">
-                    Rs. {subtotal}
+                    ₹ {subtotal}
                   </Typography>
                 </ListItem>
                 <ListItem alignItems="flex-start">
                   <ListItemText primary="Shipping" />
                   <Typography variant="subtitle1" align="right">
-                    Rs. {shipping}
+                    ₹ {shipping}
                   </Typography>
                 </ListItem>
                 <ListItem alignItems="flex-start">
                   <ListItemText primary="Tax" />
                   <Typography variant="subtitle1" align="right">
-                    Rs. {tax}
+                    ₹ {tax}
                   </Typography>
                 </ListItem>
                 <Divider />
                 <ListItem alignItems="flex-start">
                   <ListItemText primary="Total" />
                   <Typography variant="subtitle1" align="right">
-                    ${total}
+                    ₹ {total}
                   </Typography>
                 </ListItem>
                 <Divider />
@@ -286,9 +291,18 @@ const Cart = () => {
               </List>
               </>
             ) : (
-              <Typography variant="body1" align="center">
+              <>   
+              <Typography variant="body1" align="center" sx={{ fontSize: 20,}}>
                 No items in the cart. Please buy something!
               </Typography>
+                <AddShoppingCartIcon sx={{
+                  fontSize: 100 ,
+                  color:'#7B4A0C',
+                  display: "block",
+                  margin: "auto",
+                  marginTop: 20,
+                }} />
+              </>
             )}
           </Paper>
         </div>

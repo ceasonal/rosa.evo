@@ -41,6 +41,7 @@ const ProductDetails = ({ token }) => {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [status, setStatus] = useState(false);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -67,11 +68,16 @@ const ProductDetails = ({ token }) => {
         console.error("Error fetching product details:", error);
       } else {
         setProductDetails(data);
+        if(data.sold_out === true){
+          setStatus(true);
+          // console.log(status)
+        }
       }
     };
 
     fetchProductDetails();
   }, [id]);
+
 
   // according to userid uuid add to table called cart the product id and the user id
   const addToCart = async (product) => {
@@ -188,6 +194,8 @@ const ProductDetails = ({ token }) => {
                       color="primary"
                       startIcon={<ShoppingCartIcon />}
                       onClick={() => addToCart(productDetails)}
+                      disabled={status===true?true:false}
+                      // onClick={checkStatus}
                       disableElevation
                       sx={{
                         backgroundColor: "#957461",
@@ -250,7 +258,7 @@ const ProductDetails = ({ token }) => {
           </div>
         </>
       )}
-      <Footer />
+      <Footer sx={{mt:3}}/>
     </>
   );
 };

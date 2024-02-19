@@ -75,9 +75,9 @@ export default function Orders() {
                   <TableCell>{row.order_uuid}</TableCell>
                   <TableCell>{row.created_at}</TableCell>
                   <TableCell>{row.user_details[0].first_name}</TableCell>
-                  <TableCell>{`${row.user_details[0].state}, ${row.user_details[0].city}`}</TableCell>
+                  <TableCell>{row.user_details[0].state}, {row.user_details[0].city}</TableCell>
                   <TableCell>{row.ordered_prods.map(product => product.prod_name).join(", ")}</TableCell>
-                  <TableCell>{`$${row.total_price}`}</TableCell>
+                  <TableCell>{`₹ ${row.total_price}`}</TableCell>
                   <TableCell>
                     <Chip
                       label={row.status}

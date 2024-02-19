@@ -153,30 +153,6 @@ const Prod = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-
-                {/* <Grid item xs={12} sm={6} md={4}>
-                  <FormControl
-                    sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
-                  >
-                    <InputLabel id="select-custom">Custom</InputLabel>
-                    <Select
-                      labelId="select-custom-option"
-                      id="select-custom"
-                      name="custom"
-                      value={custom}
-                      label="Custom"
-                      autoWidth
-                      onChange={handleChange}
-                    >
-                      <MenuItem value="All">All</MenuItem>
-                      <MenuItem value="customizable">Customizable</MenuItem>
-                      <MenuItem value="notCustomizable">
-                        Not Customizable
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid> */}
-
                   <Grid item xs={12} sm={6} md={4}>
                   <FormControl
                     sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}

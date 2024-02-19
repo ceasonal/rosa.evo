@@ -8,6 +8,9 @@ import { Link } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 export default function Blogcard(props) {
+  const handleAboutClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <div className="container grid3">
       <Card
@@ -63,7 +66,7 @@ export default function Blogcard(props) {
                 </div>
               </div>
               <span style={{ marginLeft: "5px" }}>
-                <Link href={`#/blog/${props.id}`} style={{ color: "#754e37" }}>
+                <Link href={`#/blog/${props.id}`} style={{ color: "#754e37" }} onClick={handleAboutClick}>
                   <ArrowRightAltIcon />
                 </Link>
               </span>
