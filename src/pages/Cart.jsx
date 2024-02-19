@@ -174,20 +174,24 @@ const Cart = () => {
               width: "100%",
               maxWidth: "80vw",
               minWidth: "300px",
+              // maxHeight: "100vh",
+              overflow:'auto',
+            backgroundColor:'rgba(224, 205, 194, 0.3)',
               "@media (min-width: 600px)": {
                 maxWidth: "50vw",
                 minWidth: "400px",
               },
             }}
           >
-            <Button onClick={handleDrawerClose} sx={{ mb: 2 }}>
+            <Button onClick={handleDrawerClose} sx={{ mb: 2, color:'#7B4A0C' }}>
               Close
             </Button>
-            <Typography variant="h5" align="center" mb={2}>
+            <Typography variant="h5" align="center" mb={2} sx={{color:'#7B4A0C',fontFamily:'monospace'}}>
               Cart
             </Typography>
             {cartItems.length > 0 ? (
-              <List>
+                              <>
+              <List >
                 {cartItems.map((item) => (
                   <div key={item.id}>
                     <ListItem alignItems="center" sx={{ mb: 2 }}>
@@ -278,16 +282,9 @@ const Cart = () => {
                   </Typography>
                 </ListItem>
                 <Divider />
-                <PaymentButton
-                  variant="contained"
-                  color="primary"
-                  endIcon={<ArrowForwardIcon />}
-                  sx={{ mt: 2, width: "100%" }}
-                  disabled={!shippingTypeExists} // Disable the button if shipping type doesn't exist
-                >
-                  Checkout
-                </PaymentButton>
+                <PaymentButton disabled={!shippingTypeExists}/>
               </List>
+              </>
             ) : (
               <Typography variant="body1" align="center">
                 No items in the cart. Please buy something!

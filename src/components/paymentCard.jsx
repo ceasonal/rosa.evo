@@ -4,6 +4,7 @@ import "react-credit-cards-2/dist/es/styles-compiled.css";
 import { TextField, Button, Grid } from "@mui/material";
 import supabase from "../assets/config/SupabaseClient";
 import { useNavigate } from "react-router-dom";
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
 const CreditCardForm = () => {
   const navigate = useNavigate();
@@ -14,7 +15,9 @@ const CreditCardForm = () => {
     cvc: "",
     focus: "",
   });
-const [totalProdPrice, setTotalProdPrice] = useState(0);
+  const [totalProdPrice, setTotalProdPrice] = useState(0);
+  const [formCompleted, setFormCompleted] = useState(false); // State to track form completion
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let validatedValue = value;
@@ -24,7 +27,7 @@ const [totalProdPrice, setTotalProdPrice] = useState(0);
         validatedValue = value.slice(0, 16);
         break;
       case "name":
-        validatedValue = value.slice(0, 21);
+        validatedValue = value.replace(/[^a-zA-Z]/g, '').slice(0,21);
         break;
       case "expiry":
         validatedValue = value.slice(0, 4);
@@ -135,13 +138,10 @@ const [totalProdPrice, setTotalProdPrice] = useState(0);
       await fetchUserData();
       await createOrder();
       await deleteCartItems();
-      // console.log("Payment Confirmed");
-      // Clear cartData and userData after successful payment
-      navigate('/')
-         window.location.reload();
+      navigate("/");
+      window.location.reload();
       setCartData([]);
       setUserData([]);
-      
     } catch (error) {
       console.error("Error confirming payment:", error);
     }
@@ -152,7 +152,15 @@ const [totalProdPrice, setTotalProdPrice] = useState(0);
     fetchUserData();
   }, []);
 
-
+  useEffect(() => {
+    // Check if all fields are filled
+    const isFormCompleted =
+      state.number !== "" &&
+      state.name !== "" &&
+      state.expiry !== "" &&
+      state.cvc !== "";
+    setFormCompleted(isFormCompleted);
+  }, [state]);
 
   return (
     <Grid container spacing={2}>
@@ -193,6 +201,7 @@ const [totalProdPrice, setTotalProdPrice] = useState(0);
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 inputProps={{ maxLength: 21 }}
+
                 required
               />
             </Grid>
@@ -228,11 +237,19 @@ const [totalProdPrice, setTotalProdPrice] = useState(0);
           <Button
             variant="contained"
             color="primary"
-            style={{ marginTop: "20px" }}
+            sx={{
+              mt: 2,
+              backgroundColor: "#957461",
+              "&:hover": {
+                backgroundColor: "#685043",
+              },
+            }}
             fullWidth
             onClick={paymentConfirm}
+            disabled={!formCompleted} // Disable button if form is not completed
           >
-            Purchase
+            Purchase 
+            <CreditScoreIcon  sx={{ml:2}}/>
           </Button>
         </form>
       </Grid>

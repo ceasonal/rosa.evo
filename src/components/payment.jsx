@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import CreditCardForm from "./paymentCard";
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 export default function ResponsiveDialog() {
   const [open, setOpen] = React.useState(false);
@@ -24,24 +25,40 @@ export default function ResponsiveDialog() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-       CheckOut -
+      <Button variant="contained" onClick={handleClickOpen} sx={{
+                mt: 2,
+                backgroundColor: "#957461",
+                "&:hover": {
+                  backgroundColor: "#685043",
+                },
+              }}>
+       CheckOut
+       <ArrowRightAltIcon />
       </Button>
       <Dialog
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backdropFilter: "blur(3px)",
+          fontFamily:'monospace'
+        }}
       >
-        <DialogContent>
+        <DialogContent
+        sx={{
+          backgroundColor:'rgba(224, 205, 194, 0.3)'
+        }}
+        >
             <>
             <div className="container mt-5">
-      <h2 className="mb-4">Enter credit card details</h2>
+      <h2 className="mb-4" align="center" style={{color:'#4D1F08'}}>Enter credit card details</h2>
       <CreditCardForm />
     </div>
             </>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{backgroundColor:'rgba(224, 205, 194, 0.3)'}}>
           <Button onClick={handleClose} autoFocus>
             Cancel
           </Button>

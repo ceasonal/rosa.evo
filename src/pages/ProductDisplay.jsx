@@ -8,23 +8,38 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import MuiAlert from "@mui/material/Alert";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Paper,
-} from "@mui/material";
-import Box from "@mui/material/Box";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Magnifier } from "react-image-magnifiers";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Close from "@mui/icons-material/Close";
+import { makeStyles } from "@mui/styles";
+import Devider from "@mui/material/Divider";
+import Chip from "@mui/material/Chip";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    padding: "16px",
+  },
+  productImage: {
+    maxWidth: "100%",
+    maxHeight: "480px",
+  },
+  productDetails: {
+    padding: "16px",
+  },
+  section: {
+    marginBottom: "16px",
+  },
+  iconWithText: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "8px",
+  },
+}));
 
 const ProductDetails = ({ token }) => {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState(null);
-  const [expanded, setExpanded] = useState("panel1");
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const handleSnackbarClose = (event, reason) => {
@@ -33,10 +48,6 @@ const ProductDetails = ({ token }) => {
     }
 
     setIsSnackbarOpen(false);
-  };
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
   };
 
   useEffect(() => {
@@ -76,127 +87,114 @@ const ProductDetails = ({ token }) => {
         .eq("prod_uuid", product.disp_uuid)
         .eq("user_id", user.id)
         .single();
-        if (cartData && !cartError) {
-          console.log("Product already exists in cart");
-          return;
-        }
-        let res = await supabase.from("cart").upsert([{ prod_name: product.name, user_id: user.id, prod_price: product.price, prod_image: product.image, prod_uuid: product.disp_uuid }]);
-        console.log("Added to cart");
+      if (cartData && !cartError) {
+        console.log("Product already exists in cart");
+        return;
+      }
+      let res = await supabase
+        .from("cart")
+        .upsert([
+          {
+            prod_name: product.name,
+            user_id: user.id,
+            prod_price: product.price,
+            prod_image: product.image,
+            prod_uuid: product.disp_uuid,
+          },
+        ]);
+      console.log("Added to cart");
     } catch (e) {
       console.log(e);
     }
-
-    //   const { data, error } = await supabase
-    //     .from("cart")
-    //     .insert([
-    //       {
-    //         prod_name: product.name,
-    //         user_id: user.id,
-    //         prod_price: product.price,  
-    //         prod_image: product.image,
-    //         prod_uuid: product.disp_uuid,
-    //       },
-    //     ]);
-  
-    //   if (error) {
-    //     console.error("Error adding to cart:", error);
-    //   } else {
-    //     console.log("Added to cart");
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
   };
+
+  const classes = useStyles();
 
   return (
     <>
-      <Box
-        sx={{
-          margin: "auto",
-          padding: { xs: 2, sm: 4, md: 8 },
-          maxWidth: "100%",
-          marginBottom: 2,
-        }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            p: 2,
-            borderRadius: "8px",
-            bgcolor: "rgba(224, 205, 194, 0.3)",
-          }}
-        >
-          <Grid
-            container
-            spacing={3}
-            justifyContent="center"
-            alignItems="center"
-          >
-            {productDetails && (
-              <>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  sx={{
-                    marginBottom: { xs: 2, md: 0 },
-                    textAlign: "center",
-                  }}
-                >
-                  <Magnifier
-                    imageSrc={productDetails.image}
-                    imageAlt="productImage"
-                    style={{
-                      width: "100%",
-                      maxWidth: "100%",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    mb: { xs: 2, md: 0 },
-                    textAlign: { xs: "center", md: "start" },
-                  }}
-                >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      mb: 2,
-                      textAlign: "center",
-                      fontSize: { xs: "1.8rem", md: "2.5rem" },
-                    }}
-                  >
-                    Rosa.evo
-                  </Typography>
-                  <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
-                    {productDetails.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    sx={{ mb: 2 }}
-                  >
-                    {productDetails.category}
-                  </Typography>
-                  <Typography variant="h5" sx={{ mb: 3, color: "#282c3e" }}>
-                    Rs. {productDetails.price}
-                  </Typography>
-                  <Typography variant="h5" sx={{ mb: 2 }}>
-                    PRICES DO NOT INCLUDE GST AND SHIPPING
-                  </Typography>
+      {productDetails && (
+        <>
+          <div className={classes.root}>
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={productDetails.image}  
+                  alt="Product"
+                  className={classes.productImage}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div className={classes.productDetails}>
+                  <div className={classes.section}>
+                    <Typography variant="h4" gutterBottom fontFamily="serif">
+                      {productDetails.name}{" "}
+                      <Chip
+                        label={productDetails.category}
+                        color="secondary"
+                        sx={{ ml: 1, backgroundColor: "#957461" }}
+                      />
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      ₹ {productDetails.price}
+                    </Typography>
+                  </div>
+                  <div className={classes.section}></div>
+                  <Devider />
+                  <div className={classes.section}>
+                    <div className={classes.iconWithText}>
+                      <DescriptionIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <Typography variant="subtitle1">Description</Typography>
+                    </div>
+                    <Typography variant="body1">
+                      {productDetails.description}
+                    </Typography>
+                  </div>
+                  <Devider />
+                  <div className={classes.section}>
+                    <div className={classes.iconWithText}>
+                      <LocalShippingIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <Typography variant="subtitle1">Shipping</Typography>
+                    </div>
+                    <Typography variant="body1">
+                      We offer shipping within India via Bluedart or Delhivery
+                      courier service. Delivery time may vary from 8-9 days
+                      depending on location & product availability.
+                    </Typography>
+                  </div>
+                  <Devider />
+                  <div className={classes.section}>
+                    <div className={classes.iconWithText}>
+                      <MonetizationOnIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <Typography variant="subtitle1">Payment</Typography>
+                    </div>
+                    <Typography variant="body1">
+                      For online orders you can pay through the following
+                      methods: credit cards.
+                    </Typography>
+                    <Devider />
+                  </div>
                   {token ? (
                     <Button
                       variant="contained"
                       color="primary"
                       startIcon={<ShoppingCartIcon />}
                       onClick={() => addToCart(productDetails)}
+                      disableElevation
+                      sx={{
+                        backgroundColor: "#957461",
+                        "&:hover": {
+                          backgroundColor: "#685043",
+                        },
+                      }}
                     >
                       Add to Cart
                     </Button>
@@ -207,6 +205,13 @@ const ProductDetails = ({ token }) => {
                         color="primary"
                         startIcon={<ShoppingCartIcon />}
                         onClick={() => setIsSnackbarOpen(true)}
+                        disableElevation
+                        sx={{
+                          backgroundColor: "#957461",
+                          "&:hover": {
+                            backgroundColor: "#685043",
+                          },
+                        }}
                       >
                         Add to Cart
                       </Button>
@@ -239,85 +244,12 @@ const ProductDetails = ({ token }) => {
                       </Snackbar>
                     </>
                   )}
-                  <Accordion
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
-                  >
-                    <AccordionSummary
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                      expandIcon={<ExpandMoreIcon />}
-                    >
-                      <Typography
-                        sx={{ display: "flex", alignItems: "center" }}
-                      >
-                        <DescriptionIcon
-                          sx={{ fontSize: 20, marginRight: 1 }}
-                        />
-                        Description
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>{productDetails.description}</Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion
-                    expanded={expanded === "panel2"}
-                    onChange={handleChange("panel2")}
-                  >
-                    <AccordionSummary
-                      aria-controls="panel2d-content"
-                      id="panel2d-header"
-                      expandIcon={<ExpandMoreIcon />}
-                    >
-                      <Typography
-                        sx={{ display: "flex", alignItems: "center" }}
-                      >
-                        <LocalShippingIcon
-                          sx={{ fontSize: 20, marginRight: 1 }}
-                        />
-                        Shipping
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        We offer shipping within India via Bluedart or Delhivery
-                        courier service. Delivery time may vary from 8-9 days
-                        depending on location & product availability.
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion
-                    expanded={expanded === "panel3"}
-                    onChange={handleChange("panel3")}
-                  >
-                    <AccordionSummary
-                      aria-controls="panel3d-content"
-                      id="panel3d-header"
-                      expandIcon={<ExpandMoreIcon />}
-                    >
-                      <Typography
-                        sx={{ display: "flex", alignItems: "center" }}
-                      >
-                        <MonetizationOnIcon
-                          sx={{ fontSize: 20, marginRight: 1 }}
-                        />
-                        Payment
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        For online orders you can pay through the following
-                        methods: credit cards, debit cads/ netbanking.
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-              </>
-            )}
-          </Grid>
-        </Paper>
-      </Box>
+                </div>
+              </Grid>
+            </Grid>
+          </div>
+        </>
+      )}
       <Footer />
     </>
   );
