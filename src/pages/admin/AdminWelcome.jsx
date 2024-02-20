@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
 const AdminWelcome = () => {
+  
   const containerStyle = {
     textAlign: 'center',
     maxWidth: '600px',
@@ -19,6 +20,8 @@ const AdminWelcome = () => {
   const textStyle = {
     marginBottom: '20px',
   };
+console.log(window.location)
+
   
   return (
     <Box sx={containerStyle}>

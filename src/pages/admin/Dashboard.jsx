@@ -76,7 +76,7 @@ const Dashboard = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+console.log(window.location)
   return (
     <ThemeProvider theme={darkTheme}>
       <Box sx={{ display: "flex" }}>
