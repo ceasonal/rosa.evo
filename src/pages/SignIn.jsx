@@ -57,6 +57,7 @@ const SignInSide = ({ setToken, setIsAdmin }) => {
       if(data.user.id === import.meta.env.VITE_ADMIN_USER) {
         setIsAdmin(true);
           navigate("/admin/dashboard");
+          // window.location.reload();
       } else {
         navigate("/");
         console.log("user");

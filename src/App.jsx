@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Signin from './pages/SignIn';
@@ -40,7 +40,7 @@ function App() {
 
 
 
-  const shouldRenderNavbar = window.location.hash !== '#/admin/dashboard';
+  const shouldRenderNavbar = window.location.hash !== '/admin/dashboard';
 
   return (
     <Router>
