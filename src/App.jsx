@@ -62,7 +62,6 @@ function App() {
           <Route path="order" element={<OrderHist />} />
           <Route path="details" element={<Details />} />
         </Route>
-        
         <Route path="/admin/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" />}>
           <Route path="" element={<AdminWelcome />}>
             <Route path="" element={<Outlet />} />
