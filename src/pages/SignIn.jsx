@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-const SignInSide = ({ setToken, setIsAdmin }) => {
+const SignInSide = ({ setToken }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -55,7 +55,6 @@ const SignInSide = ({ setToken, setIsAdmin }) => {
       setToken(data);
 
       if(data.user.id === import.meta.env.VITE_ADMIN_USER) {
-        setIsAdmin(true);
           navigate("/admin/dashboard");
           // window.location.reload();
       } else {
@@ -68,6 +67,20 @@ const SignInSide = ({ setToken, setIsAdmin }) => {
       setOpenSnackbar(true);
     }
   };
+  
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if(user){
+        navigate("/")
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

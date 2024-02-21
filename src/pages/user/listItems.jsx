@@ -42,7 +42,10 @@ export const secondaryListItems = (
 const thirdListItems = () =>{
   const navigate = useNavigate();
   const handleLogOut = () => {
+    window.location.reload();
     sessionStorage.removeItem("token");
+    localStorage.clear();
+    supabase.auth.signOut();
     navigate('/')
   };
   return(

@@ -17,6 +17,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import ThirdListItems from "./listItems";
 import { Outlet } from "react-router-dom";
+import supabase from "../../assets/config/SupabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -76,7 +78,29 @@ const Dashboard = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-console.log(window.location)
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user.id === import.meta.env.VITE_ADMIN_USER) {
+        // console.log("Admin User")
+        // window.location.reload();
+      }else{
+        // console.log("Not Admin User")
+        // window.location.reload();
+        navigate('/')
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
+
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Box sx={{ display: "flex" }}>

@@ -12,20 +12,22 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const SignUp = () => {
+  
   const [formData, setFormData] = useState({
-    name: "",
+    // name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    name: "",
+    // name: "",
     email: "",
     password: "",
   });
@@ -59,16 +61,16 @@ const SignUp = () => {
     let formIsValid = true;
     const newErrors = { ...errors };
 
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-      formIsValid = false;
-    } else if (/\d/.test(formData.name)) {
-      newErrors.name = "Name should not contain numbers";
-      formIsValid = false;
-    } else if (formData.name.length > 50) {
-      newErrors.name = "Name should not exceed 50 characters";
-      formIsValid = false;
-    }
+    // if (!formData.name) {
+    //   newErrors.name = "Name is required";
+    //   formIsValid = false;
+    // } else if (/\d/.test(formData.name)) {
+    //   newErrors.name = "Name should not contain numbers";
+    //   formIsValid = false;
+    // } else if (formData.name.length > 50) {
+    //   newErrors.name = "Name should not exceed 50 characters";
+    //   formIsValid = false;
+    // }
 
     if (!formData.email) {
       newErrors.email = "Email is required";
@@ -95,32 +97,43 @@ const SignUp = () => {
       return;
     }
     try {
-      const { user, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
       });
 
       if (error) {
-        // Handle signup error
         throw error;
       }
 
-      // Handle successful signup
       setOpenSnackbar(true);
       setSnackbarMessage(
         "Account created successfully! Please check your email for verification."
       );
       setSnackbarSeverity("success");
 
-      // Optionally, redirect to a different page or clear the form
-      // ...
     } catch (error) {
       console.log(error);
     }
   }
 
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if(user){
+        navigate("/")
+        // console.log(user)
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
+
   return (
-    // ... (rest of the component JSX)
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
       <Grid
@@ -173,7 +186,7 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -191,7 +204,7 @@ const SignUp = () => {
                 helperText={errors.name}
                 onChange={handleChange}
               />
-            </Box>
+            </Box> */}
             <TextField
               margin="normal"
               required

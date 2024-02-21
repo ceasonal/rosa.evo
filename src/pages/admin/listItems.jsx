@@ -50,9 +50,11 @@ export const secondaryListItems = (
 const thirdListItems = () =>{
   const navigate = useNavigate();
   const handleLogOut = () => {
-    sessionStorage.removeItem("token");
     navigate('/')
     window.location.reload();
+    sessionStorage.removeItem("token");
+    localStorage.clear();
+    supabase.auth.signOut();
   };
   return(
   <React.Fragment>

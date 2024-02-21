@@ -126,6 +126,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="typeofname"
             variant="standard"
+            placeholder="home/work/other"
             value={type}
             onChange={(e) => setType(e.target.value)}
                     />

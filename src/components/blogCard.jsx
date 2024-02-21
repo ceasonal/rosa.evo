@@ -18,7 +18,6 @@ export default function Blogcard(props) {
         sx={{ maxWidth: 400, boxShadow: "0px 4px 8px rgba(0, 0, 0,)" }}
         className="box boxItems"
       >
-        <CardActionArea>
           <CardMedia
             component="img"
             height="200"
@@ -72,7 +71,6 @@ export default function Blogcard(props) {
               </span>
             </div>
           </CardContent>
-        </CardActionArea>
       </Card>
     </div>
   );

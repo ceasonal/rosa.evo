@@ -23,7 +23,6 @@ import ErrorPage from './pages/404';
 
 function App() {
   const [token, setToken] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   if (token) {
     sessionStorage.setItem('token', JSON.stringify(token));
@@ -35,6 +34,8 @@ function App() {
     if (sessionStorage.getItem('token')) {
       let data = JSON.parse(sessionStorage.getItem('token'));
       setToken(data);
+    }else{
+      setToken(false);
     }
   }, []);
 
@@ -47,7 +48,7 @@ function App() {
       {shouldRenderNavbar && <Navbar token={token} />}
       <Routes>
         <Route path="/" element={<Home token={token} />} />
-        <Route path="/signin" element={<Signin setToken={setToken} setIsAdmin={setIsAdmin}/>} />
+        <Route path="/signin" element={<Signin setToken={setToken}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<Forgotpass />} />
         <Route path="/updatepassword" element={<Updatepss />} />
@@ -62,14 +63,14 @@ function App() {
           <Route path="order" element={<OrderHist />} />
           <Route path="details" element={<Details />} />
         </Route>
-        <Route path="/admin/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" />}>
+        {token? <Route path="/admin/dashboard" element={ <Dashboard token={token} />}>
           <Route path="" element={<AdminWelcome />}>
             <Route path="" element={<Outlet />} />
           </Route>
           <Route path="order" element={<Order />} />
           <Route path="create" element={<CreateProd />} />
           <Route path="update" element={<UpdateProd />} />
-        </Route>
+        </Route>: "/"}
         <Route path="*" element={<ErrorPage/>} />
       </Routes>
     </Router>

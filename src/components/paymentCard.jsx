@@ -5,6 +5,7 @@ import { TextField, Button, Grid } from "@mui/material";
 import supabase from "../assets/config/SupabaseClient";
 import { useNavigate } from "react-router-dom";
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import SuccessPay from './successpay';
 
 const CreditCardForm = () => {
   const navigate = useNavigate();
@@ -234,7 +235,7 @@ const CreditCardForm = () => {
               />
             </Grid>
           </Grid>
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             sx={{
@@ -250,7 +251,8 @@ const CreditCardForm = () => {
           >
             Purchase 
             <CreditScoreIcon  sx={{ml:2}}/>
-          </Button>
+          </Button> */}
+          <SuccessPay disabled={!formCompleted} onClick={paymentConfirm}/>
         </form>
       </Grid>
     </Grid>

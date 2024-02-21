@@ -21,6 +21,8 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import InfoIcon from '@mui/icons-material/Info';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import supabase from "../assets/config/SupabaseClient";
 
 const pages = [
   { name: "Home", path: "/" },
@@ -39,9 +41,13 @@ const ResponsiveAppBar = ({ token }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [brochurePdf, setBrochurePdf] = React.useState(Pdf);
+  const [navMenuKey, setNavMenuKey] = React.useState(0);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    setNavMenuKey(prevKey => prevKey + 1); // Increment key to force re-render menu component
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -59,10 +65,28 @@ const ResponsiveAppBar = ({ token }) => {
   };
 
   const handleLogOut = () => {
-    sessionStorage.removeItem("token");
     window.location.reload();
+    sessionStorage.removeItem("token");
+    localStorage.clear();
+    supabase.auth.signOut();
   };
-
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user.id === import.meta.env.VITE_ADMIN_USER) {
+        // console.log("Admin User")
+        // window.location.reload();
+        setIsAdmin(true);
+      }else{
+        setIsAdmin(false);
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
   return (
     <AppBar
       position="static"
@@ -71,6 +95,7 @@ const ResponsiveAppBar = ({ token }) => {
         color: "#4D1F08",
         boxShadow: "none",
       }}
+      key={navMenuKey}
     >
       <Container maxWidth="xl" sx={{ backgroundColor: "inherit" }}>
         <Toolbar disableGutters>
@@ -164,6 +189,26 @@ const ResponsiveAppBar = ({ token }) => {
                       Sign Out
                     </Typography>
                   </MenuItem>
+                  {isAdmin && (
+                    <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      if (window.location.pathname === "/admin/dashboard") {
+                        window.location.reload();
+                      }
+                    }}
+                      component={Link}
+                      to="/admin/dashboard"
+                    >
+                      <AdminPanelSettingsIcon sx={{color:"#4D1F08"}}/>
+                      <Typography
+                        textAlign="center"
+                        style={{ color: "#4D1F08", fontFamily: "monospace",marginLeft:20 }}
+                      >
+                        Admin
+                      </Typography>
+                    </MenuItem>
+                  )}
                   <MenuItem
                     onClick={handleCloseNavMenu}
                     component={Link}
@@ -270,6 +315,15 @@ const ResponsiveAppBar = ({ token }) => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
+                  {isAdmin && (
+                    <MenuItem
+                      component={Link}
+                      to={"/admin/dashboard"}
+                      onClick={handleClose}
+                    >
+                      Admin
+                    </MenuItem>
+                  )}
                   <MenuItem
                     component={Link}
                     to={"/user/dashboard"}
@@ -285,7 +339,7 @@ const ResponsiveAppBar = ({ token }) => {
                     component={Link}
                     to={"/"}
                   >
-                    Logout
+                    Sign Out
                   </MenuItem>
                 </Menu>
                     <CartButton/>

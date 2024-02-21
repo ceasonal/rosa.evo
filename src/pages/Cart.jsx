@@ -137,17 +137,20 @@ const Cart = () => {
     };
   };
   const { subtotal, shipping, tax, total } = getTotalPrice();
-  const isMobileScreens = useMediaQuery("(max-width:599px)");
+  const isMobileScreens = useMediaQuery("(max-width:959px)");
   return (
     <>
-      <Badge
-        badgeContent={cartItems.length}
-        color="error"
-        onClick={handleDrawerOpen}
-        sx={{ color: "#4D1F08", cursor: "pointer" }}
-      >
-        <ShoppingCart />
-        {isMobileScreens && (
+    {
+      isMobileScreens ? (
+       <>
+          <Badge
+            badgeContent={cartItems.length}
+            color="error"
+            onClick={handleDrawerOpen}
+            sx={{ color: "#4D1F08", cursor: "pointer" }}
+          >
+            <ShoppingCart />
+          </Badge>
           <Typography
             textAlign="center"
             style={{
@@ -158,8 +161,36 @@ const Cart = () => {
           >
             Cart
           </Typography>
-        )}
+          </>
+      ) : (
+        <Badge
+        badgeContent={cartItems.length}
+        color="error"
+        onClick={handleDrawerOpen}
+        sx={{ color: "#4D1F08", cursor: "pointer" }}
+      >
+          <ShoppingCart />
       </Badge>
+      )
+    }
+      {/* <Badge
+        badgeContent={cartItems.length}
+        color="error"
+        onClick={handleDrawerOpen}
+        sx={{ color: "#4D1F08", cursor: "pointer" }}
+      >
+        <ShoppingCart />
+      </Badge>
+            <Typography
+              textAlign="center"
+              style={{
+                color: "#4D1F08",
+                fontFamily: "monospace",
+                marginLeft: 20,
+              }}
+            >
+              Cart
+            </Typography> */}
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <div
           style={{

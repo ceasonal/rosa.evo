@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import CreditCardForm from "./paymentCard";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
-export default function ResponsiveDialog() {
+export default function ResponsiveDialog(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -25,7 +25,9 @@ export default function ResponsiveDialog() {
 
   return (
     <React.Fragment>
-      <Button variant="contained" onClick={handleClickOpen} sx={{
+      <Button variant="contained" onClick={handleClickOpen} 
+      disabled={props.disabled}
+      sx={{
                 mt: 2,
                 backgroundColor: "#957461",
                 "&:hover": {
