@@ -3,112 +3,153 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import { State, City } from "country-state-city";
+import { State } from "country-state-city";
 import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import supabase from "../../assets/config/SupabaseClient";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 export default function AddressForm() {
-  // Initialize states
   const [selectedState, setSelectedState] = useState("");
-  const [city , setCity] = useState("");
+  const [city, setCity] = useState("");
   const [zipCode, setZipCode] = useState("");
-  const [formCompleted, setFormCompleted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [fname , setFname] = useState("");
-  const [lname , setLname] = useState("");
-  const [address , setAddress] = useState("");
-  const [type , setType] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [address, setAddress] = useState("");
+  const [type, setType] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error"); 
 
-  // Function to handle state change
   const handleStateChange = (event) => {
     const stateName = event.target.value;
     const code = State.getStatesOfCountry("IN").find(
       (state) => state.name === stateName
     ).isoCode;
     setSelectedState(stateName);
-    console.log("Selected state:", code);
     setZipCode("");
     setCity("");
   };
 
-  // Function to handle city change
   const handleCityChange = (event) => {
     setZipCode("");
   };
 
-  // Function to check if all fields are filled
   useEffect(() => {
-    if (
+    const isFormComplete =
       selectedState !== "" &&
       city !== "" &&
-      zipCode !== "" &&
+      zipCode.length === 6 &&
       fname !== "" &&
       lname !== "" &&
       address !== "" &&
       type !== "" &&
-      phoneNumber !== ""
-    ) {
-      setFormCompleted(true);
-    } else {
-      setFormCompleted(false);
-    }
+      phoneNumber.length === 10
+      if (isFormComplete) {
+        setSnackbarSeverity("success"); // Set severity to "success" when form is complete
+      } else {
+        setSnackbarSeverity("error"); // Reset severity to "error" when form is incomplete
+      }
   }, [selectedState, city, zipCode, fname, lname, address, phoneNumber, type]);
 
-      // Fetch existing user details based on uuid automatically 
-      useEffect(() => {
-        const fetchUserDetails = async () => {
-          try {
-            const { data: { user } } = await supabase.auth.getUser();
-            const { data, error } = await supabase
-              .from("user")
-              .select("*")
-              .eq("user_uuid", user.id)
-              .single();
-            if (error) {
-              console.log(error);
-              return;
-            }
-            if (data) {
-              setFname(data.first_name);
-              setLname(data.last_name);
-              setAddress(data.address);
-              setPhoneNumber(data.phone);
-              setSelectedState(data.state);
-              setCity(data.city);
-              setZipCode(data.zip_code);
-              setType(data.type);
-            }
-          }
-          catch (error) {
-            console.log(error);
-          }
-        };
-        fetchUserDetails();
-      }, []);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from("user")
+          .select("*")
+          .eq("user_uuid", user.id)
+          .single();
+        if (error) {
+          console.log(error);
+          return;
+        }
+        if (data) {
+          setFname(data.first_name);
+          setLname(data.last_name);
+          setAddress(data.address);
+          setPhoneNumber(data.phone);
+          setSelectedState(data.state);
+          setCity(data.city);
+          setZipCode(data.zip_code);
+          setType(data.type);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUserDetails();
+  }, []);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   const handleSubmit = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      const { data, error } = await supabase.from("user").upsert([
-        {
-          first_name: fname,
-          last_name: lname,
-          address: address,
-          phone: phoneNumber,
-          state: selectedState,
-          city: city,
-          zip_code: zipCode,
-          user_uuid: user.id,
-          type: type,
-        },
-      ]);
-      if (error) {
-        throw error;
+    const errors = validateForm();
+    if (errors.length > 0) {
+      errors.forEach((error) => {
+        setSnackbarMessage(error);
+        setSnackbarOpen(true);
+      });
+    } else {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase.from("user").upsert([
+          {
+            first_name: fname,
+            last_name: lname,
+            address: address,
+            phone: phoneNumber,
+            state: selectedState,
+            city: city,
+            zip_code: zipCode,
+            user_uuid: user.id,
+            type: type,
+          },
+        ]);
+        if (error) {
+          throw error;
+        }
+        setSnackbarMessage("Address submitted successfully!");
+        setSnackbarOpen(true);
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
+  };
+
+  const validateForm = () => {
+    const errors = [];
+
+    if (!selectedState) {
+      errors.push("State is required.");
+    }
+    if (!city) {
+      errors.push("City is required.");
+    }
+    if (zipCode.length !== 6) {
+      errors.push("Zip code must be 6 digits long.");
+    }
+    if (!fname) {
+      errors.push("First name is required.");
+    }
+    if (!lname) {
+      errors.push("Last name is required.");
+    }
+    if (!address) {
+      errors.push("Address is required.");
+    }
+    if (!type) {
+      errors.push("Type is required.");
+    }
+    if (phoneNumber.length !== 10) {
+      errors.push("Phone number must be 10 digits long.");
+    }
+    return errors;
   };
 
   return (
@@ -148,7 +189,7 @@ export default function AddressForm() {
             }}
             value={phoneNumber}
             onChange={(e) => {
-              const enteredPhoneNumber = e.target.value.replace(/\D/g, "");
+              const enteredPhoneNumber = String(e.target.value).replace(/\D/g, "");
               setPhoneNumber(enteredPhoneNumber);
             }}
             inputProps={{ maxLength: 10 }} 
@@ -263,14 +304,12 @@ export default function AddressForm() {
         <Grid item xs={12}>
           <Button
             onClick={handleSubmit}
-            disabled={!formCompleted}
             sx={{
-              backgroundColor: formCompleted ? "#4caf50" : "#cccccc",
+              backgroundColor: "#4caf50" ,
               color: "#ffffff",
               padding: "10px 20px",
               border: "none",
               borderRadius: "4px",
-              cursor: formCompleted ? "pointer" : "not-allowed",
               outline: "none",
               fontSize: "16px",
               fontWeight: "bold",
@@ -280,6 +319,16 @@ export default function AddressForm() {
           </Button>
         </Grid>
       </Grid>
+       {/* Snackbar to display success message */}
+       <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
