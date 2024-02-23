@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import UpdateIcon from '@mui/icons-material/Update';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { Link, useNavigate } from "react-router-dom";
 
 export const mainListItems = (
@@ -25,6 +26,13 @@ export const mainListItems = (
       <ListItemText primary="Orders" />
     </ListItemButton>
 
+    <ListItemButton component={Link} to="/admin/dashboard/custom">
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <AutoFixHighIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Custom Orders" />
+    </ListItemButton>
+    
   </React.Fragment>
 );
 
@@ -44,6 +52,7 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Update Product" />
     </ListItemButton>
+
   </React.Fragment>
 );
 

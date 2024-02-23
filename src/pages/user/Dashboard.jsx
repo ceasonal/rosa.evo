@@ -15,6 +15,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ThirdListItems from "./listItems";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { Outlet } from "react-router-dom";
+import supabase from "../../assets/config/SupabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -66,10 +68,27 @@ const Drawer = styled(MuiDrawer, {
 
 
 const Dashboard = () => {
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if(!user){
+        navigate("/")
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
 
   return (
       <Box sx={{ display: "flex" }}>

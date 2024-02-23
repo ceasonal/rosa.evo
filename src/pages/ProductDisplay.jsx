@@ -14,6 +14,7 @@ import Close from "@mui/icons-material/Close";
 import { makeStyles } from "@mui/styles";
 import Devider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
+import WishButton from "../components/wishButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -189,6 +190,7 @@ const ProductDetails = ({ token }) => {
                     <Devider />
                   </div>
                   {token ? (
+                    <>
                     <Button
                       variant="contained"
                       color="primary"
@@ -206,6 +208,8 @@ const ProductDetails = ({ token }) => {
                     >
                       Add to Cart
                     </Button>
+                    <WishButton/>
+                    </>
                   ) : (
                     <>
                       <Button
@@ -223,6 +227,9 @@ const ProductDetails = ({ token }) => {
                       >
                         Add to Cart
                       </Button>
+                        <WishButton 
+                        onClick={() => setIsSnackbarOpen(true)}
+                        />
                       <Snackbar
                         open={isSnackbarOpen}
                         autoHideDuration={3000}
@@ -247,7 +254,7 @@ const ProductDetails = ({ token }) => {
                           onClose={handleSnackbarClose}
                           severity="error"
                         >
-                          Please login to add to cart
+                          Please login to add to cart / wishlist
                         </MuiAlert>
                       </Snackbar>
                     </>

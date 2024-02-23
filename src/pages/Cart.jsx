@@ -173,24 +173,6 @@ const Cart = () => {
       </Badge>
       )
     }
-      {/* <Badge
-        badgeContent={cartItems.length}
-        color="error"
-        onClick={handleDrawerOpen}
-        sx={{ color: "#4D1F08", cursor: "pointer" }}
-      >
-        <ShoppingCart />
-      </Badge>
-            <Typography
-              textAlign="center"
-              style={{
-                color: "#4D1F08",
-                fontFamily: "monospace",
-                marginLeft: 20,
-              }}
-            >
-              Cart
-            </Typography> */}
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <div
           style={{
@@ -273,8 +255,12 @@ const Cart = () => {
                       <Typography variant="body1" sx={{ flexGrow: 1 }}>
                         {shippingAddress}
                       </Typography>
-                      <IconButton>
-                        <EditIcon />
+                      <IconButton
+                           component={Link}
+                           to="/user/dashboard/details"
+                           onClick={handleDrawerClose}
+                      >
+                        <EditIcon/>
                       </IconButton>
                     </div>
                   </>
@@ -282,8 +268,10 @@ const Cart = () => {
                 {!shippingTypeExists && (
                   <Button
                     variant="contained"
-                    color="primary"
-                    sx={{ mt: 2, width: "100%" }}
+                    sx={{ mt: 2, width: "100%",  backgroundColor: "#957461",
+                    "&:hover": {
+                      backgroundColor: "#685043",
+                    },}}
                     component={Link}
                     to="/user/dashboard/details"
                     onClick={handleDrawerClose}

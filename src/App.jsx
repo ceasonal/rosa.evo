@@ -16,10 +16,13 @@ import OrderHist from './pages/user/Order';
 import Details from './pages/user/Details';
 import Dashboard from './pages/admin/Dashboard';
 import Order from './pages/admin/Order';
+import CustomOrder from './pages/admin/CustomOrder';
 import CreateProd from './pages/admin/createProd';
 import UpdateProd from './pages/admin/updateProd';
 import AdminWelcome from './pages/admin/AdminWelcome';
+import Customize from './pages/Customize';
 import ErrorPage from './pages/404';
+import WishList from './pages/wishList';
 
 function App() {
   const [token, setToken] = useState(false);
@@ -41,7 +44,8 @@ function App() {
 
 
 
-  const shouldRenderNavbar = window.location.hash !== '#/admin/dashboard';
+  const shouldRenderNavbar = !['#/admin/dashboard', '#/admin/dashboard/order', '#/admin/dashboard/custom', '#/admin/dashboard/create', '#/admin/dashboard/update'].includes(window.location.hash);
+
 
   return (
     <Router>
@@ -56,6 +60,8 @@ function App() {
         <Route path="/products/:id" element={<ProductDisplay token={token} />} />
         <Route path="/products" element={<Product />} />
         <Route exact path="/blog/:id" element={<Blogs />} />
+        <Route path="/customize" element={<Customize />} />
+        <Route path="/wishlist" element={<WishList />} />
         <Route path="/user/dashboard" element={<UserDashboard />}>
         <Route path="" element={<UserWelcome />}>
             <Route path="" element={<Outlet />} />
@@ -68,6 +74,7 @@ function App() {
             <Route path="" element={<Outlet />} />
           </Route>
           <Route path="order" element={<Order />} />
+          <Route path="custom" element={<CustomOrder />} />
           <Route path="create" element={<CreateProd />} />
           <Route path="update" element={<UpdateProd />} />
         </Route>: "/"}

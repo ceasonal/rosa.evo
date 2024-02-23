@@ -21,21 +21,26 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import InfoIcon from '@mui/icons-material/Info';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import supabase from "../assets/config/SupabaseClient";
 
 const pages = [
-  { name: "Home", path: "/" },
+  // { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-  { name: "Brochure" },
   { name: "About Us", path: "/about" },
-  // { name: "Contact Us", path: "/contact" },
+  { name: "Wish List", path: "/wishlist" },
+  { name: "Customize", path: "/customize" },
+  { name: "Brochure" },
 ];
 const iconMap = {
-  Home: <HomeIcon sx={{color:"#4D1F08"}} />,
+  // Home: <HomeIcon sx={{color:"#4D1F08"}} />,
   Products: <StorefrontIcon sx={{color:"#4D1F08"}}/>,
-  Brochure: <PictureAsPdfIcon sx={{color:"#4D1F08"}}/>,
   "About Us": <InfoIcon sx={{color:"#4D1F08"}}/>,
+  "Wish List": <FavoriteIcon sx={{color:"#4D1F08"}}/>,
+  "Customize": <AutoFixHighIcon sx={{color:"#4D1F08"}}/>,
+  Brochure: <PictureAsPdfIcon sx={{color:"#4D1F08"}}/>,
 };
 const ResponsiveAppBar = ({ token }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
