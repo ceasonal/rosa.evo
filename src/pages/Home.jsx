@@ -44,7 +44,7 @@ const Home = () => {
           }}
         >
           <img
-            src="https://cdn.discordapp.com/attachments/1140959205986148372/1182703647377862756/WhatsApp_Image_2021-10-07_at_7.14.49_PM.jpg?ex=6585a99b&is=6573349b&hm=1d8498b21fa8c7f2bdf43b762a63681fdf461e458caf829d67627b92f295d739&"
+            src="https://i.ibb.co/s6sGSxv/Whats-App-Image-2021-10-17-at-6-52-40-PM.jpg"
             alt="Image 1"
             style={{
               width: "30%",
@@ -54,7 +54,7 @@ const Home = () => {
           />
 
           <img
-            src="https://media.discordapp.net/attachments/1140959205986148372/1182746305685094470/WhatsApp_Image_2021-10-07_at_7.14.51_PM_1.jpg?ex=6585d155&is=65735c55&hm=664245c8fae1ac2b41b23faf09c30ea516a1e519d525d002a915d7bbed77da52&=&format=webp&width=354&height=472"
+            src="https://i.ibb.co/vVFfhM7/Whats-App-Image-2021-10-17-at-3-25-23-PM-1.jpg"
             alt="Image 2"
             style={{
               width: "30%",
@@ -63,7 +63,7 @@ const Home = () => {
             }}
           />
           <img
-            src="https://media.discordapp.net/attachments/1140959205986148372/1182746610095095908/WhatsApp_Image_2021-10-17_at_5.33.25_PM.jpg?ex=6585d19e&is=65735c9e&hm=1fbf11a07a3fc24c0142bbd934d030d03ab4109ccc2b9ede655693c9077a63d1&=&format=webp&width=355&height=473"
+            src="https://i.ibb.co/XZ0SM05/Whats-App-Image-2021-10-17-at-5-33-25-PM.jpg"
             alt="Image 3"
             style={{
               width: "30%",
@@ -106,7 +106,7 @@ const Home = () => {
         <Grid container spacing={2} alignItems="center" justifyContent="center">
           <Grid item xs={12} md={4}>
             <img
-              src="https://cdn.discordapp.com/attachments/1140959205986148372/1183384642246680647/iii-removebg-preview.png?ex=65bf82d4&is=65ad0dd4&hm=87b5ee369c74d1e9c0a27153b22c803b3acfe369e11f7d2dfe5710aba911c00b&"
+              src="https://i.ibb.co/7Kq2xhY/iii-removebg-preview.png"
               alt="logo"
               style={{ width: "100%" }}
             />

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Imagetest from "../assets/images/test.jpg";
+import AvImage from "../assets/images/prod-images/words.png";
 import supabase from "../assets/config/SupabaseClient";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -100,13 +101,8 @@ const Forgotpass = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1 }}>
-            <img
-              src="https://cdn.discordapp.com/attachments/1140959205986148372/1182970787058171924/words.png?ex=65a251e6&is=658fdce6&hm=c35868b3947f2f328a5cbd2f5f9ea562303ace8ec82c6c0189867fd672f0ba89&"
-              alt=""
-              width={80}
-            />
-          </Avatar>
+    <Avatar sx={{ m: 1, width: 80, height: 80 }}
+          src={AvImage}/>
           <Typography component="h1" variant="h5">
             Forgot Password
           </Typography>

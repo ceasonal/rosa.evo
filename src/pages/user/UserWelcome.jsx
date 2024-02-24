@@ -27,7 +27,7 @@ const AdminWelcome = () => {
         alt="Pikachu gif"
         style={imageStyle}
       /> */}
-        <img src='https://cdn.discordapp.com/attachments/1140959205986148372/1183384642246680647/iii-removebg-preview.png?ex=65bf82d4&is=65ad0dd4&hm=87b5ee369c74d1e9c0a27153b22c803b3acfe369e11f7d2dfe5710aba911c00b&' alt='' style={imageStyle}/>
+        <img src='https://i.ibb.co/7Kq2xhY/iii-removebg-preview.png' alt='' style={imageStyle}/>
       <Typography variant="h5" gutterBottom sx={{...textStyle, fontFamily:'monospace'}}>
         Welcome to the user profile page! Here you can manage your user details and view your order history. Get started by clicking on the buttons in the side bar.
       </Typography>
