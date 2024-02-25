@@ -46,9 +46,6 @@ const Forgotpass = () => {
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(
         formData.email,
-        {
-          redirectTo: "http://127.0.0.1:5173/#/updatepassword",
-        }
       );
 
       if (error) throw error;

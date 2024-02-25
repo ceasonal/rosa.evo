@@ -118,21 +118,20 @@ const SignUp = () => {
     }
   }
 
-  const navigate = useNavigate();
-  React.useEffect(() => {
-    const fetchUserDetails = async () => {
-    try{
-      const { data: { user } } = await supabase.auth.getUser();
-      if(user){
-        navigate("/")
-        // console.log(user)
-      }
-    }catch{
-      console.log("error")
-    }
-  }
-    fetchUserDetails();
-  },[])
+  // const navigate = useNavigate();
+  // React.useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //   try{
+  //     const { data: { user } } = await supabase.auth.getUser();
+  //     if(user){
+  //       navigate("/")
+  //     }
+  //   }catch{
+  //     console.log("error")
+  //   }
+  // }
+  //   fetchUserDetails();
+  // },[])
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

@@ -69,19 +69,19 @@ const SignInSide = ({ setToken }) => {
     }
   };
   
-  React.useEffect(() => {
-    const fetchUserDetails = async () => {
-    try{
-      const { data: { user } } = await supabase.auth.getUser();
-      if(user){
-        navigate("/")
-      }
-    }catch{
-      console.log("error")
-    }
-  }
-    fetchUserDetails();
-  },[])
+  // React.useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //   try{
+  //     const { data: { user } } = await supabase.auth.getUser();
+  //     if(user){
+  //       navigate("/")
+  //     }
+  //   }catch{
+  //     console.log("error")
+  //   }
+  // }
+  //   fetchUserDetails();
+  // },[])
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
