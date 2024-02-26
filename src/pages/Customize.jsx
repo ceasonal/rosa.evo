@@ -15,6 +15,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
 import supabase from "../assets/config/SupabaseClient";
 
+
 const CustomizePage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -54,11 +55,17 @@ const CustomizePage = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    const imageUrl = URL.createObjectURL(file); // Generate URL for the uploaded image
-    console.log(imageUrl);
-    setFormData({ ...formData, imageFile: file, imageUrl }); // Set image URL in state
-  };
-
+    const formDataCopy = { ...formData }; // Create a copy of formData
+    formDataCopy.imageFile = file;
+    
+    // Read the image file as data URL
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        formDataCopy.imageUrl = e.target.result; // Set data URL as image URL
+        setFormData(formDataCopy);
+    };
+    reader.readAsDataURL(file);
+};
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Perform form validation

@@ -179,7 +179,7 @@ const CreditCardForm = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <TextField
-                type="number"
+                type="text"
                 name="number"
                 label="Card Number"
                 variant="outlined"
@@ -208,7 +208,7 @@ const CreditCardForm = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                type="number"
+                type="text"
                 name="expiry"
                 label="Valid Thru"
                 variant="outlined"
@@ -222,7 +222,7 @@ const CreditCardForm = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                type="number"
+                type="text"
                 name="cvc"
                 label="CVC"
                 variant="outlined"
