@@ -8,6 +8,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import { Link, useNavigate } from "react-router-dom";
 
 export const mainListItems = (
@@ -33,6 +34,13 @@ export const mainListItems = (
       <ListItemText primary="Custom Orders" />
     </ListItemButton>
     
+    <ListItemButton component={Link} to="/admin/dashboard/stats">
+      <ListItemIcon sx={{color:"#be9269"}}>
+        <QueryStatsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Stats" />
+    </ListItemButton>
+
   </React.Fragment>
 );
 

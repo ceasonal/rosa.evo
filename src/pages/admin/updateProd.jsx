@@ -9,7 +9,9 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { Divider } from "@mui/material";
 import supabase from "../../assets/config/SupabaseClient";
+
 
 const UpdateProd = () => {
   const [id, setId] = useState("");
@@ -186,7 +188,8 @@ const UpdateProd = () => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{color:"#be9269"}}>Update Product</Typography>
+      <Typography variant="h5">Update Product</Typography>
+      <Divider />
       <form>
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="id">Product ID</InputLabel>

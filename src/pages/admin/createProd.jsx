@@ -9,6 +9,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { Divider } from "@mui/material";
 import supabase from "../../assets/config/SupabaseClient";
 
 const CreateProd = () => {
@@ -90,7 +91,8 @@ const CreateProd = () => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{color:"#be9269"}}>Create Product</Typography>
+      <Typography variant="h5">Create Product</Typography>
+      <Divider />
       <form>
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="name">Name</InputLabel>

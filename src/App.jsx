@@ -20,6 +20,7 @@ import CustomOrder from './pages/admin/CustomOrder';
 import CreateProd from './pages/admin/createProd';
 import UpdateProd from './pages/admin/updateProd';
 import AdminWelcome from './pages/admin/AdminWelcome';
+import Stats from './pages/admin/Stats';
 import Customize from './pages/Customize';
 import ErrorPage from './pages/404';
 import WishList from './pages/wishList';
@@ -42,16 +43,13 @@ function App() {
     }
   }, []);
 
-
-
-  const shouldRenderNavbar = !['#/admin/dashboard', '#/admin/dashboard/order', '#/admin/dashboard/custom', '#/admin/dashboard/create', '#/admin/dashboard/update'].includes(window.location.hash);
-
-
+  const shouldRenderNavbar = !['#/admin/dashboard', '#/admin/dashboard/order', '#/admin/dashboard/custom', '#/admin/dashboard/stats', '#/admin/dashboard/create', '#/admin/dashboard/update'].includes(window.location.hash);
+  
   return (
     <Router>
       {shouldRenderNavbar && <Navbar token={token} />}
       <Routes>
-        <Route path="/" element={<Home token={token} />} />
+        <Route path="/" element={<Home token={token} />} /> 
         <Route path="/signin" element={<Signin setToken={setToken}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<Forgotpass />} />
@@ -75,6 +73,7 @@ function App() {
           </Route>
           <Route path="order" element={<Order />} />
           <Route path="custom" element={<CustomOrder />} />
+          <Route path="stats" element={<Stats />} />
           <Route path="create" element={<CreateProd />} />
           <Route path="update" element={<UpdateProd />} />
         </Route>: "/"}

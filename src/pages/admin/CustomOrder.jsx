@@ -134,7 +134,7 @@ export default function Orders() {
                   <TableCell>{row.user_contact}</TableCell>
                   <TableCell>
                     <Button variant="outlined" onClick={() => handleClickProductDialogOpen(row)}>
-                      View Product
+                      View Info
                     </Button>
                   </TableCell>
                   <TableCell>
