@@ -25,7 +25,7 @@ const CreditCardForm = () => {
 
     switch (name) {
       case "number":
-        validatedValue = value.slice(0, 16);
+        validatedValue = value.replace(/\D/g, '').slice(0, 16);
         break;
       case "name":
         validatedValue = value.replace(/[^a-zA-Z]/g, '').slice(0,21);
@@ -34,7 +34,7 @@ const CreditCardForm = () => {
         validatedValue = value.slice(0, 4);
         break;
       case "cvc":
-        validatedValue = value.slice(0, 3);
+        validatedValue = value.replace(/\D/g, '').slice(0, 3);
         break;
       default:
         break;

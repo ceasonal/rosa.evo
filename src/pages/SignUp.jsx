@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../assets/config/SupabaseClient";
 import Imagetest from "../assets/images/test1.jpg";
 import AvImage from "../assets/images/prod-images/words.png";
@@ -116,22 +116,36 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
     }
+
+    try {
+      const { data, error } = await supabase
+        .from('auth')
+        .insert([{ email: formData.email }]); 
+    
+      if (error) {
+        throw error;
+      }
+    
+      console.log("Data inserted successfully:", data);
+    } catch (error) {
+      console.log("Insert error:", error.message);
+    }
   }
 
-  // const navigate = useNavigate();
-  // React.useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //   try{
-  //     const { data: { user } } = await supabase.auth.getUser();
-  //     if(user){
-  //       navigate("/")
-  //     }
-  //   }catch{
-  //     console.log("error")
-  //   }
-  // }
-  //   fetchUserDetails();
-  // },[])
+    // useEffect(() => {
+    //   const fetchUserDetails = async () => {
+    //     try {
+    //       const { data: user } = await supabase
+    //       .from('auth.users')
+    //       .select('*');
+    //       console.log(user);
+    //     } catch {
+    //       console.log("error");
+    //     }
+    //   };
+    //   fetchUserDetails();
+    // }, []);
+
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

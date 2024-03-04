@@ -27,8 +27,8 @@ const Stats = () => {
           setTotProd(prodsData.length);
 
         const { data:  user } = await supabase
-          .from('user')
-          .select('user_uuid');
+          .from('auth')
+          .select('email');
           setTotUser(user.length);
   
         const { data:  orders } = await supabase

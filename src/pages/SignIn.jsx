@@ -67,6 +67,7 @@ const SignInSide = ({ setToken }) => {
       setError(error.message || "An error occurred during sign in");
       setOpenSnackbar(true);
     }
+
   };
   
   // React.useEffect(() => {
