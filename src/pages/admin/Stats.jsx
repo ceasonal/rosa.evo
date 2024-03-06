@@ -82,8 +82,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <PeopleAltIcon style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <PeopleAltIcon style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{  marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
             {totUser}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -104,8 +104,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <WindowIcon style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <WindowIcon style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{ marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
             {totProd}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -126,8 +126,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <SavingsIcon  style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <SavingsIcon  style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{ marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
             {totIncome}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -148,8 +148,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <ShoppingBasketIcon  style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <ShoppingBasketIcon  style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{ marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
             {totOrder}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -170,8 +170,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <PendingIcon style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <PendingIcon style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{ marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
             {pendDel}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -192,8 +192,8 @@ const Stats = () => {
           alignItems: 'center',
           borderRadius: '10px',
         }}>
-            <LibraryAddCheckIcon  style={{color:'#be9269'}}/>
-          <Typography variant="body1" color="white" style={{ marginBottom: '10px', fontFamily:'monospace', fontWeight:'bold' }}>
+            <LibraryAddCheckIcon  style={{color:'#be9269', marginBottom:'10px'}}/>
+          <Typography variant="body1" color="white" style={{ marginBottom: '15px', fontFamily:'monospace', fontWeight:'bold', fontSize: '40px' }}>
            {delivered}
           </Typography>
           <Typography variant="body1" color="white" fontFamily='monospace'>
@@ -201,7 +201,6 @@ const Stats = () => {
           </Typography>
         </Box>
       </Grid>
-
     </Grid>
     </>
   );

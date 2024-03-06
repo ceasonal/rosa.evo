@@ -9,38 +9,38 @@ const topComments = [
   {
     id: 1,
     user: {
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/50x50/?person",
+      name: "Ninad K",
+      avatar: "https://i.ibb.co/6ySX45J/ninad.jpg",
       social: {
-        instagram: "https://instagram.com/johndoe",
+        instagram: "https://instagram.com/ninadkarkhanis",
       },
     },
-    comment: "This is an amazing website! I love the content and design.",
+    comment: "Great quality products! My mom loved it.",
     value: 5,
   },
   {
     id: 2,
     user: {
-      name: "Jane Smith",
-      avatar: "https://source.unsplash.com/50x50/?woman",
+      name: "Hamza",
+      avatar: "https://i.ibb.co/vQfdw4N/hamza.jpg",
       social: {
-        instagram: "https://instagram.com/janesmith",
+        instagram: "https://instagram.com/hamza_kapasi",
       },
     },
-    comment: "The information provided here is very useful. Keep it up!",
-    value: 4.5,
+    comment: "Highly recommend this resin ring from rosa evo! Stunning design, excellent quality, and top-notch customer service. Love it!",
+    value: 5,
   },
   {
     id: 4,
     user: {
-      name: "Alia Doe",
-      avatar: "https://source.unsplash.com/50x50/?person",
+      name: "Viraj Panickar",
+      avatar: "https://i.ibb.co/8BQZr1V/viraj.jpg",
       social: {
-        instagram: "https://instagram.com/janesmith",
+        instagram: "https://instagram.com/virah_b1331",
       },
     },
-    comment: "Very Epic Products! Must buy.",
-    value: 4,
+    comment: "AMAZING QUALITY AND THE PACKAGING IS SUPERB!!",
+    value: 5,
   },
 ];
 

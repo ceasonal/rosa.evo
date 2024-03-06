@@ -31,7 +31,7 @@ const Home = () => {
             marginTop: 2,
           }}
         >
-          Hand Crafted Jewellery With A Mothers Touch
+          Hand Crafted Jewellery With A Mother's Touch
         </Typography>
         <Box
           sx={{

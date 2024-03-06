@@ -44,7 +44,7 @@ const Footer = () => {
           <Grid item xs={12} sm={4}>
             <Box display="flex" alignItems="center" justifyContent="center">
               <img
-                src="https://media.discordapp.net/attachments/1140959205986148372/1183384642246680647/iii-removebg-preview.png?ex=65e46cd4&is=65d1f7d4&hm=b53ba1f3bdbdc330d7de85227c8bfc94e570de337c2d807074baab9548281dc5&=&format=webp&quality=lossless&width=322&height=473"
+                src="https://i.ibb.co/7Kq2xhY/iii-removebg-preview.png"
                 alt="RosaEvo"
                 style={{ maxWidth: "50%", height: "auto" }}
               />

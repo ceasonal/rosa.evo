@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Prod = () => {
   const [fetchErrors, setFetchErrors] = useState(null);
@@ -100,7 +102,21 @@ const Prod = () => {
   
     fetchDisplayProducts();
   }, [categories, price, SoldOut]);
-  
+
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if(!user){
+        navigate("/")
+      }
+    }catch{
+      console.log("error")
+    }
+  }
+    fetchUserDetails();
+  },[])
 
   return (
     <>
@@ -202,12 +218,35 @@ const Prod = () => {
                 </>
               ) : (
                 <Grid container spacing={3} justifyContent="center">
-                  <Box sx={{ marginTop: 5 }}>
+                       <Box
+                    sx={{
+                      marginTop: 5,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     <img
-                      src="https://www.ssmed.in/images/notfound.png"
-                      alt="no-product-found"
-                      style={{ maxWidth: "100%" }}
+                      src="https://www.breathearomatherapy.com/assets/images/global/no-product.png"
+                      alt="404"
+                      style={{
+                        width: "40%",
+                        marginBottom: "20px",
+                      }}
                     />
+                    <Typography
+                      gutterBottom
+                      style={{
+                        fontWeight: "bold", 
+                        marginTop: "20px", 
+                        fontSize: "20px",
+                        color: '#4D1F08',
+                        fontFamily: 'monospace'
+                      }}
+                    >
+                      Products Not Found / Add to Wishlist
+                    </Typography>
                   </Box>
                 </Grid>
               )}

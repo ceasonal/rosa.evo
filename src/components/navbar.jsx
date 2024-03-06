@@ -30,7 +30,7 @@ const pages = [
   // { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
   { name: "About Us", path: "/about" },
-  { name: "Wish List", path: "/wishlist" },
+  // { name: "Wish List", path: "/wishlist" },
   { name: "Customize", path: "/customize" },
   { name: "Brochure" },
 ];
@@ -38,7 +38,7 @@ const iconMap = {
   // Home: <HomeIcon sx={{color:"#4D1F08"}} />,
   Products: <StorefrontIcon sx={{color:"#4D1F08"}}/>,
   "About Us": <InfoIcon sx={{color:"#4D1F08"}}/>,
-  "Wish List": <FavoriteIcon sx={{color:"#4D1F08"}}/>,
+  // "Wish List": <FavoriteIcon sx={{color:"#4D1F08"}}/>,
   "Customize": <AutoFixHighIcon sx={{color:"#4D1F08"}}/>,
   Brochure: <PictureAsPdfIcon sx={{color:"#4D1F08"}}/>,
 };
@@ -178,21 +178,27 @@ const ResponsiveAppBar = ({ token }) => {
               ])}
               {token ? (
                 <>
-                  <MenuItem
+                 <MenuItem
                     onClick={() => {
                       handleCloseNavMenu();
-                      handleLogOut();
                     }}
                     component={Link}
-                    to="/"
+                    to="/wishlist"
                   >
-                    <LogoutIcon sx={{color:"#4D1F08"}}/>
+                    <FavoriteIcon sx={{color:"#4D1F08"}}/>
                     <Typography
                       textAlign="center"
                       style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                     >
-                      Sign Out
+                      Wish List
                     </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu();
+                    }}
+                    >
+                    <CartButton/>
                   </MenuItem>
                   {isAdmin && (
                     <MenuItem
@@ -230,9 +236,18 @@ const ResponsiveAppBar = ({ token }) => {
                   <MenuItem
                     onClick={() => {
                       handleCloseNavMenu();
+                      handleLogOut();
                     }}
+                    component={Link}
+                    to="/"
+                  >
+                    <LogoutIcon sx={{color:"#4D1F08"}}/>
+                    <Typography
+                      textAlign="center"
+                      style={{ color: "#4D1F08", fontFamily: "monospace", marginLeft:20 }}
                     >
-                    <CartButton/>
+                      Sign Out
+                    </Typography>
                   </MenuItem>
                 </>
               ) : (
@@ -271,6 +286,7 @@ const ResponsiveAppBar = ({ token }) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
+              <>
               <Button
                 key={page.name}
                 onClick={
@@ -290,7 +306,29 @@ const ResponsiveAppBar = ({ token }) => {
               >
                 {page.name}
               </Button>
+              </>
             ))}
+             { token ? (
+                  <>
+                  <Button
+                    onClick={() => {
+                      handleCloseNavMenu();
+                    }}
+                    component={Link}
+                    to="/wishlist"
+                    sx={{
+                      my: 2,
+                      color: "#4D1F08",
+                      display: "block",
+                      textTransform: "none",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Wish List
+                  </Button>
+                  </>
+                ): null
+              }
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {token ? (

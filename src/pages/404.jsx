@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Typography } from '@mui/material';
-import NotFoundImage from '../assets/images/404bg.png';
-
+import Error from '../assets/images/error.png'
 const NotFound = () => {
   return (
     <Container
@@ -13,7 +12,7 @@ const NotFound = () => {
       }}
     >
       <img
-        src={NotFoundImage}
+        src={Error}
         alt="404"
         style={{
           width: '40%',
@@ -21,16 +20,16 @@ const NotFound = () => {
         }}
       />
       <Typography
-        variant="h4"
-        component="h1"
         gutterBottom
         style={{
-          fontSize: '2.5rem', // Adjust font size
-          fontWeight: 'bold', // Make the text bold
-          marginTop: '20px', // Add margin at the top
+          fontWeight: 'bold',
+          fontSize: '20px',
+          marginTop: '20px',
+          color: '#4D1F08',
+          fontFamily: 'monospace',
         }}
       >
-        Page Not Found
+        The page you are looking for does not exist
       </Typography>
     </Container>
   );

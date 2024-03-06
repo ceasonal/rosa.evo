@@ -5,6 +5,7 @@ import supabase from "../assets/config/SupabaseClient";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
+import { Typography } from "@mui/material";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 const Prod = () => {
@@ -28,7 +29,7 @@ const Prod = () => {
         break;
       // case "custom":
       //   setCustom(value);
-        // break;
+      // break;
       case "sold_out":
         setSoldOut(value);
         break;
@@ -153,7 +154,7 @@ const Prod = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                   <FormControl
                     sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
                   >
@@ -171,7 +172,6 @@ const Prod = () => {
                       <MenuItem value="True">Sold Out</MenuItem>
                     </Select>
                   </FormControl>
-
                 </Grid>
               </Grid>
 
@@ -187,12 +187,35 @@ const Prod = () => {
                 </>
               ) : (
                 <Grid container spacing={3} justifyContent="center">
-                  <Box sx={{ marginTop: 5 }}>
+                  <Box
+                    sx={{
+                      marginTop: 5,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     <img
-                      src="https://www.ssmed.in/images/notfound.png"
-                      alt="no-product-found"
-                      style={{ maxWidth: "100%" }}
+                      src="https://www.breathearomatherapy.com/assets/images/global/no-product.png"
+                      alt="404"
+                      style={{
+                        width: "40%",
+                        marginBottom: "20px",
+                      }}
                     />
+                    <Typography
+                      gutterBottom
+                      style={{
+                        fontWeight: "bold", 
+                        marginTop: "20px",
+                        fontSize: "20px", 
+                        color: '#4D1F08',
+                        fontFamily: 'monospace'
+                      }}
+                    >
+                      Products Not Found
+                    </Typography>
                   </Box>
                 </Grid>
               )}
