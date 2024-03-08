@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import supabase from "../assets/config/SupabaseClient";
 import Imagetest from "../assets/images/test1.jpg";
 import AvImage from "../assets/images/prod-images/words.png";
@@ -13,22 +13,18 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const SignUp = () => {
-  
   const [formData, setFormData] = useState({
-    // name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    // name: "",
     email: "",
     password: "",
   });
@@ -58,20 +54,9 @@ const SignUp = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // Simple form validation
+    // Form validation
     let formIsValid = true;
     const newErrors = { ...errors };
-
-    // if (!formData.name) {
-    //   newErrors.name = "Name is required";
-    //   formIsValid = false;
-    // } else if (/\d/.test(formData.name)) {
-    //   newErrors.name = "Name should not contain numbers";
-    //   formIsValid = false;
-    // } else if (formData.name.length > 50) {
-    //   newErrors.name = "Name should not exceed 50 characters";
-    //   formIsValid = false;
-    // }
 
     if (!formData.email) {
       newErrors.email = "Email is required";
@@ -112,40 +97,24 @@ const SignUp = () => {
         "Account created successfully! Please check your email for verification."
       );
       setSnackbarSeverity("success");
-
     } catch (error) {
       console.log(error);
     }
 
     try {
       const { data, error } = await supabase
-        .from('auth')
-        .insert([{ email: formData.email }]); 
-    
+        .from("auth")
+        .insert([{ email: formData.email }]);
+
       if (error) {
         throw error;
       }
-    
+
       console.log("Data inserted successfully:", data);
     } catch (error) {
       console.log("Insert error:", error.message);
     }
   }
-
-    // useEffect(() => {
-    //   const fetchUserDetails = async () => {
-    //     try {
-    //       const { data: user } = await supabase
-    //       .from('auth.users')
-    //       .select('*');
-    //       console.log(user);
-    //     } catch {
-    //       console.log("error");
-    //     }
-    //   };
-    //   fetchUserDetails();
-    // }, []);
-
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -187,10 +156,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar
-            sx={{ m: 1, width: 80, height: 80 }}
-            src={AvImage}
-          />
+          <Avatar sx={{ m: 1, width: 80, height: 80 }} src={AvImage} />
           <Typography component="h1" variant="h5" fontFamily="monospace">
             Sign Up
           </Typography>
@@ -200,25 +166,6 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            {/* <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                name="name"
-                error={Boolean(errors.name)}
-                helperText={errors.name}
-                onChange={handleChange}
-              />
-            </Box> */}
             <TextField
               margin="normal"
               required

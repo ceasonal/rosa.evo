@@ -52,12 +52,11 @@ const SignInSide = ({ setToken }) => {
       });
 
       if (error) throw error;
-      
+
       setToken(data);
 
-      if(data.user.id === import.meta.env.VITE_ADMIN_USER) {
-          navigate("/admin/dashboard");
-          // window.location.reload();
+      if (data.user.id === import.meta.env.VITE_ADMIN_USER) {
+        navigate("/admin/dashboard");
       } else {
         navigate("/");
         console.log("user");
@@ -67,22 +66,7 @@ const SignInSide = ({ setToken }) => {
       setError(error.message || "An error occurred during sign in");
       setOpenSnackbar(true);
     }
-
   };
-  
-  // React.useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //   try{
-  //     const { data: { user } } = await supabase.auth.getUser();
-  //     if(user){
-  //       navigate("/")
-  //     }
-  //   }catch{
-  //     console.log("error")
-  //   }
-  // }
-  //   fetchUserDetails();
-  // },[])
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -121,8 +105,7 @@ const SignInSide = ({ setToken }) => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, width: 80, height: 80 }}
-          src={AvImage}/>
+          <Avatar sx={{ m: 1, width: 80, height: 80 }} src={AvImage} />
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>

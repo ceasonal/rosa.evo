@@ -1,38 +1,39 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
+import * as React from "react";
+import { useEffect, useState } from "react";
 import supabase from "../../assets/config/SupabaseClient";
-import { Button } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Orders() {
-  const [orderData, setOrderData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [productDialogOpen, setProductDialogOpen] = React.useState(false);
-  const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
-  const [selectedRow, setSelectedRow] = React.useState(null);
+  const [orderData, setOrderData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [productDialogOpen, setProductDialogOpen] = useState(false);
+  const [imageDialogOpen, setImageDialogOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const fetchOrderData = async () => {
     try {
       const { data, error } = await supabase
         .from("custom")
         .select("*")
-        .order('created_at', { ascending: false });
-      
+        .order("created_at", { ascending: false });
+
       if (error) {
         throw error;
       }
@@ -59,13 +60,13 @@ export default function Orders() {
     } catch (error) {
       console.error("Error marking order as delivered:", error.message);
     }
-  }
+  };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchOrderData();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     markAsDelivered();
     supabase
       .channel("room1")
@@ -96,7 +97,7 @@ export default function Orders() {
   };
 
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
@@ -104,15 +105,15 @@ export default function Orders() {
         Custom Requests
       </Typography>
       <Divider />
-      {isLoading ? ( 
+      {isLoading ? (
         <Typography variant="body1" sx={{ mt: 2 }}>
           Loading...
         </Typography>
-      ) : orderData.length === 0 ? ( 
+      ) : orderData.length === 0 ? (
         <Typography variant="body1" sx={{ mt: 2 }}>
           No one has ordered yet ;-;
         </Typography>
-      ) : ( 
+      ) : (
         <TableContainer component={Paper} sx={{ mt: 4 }}>
           <Table size="small">
             <TableHead>
@@ -133,13 +134,19 @@ export default function Orders() {
                   <TableCell>{row.user_name}</TableCell>
                   <TableCell>{row.user_contact}</TableCell>
                   <TableCell>
-                    <Button variant="outlined" onClick={() => handleClickProductDialogOpen(row)}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleClickProductDialogOpen(row)}
+                    >
                       View Info
                     </Button>
                   </TableCell>
                   <TableCell>
                     {row.prod_image ? (
-                      <Button variant="outlined" onClick={() => handleClickImageDialogOpen(row)}>
+                      <Button
+                        variant="outlined"
+                        onClick={() => handleClickImageDialogOpen(row)}
+                      >
                         View Image
                       </Button>
                     ) : (
@@ -151,7 +158,9 @@ export default function Orders() {
                   <TableCell>
                     <Chip
                       label={row.status}
-                      color={row.status === "in contact" ? "success" : "warning"}
+                      color={
+                        row.status === "in contact" ? "success" : "warning"
+                      }
                     />
                   </TableCell>
                   <TableCell>
@@ -159,8 +168,16 @@ export default function Orders() {
                       variant="contained"
                       color="primary"
                       disabled={row.status === "in contact"}
-                      onClick={() => markAsDelivered(row.custom_id, "in contact")}
-                      sx={{ borderRadius: 16, textTransform: 'none', minWidth: 'auto', height: 32, py: 0 }}
+                      onClick={() =>
+                        markAsDelivered(row.custom_id, "in contact")
+                      }
+                      sx={{
+                        borderRadius: 16,
+                        textTransform: "none",
+                        minWidth: "auto",
+                        height: 32,
+                        py: 0,
+                      }}
                     >
                       Update
                     </Button>
@@ -172,11 +189,16 @@ export default function Orders() {
         </TableContainer>
       )}
       {/* Product Dialog */}
-      <Dialog open={productDialogOpen} onClose={handleCloseDialogs} fullScreen={fullScreen}>
+      <Dialog
+        open={productDialogOpen}
+        onClose={handleCloseDialogs}
+        fullScreen={fullScreen}
+      >
         <DialogTitle>About Product</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Date: {selectedRow && selectedRow.created_at}<br/>
+            Date: {selectedRow && selectedRow.created_at}
+            <br />
             Description: {selectedRow && selectedRow.prod_description}
           </DialogContentText>
         </DialogContent>
@@ -187,10 +209,20 @@ export default function Orders() {
         </DialogActions>
       </Dialog>
       {/* Image Dialog */}
-      <Dialog open={imageDialogOpen} onClose={handleCloseDialogs} fullScreen={fullScreen}>
+      <Dialog
+        open={imageDialogOpen}
+        onClose={handleCloseDialogs}
+        fullScreen={fullScreen}
+      >
         <DialogTitle>About Product Image</DialogTitle>
         <DialogContent>
-          {selectedRow && <img src={selectedRow.prod_image} alt="Product" style={{ width: '50%' }} />}
+          {selectedRow && (
+            <img
+              src={selectedRow.prod_image}
+              alt="Product"
+              style={{ width: "50%" }}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialogs} color="primary">

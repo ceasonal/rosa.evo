@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Imagetest from "../assets/images/test.jpg";
 import AvImage from "../assets/images/prod-images/words.png";
 import supabase from "../assets/config/SupabaseClient";
@@ -12,7 +13,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { useState } from "react";
 
 const Forgotpass = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ const Forgotpass = () => {
 
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(
-        formData.email,
+        formData.email
       );
 
       if (error) throw error;
@@ -98,8 +98,7 @@ const Forgotpass = () => {
             alignItems: "center",
           }}
         >
-    <Avatar sx={{ m: 1, width: 80, height: 80 }}
-          src={AvImage}/>
+          <Avatar sx={{ m: 1, width: 80, height: 80 }} src={AvImage} />
           <Typography component="h1" variant="h5">
             Forgot Password
           </Typography>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Imagetest from "../assets/images/test.jpg";
 import supabase from "../assets/config/SupabaseClient";
+import AvImage from "../assets/images/prod-images/words.png";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +13,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import AvImage from "../assets/images/prod-images/words.png";
 
 const UpdatePass = () => {
   const [formData, setFormData] = useState({
@@ -100,10 +100,7 @@ const UpdatePass = () => {
             alignItems: "center",
           }}
         >
-           <Avatar
-            sx={{ m: 1, width: 80, height: 80 }}
-            src={AvImage}
-          />
+          <Avatar sx={{ m: 1, width: 80, height: 80 }} src={AvImage} />
           <Typography component="h1" variant="h5">
             Update Password
           </Typography>

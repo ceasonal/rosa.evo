@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../components/productCard";
 import Footer from "../components/footer";
 import supabase from "../assets/config/SupabaseClient";
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
-import { Typography } from "@mui/material";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 
 const Prod = () => {
@@ -172,14 +177,16 @@ const Prod = () => {
 
               {displayProducts && displayProducts.length > 0 ? (
                 <>
-                  {displayProducts.slice((page - 1) *  itemsPerPage, page * itemsPerPage).map((product) => (
-                    <ProductCard
-                      id={product.id}
-                      product={product}
-                      key={product.id}
-                    />
-                  ))}
-                  <Grid container justifyContent="center" sx={{ mt: 3, mb:3 }}>
+                  {displayProducts
+                    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                    .map((product) => (
+                      <ProductCard
+                        id={product.id}
+                        product={product}
+                        key={product.id}
+                      />
+                    ))}
+                  <Grid container justifyContent="center" sx={{ mt: 3, mb: 3 }}>
                     <Pagination
                       count={totalPages}
                       page={page}
@@ -220,11 +227,11 @@ const Prod = () => {
                     <Typography
                       gutterBottom
                       style={{
-                        fontWeight: "bold", 
+                        fontWeight: "bold",
                         marginTop: "20px",
-                        fontSize: "20px", 
-                        color: '#4D1F08',
-                        fontFamily: 'monospace'
+                        fontSize: "20px",
+                        color: "#4D1F08",
+                        fontFamily: "monospace",
                       }}
                     >
                       Products Not Found

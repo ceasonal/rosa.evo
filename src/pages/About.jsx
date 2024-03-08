@@ -8,6 +8,7 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+
 const About = () => {
   return (
     <>
@@ -68,7 +69,7 @@ const About = () => {
                 src={img1}
                 alt="team"
                 style={{
-                  maxWidth: "40%", // Adjust the percentage as needed
+                  maxWidth: "40%",
                   height: "auto",
                   objectFit: "cover",
                   borderRadius: "16px",
@@ -102,7 +103,7 @@ const About = () => {
                   src={img2}
                   alt="team"
                   style={{
-                    maxWidth: "40%", // Adjust the percentage as needed
+                    maxWidth: "40%", 
                     height: "auto",
                     objectFit: "cover",
                     borderRadius: "16px",

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../assets/config/SupabaseClient.js";
 import Footer from "../components/footer.jsx";
+import WishButton from "../components/wishButton";
+import { makeStyles } from "@mui/styles";
 import { Typography, Grid, Button } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import DescriptionIcon from "@mui/icons-material/Description";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Close from "@mui/icons-material/Close";
-import { makeStyles } from "@mui/styles";
 import Devider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import WishButton from "../components/wishButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DescriptionIcon from "@mui/icons-material/Description";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,9 +69,8 @@ const ProductDetails = ({ token }) => {
         console.error("Error fetching product details:", error);
       } else {
         setProductDetails(data);
-        if(data.sold_out === true){
+        if (data.sold_out === true) {
           setStatus(true);
-          // console.log(status)
         }
       }
     };
@@ -79,8 +78,6 @@ const ProductDetails = ({ token }) => {
     fetchProductDetails();
   }, [id]);
 
-
-  // according to userid uuid add to table called cart the product id and the user id
   const addToCart = async (product) => {
     try {
       const {
@@ -98,17 +95,15 @@ const ProductDetails = ({ token }) => {
         console.log("Product already exists in cart");
         return;
       }
-      let res = await supabase
-        .from("cart")
-        .upsert([
-          {
-            prod_name: product.name,
-            user_id: user.id,
-            prod_price: product.price,
-            prod_image: product.image,
-            prod_uuid: product.disp_uuid,
-          },
-        ]);
+      let res = await supabase.from("cart").upsert([
+        {
+          prod_name: product.name,
+          user_id: user.id,
+          prod_price: product.price,
+          prod_image: product.image,
+          prod_uuid: product.disp_uuid,
+        },
+      ]);
       console.log("Added to cart");
     } catch (e) {
       console.log(e);
@@ -134,7 +129,7 @@ const ProductDetails = ({ token }) => {
                 }}
               >
                 <img
-                  src={productDetails.image}  
+                  src={productDetails.image}
                   alt="Product"
                   className={classes.productImage}
                 />
@@ -158,7 +153,9 @@ const ProductDetails = ({ token }) => {
                   <Devider />
                   <div className={classes.section}>
                     <div className={classes.iconWithText}>
-                      <DescriptionIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <DescriptionIcon
+                        sx={{ marginRight: "8px", color: "#685043" }}
+                      />
                       <Typography variant="subtitle1">Description</Typography>
                     </div>
                     <Typography variant="body1">
@@ -168,7 +165,9 @@ const ProductDetails = ({ token }) => {
                   <Devider />
                   <div className={classes.section}>
                     <div className={classes.iconWithText}>
-                      <LocalShippingIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <LocalShippingIcon
+                        sx={{ marginRight: "8px", color: "#685043" }}
+                      />
                       <Typography variant="subtitle1">Shipping</Typography>
                     </div>
                     <Typography variant="body1">
@@ -180,7 +179,9 @@ const ProductDetails = ({ token }) => {
                   <Devider />
                   <div className={classes.section}>
                     <div className={classes.iconWithText}>
-                      <MonetizationOnIcon sx={{ marginRight: "8px", color:'#685043' }} />
+                      <MonetizationOnIcon
+                        sx={{ marginRight: "8px", color: "#685043" }}
+                      />
                       <Typography variant="subtitle1">Payment</Typography>
                     </div>
                     <Typography variant="body1">
@@ -191,24 +192,24 @@ const ProductDetails = ({ token }) => {
                   </div>
                   {token ? (
                     <>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      startIcon={<ShoppingCartIcon />}
-                      onClick={() => addToCart(productDetails)}
-                      disabled={status===true?true:false}
-                      // onClick={checkStatus}
-                      disableElevation
-                      sx={{
-                        backgroundColor: "#957461",
-                        "&:hover": {
-                          backgroundColor: "#685043",
-                        },
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
-                    <WishButton/>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<ShoppingCartIcon />}
+                        onClick={() => addToCart(productDetails)}
+                        disabled={status === true ? true : false}
+                        // onClick={checkStatus}
+                        disableElevation
+                        sx={{
+                          backgroundColor: "#957461",
+                          "&:hover": {
+                            backgroundColor: "#685043",
+                          },
+                        }}
+                      >
+                        Add to Cart
+                      </Button>
+                      <WishButton />
                     </>
                   ) : (
                     <>
@@ -227,9 +228,7 @@ const ProductDetails = ({ token }) => {
                       >
                         Add to Cart
                       </Button>
-                        <WishButton 
-                        onClick={() => setIsSnackbarOpen(true)}
-                        />
+                      <WishButton onClick={() => setIsSnackbarOpen(true)} />
                       <Snackbar
                         open={isSnackbarOpen}
                         autoHideDuration={3000}
@@ -265,7 +264,7 @@ const ProductDetails = ({ token }) => {
           </div>
         </>
       )}
-      <Footer sx={{mt:3}}/>
+      <Footer sx={{ mt: 3 }} />
     </>
   );
 };

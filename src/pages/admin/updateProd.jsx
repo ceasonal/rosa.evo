@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import supabase from "../../assets/config/SupabaseClient";
 import {
   Box,
   Button,
@@ -10,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Divider } from "@mui/material";
-import supabase from "../../assets/config/SupabaseClient";
 
 
 const UpdateProd = () => {
@@ -25,7 +25,6 @@ const UpdateProd = () => {
   const [formCorrect, setFormCorrect] = useState(null);
 
   useEffect(() => {
-    // Fetch existing product details based on the provided id
     const fetchProductDetails = async () => {
       try {
         const productId = parseInt(id, 10);
@@ -51,7 +50,6 @@ const UpdateProd = () => {
           return;
         }
 
-        // Set the state with existing product details
         if (data) {
           setName(data.name);
           setPrice(data.price);
@@ -64,18 +62,16 @@ const UpdateProd = () => {
           setTimeout(() => {
             setFormError(null);
           }, 2000);
-          setFormCorrect(null); // Clear success message
+          setFormCorrect(null); 
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    // Fetch product details only when id is provided
     if (id) {
       fetchProductDetails();
     }else {
-        // Reset form fields when id is empty
         setName("");
         setPrice("");
         setDescription("");
@@ -107,7 +103,7 @@ const UpdateProd = () => {
       setTimeout(() => {
         setFormError(null);
       }, 2000);
-      setFormCorrect(null); // Clear success message
+      setFormCorrect(null); 
       return;
     }
 

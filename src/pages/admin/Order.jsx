@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
+import supabase from "../../assets/config/SupabaseClient";
+import { Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,21 +13,18 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import supabase from "../../assets/config/SupabaseClient";
 import Link from '@mui/material/Link';
-import { Button } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 
 export default function Orders() {
-  const [orderData, setOrderData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
+  const [orderData, setOrderData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const fetchOrderData = async () => {
     try {
@@ -44,7 +45,7 @@ export default function Orders() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchOrderData();
   }, []);
 
@@ -64,7 +65,7 @@ export default function Orders() {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     markAsDelivered();
     supabase
       .channel("room1")

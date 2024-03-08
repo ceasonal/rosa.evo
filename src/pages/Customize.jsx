@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import supabase from "../assets/config/SupabaseClient";
 import {
   TextField,
   Button,
@@ -13,7 +14,6 @@ import {
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import supabase from "../assets/config/SupabaseClient";
 
 
 const CustomizePage = () => {
@@ -44,7 +44,7 @@ const CustomizePage = () => {
     if (name === "contact") {
       newValue = newValue.replace(/\D/g, ""); // Remove any non-digit characters
     }
-  
+
     // Enforce input format for name (allow only characters)
     if (name === "name") {
       newValue = newValue.replace(/[^A-Za-z]/gi, ""); // Remove any non-letter characters
@@ -88,14 +88,11 @@ const CustomizePage = () => {
       return;
     }
 
-    // Handle form submission logic here
-    // For demo purposes, let's assume the submission was successful
     setSnackbarSeverity("success");
     setSnackbarMessage("Thank you! Our team will contact you about the product.");
     setSnackbarOpen(true);
     console.log(formData);
-
-    // add to supabase
+    
     try{
         const { error } = await supabase
         .from('custom')
@@ -202,7 +199,6 @@ const CustomizePage = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* Display uploaded image */}
               {formData.imageUrl && (
                 <img
                   src={formData.imageUrl}

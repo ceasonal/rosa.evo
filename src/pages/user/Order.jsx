@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import supabase from "../../assets/config/SupabaseClient";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,12 +11,11 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import supabase from "../../assets/config/SupabaseClient";
 import Link from '@mui/material/Link';
 
 export default function Orders() {
-  const [orderData, setOrderData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [orderData, setOrderData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchOrderData = async () => {
     try {
@@ -37,7 +38,7 @@ export default function Orders() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchOrderData();
   }, []);
 

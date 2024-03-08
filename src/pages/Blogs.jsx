@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { blogList } from "../assets/config/blogdata";
 import Footer from "../components/footer";
 import { Link } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const Blog = () => {
   const { id } = useParams();

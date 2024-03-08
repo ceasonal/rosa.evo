@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/productCard";
 import Footer from "../components/footer";
 import supabase from "../assets/config/SupabaseClient";
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 
 const Prod = () => {
@@ -16,7 +21,6 @@ const Prod = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState("All");
   const [price, setPrice] = useState("Highest-Lowest");
-  // const [custom, setCustom] = useState("All");
   const [SoldOut, setSoldOut] = useState("False");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -32,9 +36,6 @@ const Prod = () => {
       case "price":
         setPrice(value);
         break;
-      // case "custom":
-      //   setCustom(value);
-        // break;
       case "sold_out":
         setSoldOut(value);
         break;
@@ -46,68 +47,69 @@ const Prod = () => {
   useEffect(() => {
     const fetchDisplayProducts = async () => {
       setLoading(true);
-  
+
       try {
         // Fetch display_uuid from the wishlist table for a specific user
-        const { data: {user}, } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data: wishlists, error: wishlistError } = await supabase
-          .from('wishlist')
-          .select('*')
-          .eq('user_uuid', user.id)
+          .from("wishlist")
+          .select("*")
+          .eq("user_uuid", user.id);
 
         if (wishlistError) {
           throw new Error("Could not fetch wishlist");
         }
         // Extract display_uuids from the wishlist data
-        const displayUuids = wishlists.map(wishlist => wishlist.display_uuid);
-  
+        const displayUuids = wishlists.map((wishlist) => wishlist.display_uuid);
+
         let query = supabase.from("DisplayProducts").select("*");
-  
+
         // Filter products based on display_uuid
-        query = query.in('disp_uuid', displayUuids);
-  
+        query = query.in("disp_uuid", displayUuids);
+
         // Apply category filter
         if (categories !== "All") {
           query = query.eq("category", categories);
         }
-  
+
         // Apply price sorting
         if (price === "Highest-Lowest") {
           query = query.order("price", { ascending: false });
         } else if (price === "Lowest-Highest") {
           query = query.order("price", { ascending: true });
         }
-  
+
         // Apply SoldOut filter
         if (SoldOut === "True") {
           query = query.eq("sold_out", true);
         } else if (SoldOut === "False") {
           query = query.eq("sold_out", false);
         }
-  
+
         const response = await query;
-  
+
         const { data: DisplayProducts, error } = response;
-  
+
         if (error) {
           throw new Error("Could not fetch products");
         }
-  
+
         setDisplayProducts(DisplayProducts);
         setFetchErrors(null);
       } catch (error) {
-        // setFetchErrors(error.message);
         setDisplayProducts(null);
         setTotalPages(Math.ceil(DisplayProducts.length / itemsPerPage));
         console.error(error);
       }
-  
+
       setLoading(false);
     };
-  
+
     fetchDisplayProducts();
   }, [categories, price, SoldOut]);
-  
+
   const handlePageChange = (event, value) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -116,17 +118,19 @@ const Prod = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     const fetchUserDetails = async () => {
-    try{
-      const { data: { user } } = await supabase.auth.getUser();
-      if(!user){
-        navigate("/")
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) {
+          navigate("/");
+        }
+      } catch {
+        console.log("error");
       }
-    }catch{
-      console.log("error")
-    }
-  }
+    };
     fetchUserDetails();
-  },[])
+  }, []);
 
   return (
     <>
@@ -194,7 +198,7 @@ const Prod = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                   <FormControl
                     sx={{ width: { xs: "40%", sm: "100%", md: "100%" } }}
                   >
@@ -212,20 +216,21 @@ const Prod = () => {
                       <MenuItem value="True">Sold Out</MenuItem>
                     </Select>
                   </FormControl>
-
                 </Grid>
               </Grid>
 
               {displayProducts && displayProducts.length > 0 ? (
                 <>
-                  {displayProducts.slice((page - 1) *  itemsPerPage, page * itemsPerPage).map((product) => (
-                    <ProductCard
-                      id={product.id}
-                      product={product}
-                      key={product.id}
-                    />
-                  ))}
-                       <Grid container justifyContent="center" sx={{ mt: 3, mb:3 }}>
+                  {displayProducts
+                    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                    .map((product) => (
+                      <ProductCard
+                        id={product.id}
+                        product={product}
+                        key={product.id}
+                      />
+                    ))}
+                  <Grid container justifyContent="center" sx={{ mt: 3, mb: 3 }}>
                     <Pagination
                       count={totalPages}
                       page={page}
@@ -246,7 +251,7 @@ const Prod = () => {
                 </>
               ) : (
                 <Grid container spacing={3} justifyContent="center">
-                       <Box
+                  <Box
                     sx={{
                       marginTop: 5,
                       display: "flex",
@@ -266,11 +271,11 @@ const Prod = () => {
                     <Typography
                       gutterBottom
                       style={{
-                        fontWeight: "bold", 
-                        marginTop: "20px", 
+                        fontWeight: "bold",
+                        marginTop: "20px",
                         fontSize: "20px",
-                        color: '#4D1F08',
-                        fontFamily: 'monospace'
+                        color: "#4D1F08",
+                        fontFamily: "monospace",
                       }}
                     >
                       Products Not Found / Add to Wishlist

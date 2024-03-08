@@ -1,4 +1,8 @@
 import * as React from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { mainListItems, secondaryListItems } from "./listItems";
+import ThirdListItems from "./listItems";
+import supabase from "../../assets/config/SupabaseClient";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -14,11 +18,6 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
-import ThirdListItems from "./listItems";
-import { Outlet } from "react-router-dom";
-import supabase from "../../assets/config/SupabaseClient";
-import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -66,7 +65,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -83,23 +81,22 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     const fetchUserDetails = async () => {
-    try{
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user.id === import.meta.env.VITE_ADMIN_USER) {
-        // console.log("Admin User")
-        // window.location.reload();
-      }else{
-        // console.log("Not Admin User")
-        // window.location.reload();
-        navigate('/')
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user.id === import.meta.env.VITE_ADMIN_USER) {
+          // console.log("Admin User")
+        } else {
+          // console.log("Not Admin User")
+          navigate("/");
+        }
+      } catch {
+        console.log("error");
       }
-    }catch{
-      console.log("error")
-    }
-  }
+    };
     fetchUserDetails();
-  },[])
-
+  }, []);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -133,7 +130,7 @@ const Dashboard = () => {
               Rosa.Evo Admin
             </Typography>
             {/* <IconButton color="inherit"> */}
-              {/* <Badge badgeContent={4} color="secondary">
+            {/* <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton> */}
@@ -154,12 +151,12 @@ const Dashboard = () => {
           </Toolbar>
           <Divider />
           <List component="nav">
-             {mainListItems}
-            <Divider sx={{ my: 1, marginBottom:2 }} />
+            {mainListItems}
+            <Divider sx={{ my: 1, marginBottom: 2 }} />
             {secondaryListItems}
-            <Divider sx={{ my: 1, marginBottom:2 }} />
-            {<ThirdListItems/>}
-            </List>
+            <Divider sx={{ my: 1, marginBottom: 2 }} />
+            {<ThirdListItems />}
+          </List>
         </Drawer>
         <Box
           component="main"

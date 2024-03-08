@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import supabase from "../../assets/config/SupabaseClient";
+import { State } from "country-state-city";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import { State } from "country-state-city";
 import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import supabase from "../../assets/config/SupabaseClient";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+
 export default function AddressForm() {
   const [selectedState, setSelectedState] = useState("");
   const [city, setCity] = useState("");
@@ -21,7 +22,7 @@ export default function AddressForm() {
   const [type, setType] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("error"); 
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
 
   const handleStateChange = (event) => {
     const stateName = event.target.value;
@@ -46,18 +47,20 @@ export default function AddressForm() {
       lname !== "" &&
       address !== "" &&
       type !== "" &&
-      phoneNumber.length === 10
-      if (isFormComplete) {
-        setSnackbarSeverity("success"); // Set severity to "success" when form is complete
-      } else {
-        setSnackbarSeverity("error"); // Reset severity to "error" when form is incomplete
-      }
+      phoneNumber.length === 10;
+    if (isFormComplete) {
+      setSnackbarSeverity("success"); 
+    } else {
+      setSnackbarSeverity("error"); 
+    }
   }, [selectedState, city, zipCode, fname, lname, address, phoneNumber, type]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data, error } = await supabase
           .from("user")
           .select("*")
@@ -97,7 +100,9 @@ export default function AddressForm() {
       });
     } else {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data, error } = await supabase.from("user").upsert([
           {
             first_name: fname,
@@ -158,7 +163,7 @@ export default function AddressForm() {
         Shipping address
       </Typography>
       <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="type"
@@ -170,7 +175,7 @@ export default function AddressForm() {
             placeholder="home/work/other"
             value={type}
             onChange={(e) => setType(e.target.value)}
-                    />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -189,10 +194,13 @@ export default function AddressForm() {
             }}
             value={phoneNumber}
             onChange={(e) => {
-              const enteredPhoneNumber = String(e.target.value).replace(/\D/g, "");
+              const enteredPhoneNumber = String(e.target.value).replace(
+                /\D/g,
+                ""
+              );
               setPhoneNumber(enteredPhoneNumber);
             }}
-            inputProps={{ maxLength: 10 }} 
+            inputProps={{ maxLength: 10 }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -206,7 +214,7 @@ export default function AddressForm() {
             variant="standard"
             value={fname}
             onChange={(e) => setFname(e.target.value)}
-                    />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -254,7 +262,7 @@ export default function AddressForm() {
           </TextField>
         </Grid>
         <Grid item xs={12} sm={6}>
-        <TextField
+          <TextField
             required
             id="city"
             name="city"
@@ -285,8 +293,8 @@ export default function AddressForm() {
               const limitedZip = enteredZip.slice(0, 6);
               setZipCode(limitedZip);
             }}
-            disabled={!city} 
-            inputProps={{ maxLength: 6 }} 
+            disabled={!city}
+            inputProps={{ maxLength: 6 }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -298,14 +306,14 @@ export default function AddressForm() {
             autoComplete="shipping country"
             variant="standard"
             value="India"
-            disabled 
+            disabled
           />
         </Grid>
         <Grid item xs={12}>
           <Button
             onClick={handleSubmit}
             sx={{
-              backgroundColor: "#4caf50" ,
+              backgroundColor: "#4caf50",
               color: "#ffffff",
               padding: "10px 20px",
               border: "none",
@@ -319,13 +327,16 @@ export default function AddressForm() {
           </Button>
         </Grid>
       </Grid>
-       {/* Snackbar to display success message */}
-       <Snackbar
+      <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

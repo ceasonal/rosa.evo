@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import supabase from "../assets/config/SupabaseClient";
 import PaymentButton from "../components/payment";
 import { ShoppingCart, Clear } from "@mui/icons-material";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import EditIcon from "@mui/icons-material/Edit";
 import HomeIcon from "@mui/icons-material/Home";
 import {
