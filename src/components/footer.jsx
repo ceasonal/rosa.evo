@@ -9,16 +9,9 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "@mui/material/Link";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from "@mui/icons-material/Instagram";
 
-// Replace these with your own social media URLs
-const socialMediaLinks = {
-  facebook: "#",
-  twitter: "#",
-  instagram: "#",
-};
 
 const Footer = () => {
   const theme = useTheme();
@@ -134,20 +127,17 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12}>
             <IconButton>
-              <Link href={socialMediaLinks.facebook} color="#ffffff" sx={{ mr: 1 }}>
-                <FacebookIcon />
-              </Link>
+              <WhatsAppIcon   sx={{ mr: 1, color:"#ffffff" }}/>   <Typography 
+              sx={
+                {color:"#ffffff"}
+              }
+              >Contact us on +91 1234567890</Typography>
             </IconButton>
             <IconButton>
-              <Link href={socialMediaLinks.twitter} color="#ffffff" sx={{ mr: 1 }}>
-                <TwitterIcon />
-              </Link>
-            </IconButton>
-            <IconButton>
-              <Link href={socialMediaLinks.instagram} color="#ffffff" sx={{ mr: 1 }}>
+            <Link href='https://www.instagram.com/rosa.evo' color="#ffffff" sx={{ mr: 1 }} target="_blank" rel="noopener noreferrer">
                 <InstagramIcon />
               </Link>
-            </IconButton>
+            </IconButton> 
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2">

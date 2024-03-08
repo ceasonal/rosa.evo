@@ -8,6 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
 
 const Prod = () => {
   const [fetchErrors, setFetchErrors] = useState(null);
@@ -17,6 +18,9 @@ const Prod = () => {
   const [price, setPrice] = useState("Highest-Lowest");
   // const [custom, setCustom] = useState("All");
   const [SoldOut, setSoldOut] = useState("False");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -94,6 +98,7 @@ const Prod = () => {
       } catch (error) {
         // setFetchErrors(error.message);
         setDisplayProducts(null);
+        setTotalPages(Math.ceil(DisplayProducts.length / itemsPerPage));
         console.error(error);
       }
   
@@ -102,6 +107,11 @@ const Prod = () => {
   
     fetchDisplayProducts();
   }, [categories, price, SoldOut]);
+  
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const navigate = useNavigate();
   React.useEffect(() => {
@@ -208,13 +218,31 @@ const Prod = () => {
 
               {displayProducts && displayProducts.length > 0 ? (
                 <>
-                  {displayProducts.map((product) => (
+                  {displayProducts.slice((page - 1) *  itemsPerPage, page * itemsPerPage).map((product) => (
                     <ProductCard
                       id={product.id}
                       product={product}
                       key={product.id}
                     />
                   ))}
+                       <Grid container justifyContent="center" sx={{ mt: 3, mb:3 }}>
+                    <Pagination
+                      count={totalPages}
+                      page={page}
+                      onChange={handlePageChange}
+                      variant="outlined"
+                      sx={{
+                        "& .MuiPaginationItem-root": {
+                          color: "black",
+                          border: "1px solid #4D1F08",
+                        },
+                        "& .MuiPaginationItem-page.Mui-selected": {
+                          backgroundColor: "#4D1F08",
+                          color: "white",
+                        },
+                      }}
+                    />
+                  </Grid>
                 </>
               ) : (
                 <Grid container spacing={3} justifyContent="center">
