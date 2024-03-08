@@ -1,8 +1,8 @@
 import React from "react";
+import { CardActionArea, Icon } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Icon } from "@mui/material";
 
 export default function AboutUsCard(props) {
   return (

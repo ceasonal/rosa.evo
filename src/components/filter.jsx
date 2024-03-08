@@ -8,18 +8,11 @@ const Filter = () => {
     const [customizable, setCustomizable] = useState(false);
     const [price, setPrice] = useState('');
 
-    const Filter = () => {
-        const [type, setType] = useState('');
-        const [customizable, setCustomizable] = useState(false);
-        const [price, setPrice] = useState('');
-    
         useEffect(() => {
-            // Fetch data from Supabase based on the selected filters
             const fetchData = async () => {
                 let query = supabase
                     .from('DisplayProducts')
                     .select('*')
-                    .eq('type', type)
                     .eq('customizable', customizable)
                     .gte('price', price)
                     .order('created_at', { ascending: createdAt === 'asc' });
@@ -36,7 +29,6 @@ const Filter = () => {
 
             fetchData();
         }, [createdAt, earing, necklace, customizable, price]);
-    }; // Add a closing curly brace here
 
     return (
         <div>

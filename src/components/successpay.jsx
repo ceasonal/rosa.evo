@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { makeStyles } from "@mui/styles";
+import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { makeStyles } from "@mui/styles";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -45,7 +45,6 @@ const PurchaseButton = (props) => {
           handleClickOpen();
           props.onClick();
         }}
-        // onClick={handleClickOpen()}
       >
         Purchase
         <CreditScoreIcon sx={{ ml: 2 }} />
@@ -66,7 +65,7 @@ const PurchaseButton = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            overflow: "hidden", // Prevents scrolling
+            overflow: "hidden",
           }}
         >
           <DialogContentText id="alert-dialog-description">

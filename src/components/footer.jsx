@@ -9,9 +9,8 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "@mui/material/Link";
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
-
 
 const Footer = () => {
   const theme = useTheme();
@@ -33,7 +32,12 @@ const Footer = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container alignItems="center" justifyContent="center" spacing={isSmallerScreen ? 1 : 3}>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          spacing={isSmallerScreen ? 1 : 3}
+        >
           <Grid item xs={12} sm={4}>
             <Box display="flex" alignItems="center" justifyContent="center">
               <img
@@ -127,17 +131,22 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12}>
             <IconButton>
-              <WhatsAppIcon   sx={{ mr: 1, color:"#ffffff" }}/>   <Typography 
-              sx={
-                {color:"#ffffff"}
-              }
-              >Contact us on +91 1234567890</Typography>
+              <WhatsAppIcon sx={{ mr: 1, color: "#ffffff" }} />{" "}
+              <Typography sx={{ color: "#ffffff" }}>
+                Contact us on +91 1234567890
+              </Typography>
             </IconButton>
             <IconButton>
-            <Link href='https://www.instagram.com/rosa.evo' color="#ffffff" sx={{ mr: 1 }} target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://www.instagram.com/rosa.evo"
+                color="#ffffff"
+                sx={{ mr: 1 }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <InstagramIcon />
               </Link>
-            </IconButton> 
+            </IconButton>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import supabase from '../assets/config/SupabaseClient';
 import { IconButton } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
-import supabase from '../assets/config/SupabaseClient';
-import { useParams } from 'react-router-dom';
 
 const WishButton = (props) => {
     const { id } = useParams();
@@ -84,7 +84,6 @@ const WishButton = (props) => {
                 .insert([
                     {
                         user_uuid: user.id,
-                        // product_info: productDetails,
                         display_uuid: productDetails.disp_uuid
                     }
                 ]);

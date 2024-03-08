@@ -22,7 +22,6 @@ const AdminWelcome = () => {
   };
 console.log(window.location)
 
-  
   return (
     <Box sx={containerStyle}>
       <img

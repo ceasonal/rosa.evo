@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import supabase from "../../assets/config/SupabaseClient";
 import {
   Box,
   Button,
@@ -10,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Divider } from "@mui/material";
-import supabase from "../../assets/config/SupabaseClient";
 
 const CreateProd = () => {
   const [name, setName] = useState("");

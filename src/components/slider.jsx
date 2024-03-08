@@ -27,7 +27,8 @@ const topComments = [
         instagram: "https://instagram.com/hamza_kapasi",
       },
     },
-    comment: "Highly recommend this resin ring from rosa evo! Stunning design, excellent quality, and top-notch customer service. Love it!",
+    comment:
+      "Highly recommend this resin ring from rosa evo! Stunning design, excellent quality, and top-notch customer service. Love it!",
     value: 5,
   },
   {
@@ -93,7 +94,7 @@ const CommentSlider = () => {
             scrollBehavior: "smooth",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center", // Centering the content
+            justifyContent: "center",
             width: "100%",
             marginLeft: "auto",
             marginRight: "auto",

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Cards from "react-credit-cards-2";
-import "react-credit-cards-2/dist/es/styles-compiled.css";
-import { TextField, Button, Grid } from "@mui/material";
 import supabase from "../assets/config/SupabaseClient";
 import { useNavigate } from "react-router-dom";
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import SuccessPay from './successpay';
+import "react-credit-cards-2/dist/es/styles-compiled.css";
+import Cards from "react-credit-cards-2";
+import { TextField, Grid } from "@mui/material";
 
 const CreditCardForm = () => {
   const navigate = useNavigate();
@@ -235,23 +234,6 @@ const CreditCardForm = () => {
               />
             </Grid>
           </Grid>
-          {/* <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              mt: 2,
-              backgroundColor: "#957461",
-              "&:hover": {
-                backgroundColor: "#685043",
-              },
-            }}
-            fullWidth
-            onClick={paymentConfirm}
-            disabled={!formCompleted} // Disable button if form is not completed
-          >
-            Purchase 
-            <CreditScoreIcon  sx={{ml:2}}/>
-          </Button> */}
           <SuccessPay disabled={!formCompleted} onClick={paymentConfirm}/>
         </form>
       </Grid>
