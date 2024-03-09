@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
+import Typography from "@mui/material/Typography";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -40,7 +40,7 @@ const PurchaseButton = (props) => {
           },
         }}
         fullWidth
-        disabled={props.disabled} // Disable button if form is not completed
+        disabled={props.disabled}
         onClick={() => {
           handleClickOpen();
           props.onClick();
@@ -57,9 +57,6 @@ const PurchaseButton = (props) => {
         maxWidth="lg"
         fullWidth
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Payment Successful"}
-        </DialogTitle>
         <DialogContent
           sx={{
             display: "flex",
@@ -68,11 +65,14 @@ const PurchaseButton = (props) => {
             overflow: "hidden",
           }}
         >
-          <DialogContentText id="alert-dialog-description">
-            Thank you for your purchase!
+          <DialogContentText id="alert-dialog-description" >
+            <Typography align='center'>
+              Your payment has been successfully processed. Thank you for your
+              purchase!
+            </Typography>
           </DialogContentText>
           <img
-            src="https://cdn.discordapp.com/attachments/1140959205986148372/1209909946339041411/Capture-removebg-preview_1.png?ex=65e8a372&is=65d62e72&hm=c161262280743463e47acf68dc727458f7ebb4f2d4888e80e9283b0131e9d109"
+            src="https://cdni.iconscout.com/illustration/premium/thumb/order-confirmed-5115435-4273317.png"
             alt="Confirmation"
             className={classes.image}
           />
