@@ -5,6 +5,7 @@ import SuccessPay from './successpay';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
 import { TextField, Grid } from "@mui/material";
+import emailjs from '@emailjs/browser';
 
 const CreditCardForm = () => {
   const navigate = useNavigate();
@@ -132,12 +133,54 @@ const CreditCardForm = () => {
     }
   };
 
+  // EMAILJS
+  const sendEmail = async () => {
+    try {
+      const { data: { user }} = await supabase.auth.getUser();
+      if (user) { // Check if user exists
+        // Format order details
+        const formattedCartData = cartData.map(item => ({
+          prod_name: item.prod_name,
+          prod_price: item.prod_price,
+        }));
+  
+        // Format user details
+        const formattedUserData = userData.map(item => ({
+          first_name: item.first_name,
+          last_name: item.last_name,
+          phone: item.phone,
+          state: item.state,
+          city: item.city,
+          zip_code: item.zip_code,
+          address: item.address,
+          type: item.type,
+        }));
+  
+        // Send email
+        await emailjs.send(
+          import.meta.env.VITE_EMAIL_SERVICE_ID,
+          import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+          {
+            user_email: user.email,
+            message: `Order details:\n${formattedCartData.map(item => `${item.prod_name}: ${item.prod_price}`).join('\n')}\n\nUser details:\n${formattedUserData.map(item => `${item.first_name} ${item.last_name}\nPhone: ${item.phone}\nAddress: ${item.address}, ${item.city}, ${item.state} ${item.zip_code}\nType: ${item.type}`).join('\n')}\n\nTotal price: ${totalProdPrice}`,
+          },
+          import.meta.env.VITE_EMAIL_PUBLIC_KEY
+        );
+        console.log('Your order has been placed!');
+        console.log(user.email);
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  };
+
   const paymentConfirm = async () => {
     try {
       await fetchCartItems();
       await fetchUserData();
       await createOrder();
       await deleteCartItems();
+      await sendEmail();
       navigate("/");
       window.location.reload();
       setCartData([]);
