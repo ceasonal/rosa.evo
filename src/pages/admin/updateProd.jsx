@@ -213,7 +213,10 @@ const UpdateProd = () => {
             id="price"
             type="number"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => {
+              const newValue = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative value
+              setPrice(newValue);
+            }}
             required
           />
         </FormControl>
