@@ -214,7 +214,7 @@ const UpdateProd = () => {
             type="number"
             value={price}
             onChange={(e) => {
-              const newValue = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative value
+              const newValue = Math.max(0, parseFloat(e.target.value)); 
               setPrice(newValue);
             }}
             required

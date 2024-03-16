@@ -150,7 +150,7 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2">
-              © 2023 RosaEvo. All rights reserved.
+              © 2024 RosaEvo. All rights reserved.
             </Typography>
           </Grid>
         </Grid>
