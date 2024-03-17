@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../assets/config/SupabaseClient";
 import { useNavigate } from "react-router-dom";
-import SuccessPay from './successpay';
+import SuccessPay from "./successpay";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
 import { TextField, Grid } from "@mui/material";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 const CreditCardForm = () => {
+  let newUUID = null;
   const navigate = useNavigate();
   const [state, setState] = useState({
     number: "",
@@ -17,7 +18,7 @@ const CreditCardForm = () => {
     focus: "",
   });
   const [totalProdPrice, setTotalProdPrice] = useState(0);
-  const [formCompleted, setFormCompleted] = useState(false); // State to track form completion
+  const [formCompleted, setFormCompleted] = useState(false); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +26,16 @@ const CreditCardForm = () => {
 
     switch (name) {
       case "number":
-        validatedValue = value.replace(/\D/g, '').slice(0, 16);
+        validatedValue = value.replace(/\D/g, "").slice(0, 16);
         break;
       case "name":
-        validatedValue = value.replace(/[^a-zA-Z]/g, '').slice(0,21);
+        validatedValue = value.replace(/[^a-zA-Z]/g, "").slice(0, 21);
         break;
       case "expiry":
         validatedValue = value.slice(0, 4);
         break;
       case "cvc":
-        validatedValue = value.replace(/\D/g, '').slice(0, 3);
+        validatedValue = value.replace(/\D/g, "").slice(0, 3);
         break;
       default:
         break;
@@ -52,7 +53,9 @@ const CreditCardForm = () => {
 
   const fetchCartItems = async () => {
     try {
-      const { data: { user }} = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from("cart")
         .select("*")
@@ -70,7 +73,7 @@ const CreditCardForm = () => {
         const shipping = 200;
         const tax = 30;
         totalPrice += shipping + tax;
-        
+
         // Set the total product price
         setTotalProdPrice(totalPrice);
       }
@@ -81,7 +84,9 @@ const CreditCardForm = () => {
 
   const fetchUserData = async () => {
     try {
-      const { data: { user }} = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from("user")
         .select("*")
@@ -99,7 +104,9 @@ const CreditCardForm = () => {
 
   const deleteCartItems = async () => {
     try {
-      const { data: { user }} = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { error } = await supabase
         .from("cart")
         .delete()
@@ -114,14 +121,30 @@ const CreditCardForm = () => {
   };
 
   const createOrder = async () => {
+    // let newUUID = null;
+    const generateUUID = () => {
+      newUUID = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          let r = (Math.random() * 16) | 0;
+          let v = c === "x" ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        }
+      );
+      console.log(newUUID);
+    };
+    generateUUID();
     try {
-      const { data: { user }} = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data, error } = await supabase.from("order").insert([
         {
           user_uuid: user.id,
           ordered_prods: cartData,
           user_details: userData,
           total_price: totalProdPrice,
+          order_uuid: newUUID,
         },
       ]);
       if (error) {
@@ -136,16 +159,19 @@ const CreditCardForm = () => {
   // EMAILJS
   const sendEmail = async () => {
     try {
-      const { data: { user }} = await supabase.auth.getUser();
-      if (user) { // Check if user exists
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        // Check if user exists
         // Format order details
-        const formattedCartData = cartData.map(item => ({
+        const formattedCartData = cartData.map((item) => ({
           prod_name: item.prod_name,
           prod_price: item.prod_price,
         }));
-  
+
         // Format user details
-        const formattedUserData = userData.map(item => ({
+        const formattedUserData = userData.map((item) => ({
           first_name: item.first_name,
           last_name: item.last_name,
           phone: item.phone,
@@ -155,22 +181,31 @@ const CreditCardForm = () => {
           address: item.address,
           type: item.type,
         }));
-  
+
         // Send email
         await emailjs.send(
           import.meta.env.VITE_EMAIL_SERVICE_ID,
           import.meta.env.VITE_EMAIL_TEMPLATE_ID,
           {
             user_email: user.email,
-            message: `Order details:\n${formattedCartData.map(item => `${item.prod_name}: ${item.prod_price}`).join('\n')}\n\nUser details:\n${formattedUserData.map(item => `${item.first_name} ${item.last_name}\nPhone: ${item.phone}\nAddress: ${item.address}, ${item.city}, ${item.state} ${item.zip_code}\nType: ${item.type}`).join('\n')}\n\nTotal price: ${totalProdPrice}`,
+            message: `Order ID: ${newUUID}\nOrder details:\n${formattedCartData
+              .map((item) => `${item.prod_name}: ${item.prod_price} ₹`)
+              .join("\n")}\n\nUser details:\n${formattedUserData
+              .map(
+                (item) =>
+                  `${item.first_name} ${item.last_name}\nPhone: ${item.phone}\nAddress: ${item.address}, ${item.city}, ${item.state} ${item.zip_code}\nType: ${item.type}`
+              )
+              .join(
+                "\n"
+              )}\n\nTotal price ( Shipping & Tax Included ): ${totalProdPrice} ₹`,
           },
           import.meta.env.VITE_EMAIL_PUBLIC_KEY
         );
-        console.log('Your order has been placed!');
+        console.log("Your order has been placed!");
         console.log(user.email);
       }
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error("Error sending email:", error);
     }
   };
 
@@ -244,7 +279,6 @@ const CreditCardForm = () => {
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 inputProps={{ maxLength: 21 }}
-
                 required
               />
             </Grid>
@@ -277,7 +311,7 @@ const CreditCardForm = () => {
               />
             </Grid>
           </Grid>
-          <SuccessPay disabled={!formCompleted} onClick={paymentConfirm}/>
+          <SuccessPay disabled={!formCompleted} onClick={paymentConfirm} />
         </form>
       </Grid>
     </Grid>
