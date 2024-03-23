@@ -32,7 +32,7 @@ const CreditCardForm = () => {
         validatedValue = value.replace(/[^a-zA-Z]/g, "").slice(0, 21);
         break;
       case "expiry":
-        validatedValue = value.slice(0, 4);
+        validatedValue = value.replace(/\D/g, "").slice(0, 4);
         break;
       case "cvc":
         validatedValue = value.replace(/\D/g, "").slice(0, 3);

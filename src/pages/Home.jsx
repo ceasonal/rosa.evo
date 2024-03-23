@@ -182,6 +182,7 @@ const Home = () => {
                 href="#/about"
                 rel="noopener noreferrer"
                 style={{ textDecoration: "none", color: "#4D1F08" }}
+                onClick={() => window.scrollTo(0, 0)}
               >
                 <Typography
                   sx={{
