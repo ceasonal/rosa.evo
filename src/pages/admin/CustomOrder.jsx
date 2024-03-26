@@ -46,11 +46,43 @@ export default function Orders() {
     }
   };
 
-  const markAsDelivered = async (customID) => {
+  const markAsContacted = async (customID) => {
     try {
       const { error } = await supabase
         .from("custom")
         .update({ status: "in contact" })
+        .eq("custom_id", customID);
+      if (error) {
+        throw error;
+      }
+      console.log("Contacted user");
+      fetchOrderData();
+    } catch (error) {
+      console.error("Error marking contacting user:", error.message);
+    }
+  };
+
+  const markAsOrdered = async (customID) => {
+    try {
+      const { error } = await supabase
+        .from("custom")
+        .update({ orderplaced: "placed" }) 
+        .eq("custom_id", customID);
+      if (error) {
+        throw error;
+      }
+      console.log("Order marked as placed");
+      fetchOrderData();
+    } catch (error) {
+      console.error("Error marking order as placed:", error.message);
+    }
+  };
+
+  const markAsDelivered = async (customID) => {
+    try {
+      const { error } = await supabase
+        .from("custom")
+        .update({ delivered: "delivered" })
         .eq("custom_id", customID);
       if (error) {
         throw error;
@@ -62,23 +94,24 @@ export default function Orders() {
     }
   };
 
+  const deleteRequest = async (customID) => {
+    try {
+      const { error } = await supabase
+        .from("custom")
+        .delete()
+        .eq("custom_id", customID);
+      if (error) {
+        throw error;
+      }
+      console.log("Request deleted successfully");
+      fetchOrderData();
+    } catch (error) {
+      console.error("Error deleting request:", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchOrderData();
-  }, []);
-
-  useEffect(() => {
-    markAsDelivered();
-    supabase
-      .channel("room1")
-      .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-        console.log("Change received!", payload);
-        markAsDelivered();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel("room1");
-    };
   }, []);
 
   const handleClickProductDialogOpen = (row) => {
@@ -86,10 +119,6 @@ export default function Orders() {
     setProductDialogOpen(true);
   };
 
-  const handleClickImageDialogOpen = (row) => {
-    setSelectedRow(row);
-    setImageDialogOpen(true);
-  };
 
   const handleCloseDialogs = () => {
     setProductDialogOpen(false);
@@ -119,20 +148,20 @@ export default function Orders() {
             <TableHead>
               <TableRow>
                 <TableCell>Request ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Contact</TableCell>
                 <TableCell>Product</TableCell>
-                <TableCell>Image</TableCell>
                 <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
+                <TableCell align="center">Ordered</TableCell>
+                <TableCell align="center">Action</TableCell>
+                <TableCell align="center">Delivered</TableCell>
+                <TableCell align="center">Action</TableCell>
+                <TableCell align="center">Delete Request</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {orderData.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.custom_id}</TableCell>
-                  <TableCell>{row.user_name}</TableCell>
-                  <TableCell>{row.user_contact}</TableCell>
                   <TableCell>
                     <Button
                       variant="outlined"
@@ -140,20 +169,6 @@ export default function Orders() {
                     >
                       View Info
                     </Button>
-                  </TableCell>
-                  <TableCell>
-                    {row.prod_image ? (
-                      <Button
-                        variant="outlined"
-                        onClick={() => handleClickImageDialogOpen(row)}
-                      >
-                        View Image
-                      </Button>
-                    ) : (
-                      <Button variant="outlined" disabled>
-                        No Image
-                      </Button>
-                    )}
                   </TableCell>
                   <TableCell>
                     <Chip
@@ -169,7 +184,7 @@ export default function Orders() {
                       color="primary"
                       disabled={row.status === "in contact"}
                       onClick={() =>
-                        markAsDelivered(row.custom_id, "in contact")
+                        markAsContacted(row.custom_id)
                       }
                       sx={{
                         borderRadius: 16,
@@ -180,6 +195,80 @@ export default function Orders() {
                       }}
                     >
                       Update
+                    </Button>
+                  </TableCell>
+
+                  {/* order placed */}
+                  <TableCell>
+                    <Chip
+                      label={row.orderplaced}
+                      color={
+                        row.orderplaced === "placed" ? "success" : "warning" 
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                     color="primary"
+                      variant="contained"
+                      disabled={row.orderplaced === "placed"} 
+                      onClick={() =>
+                        markAsOrdered(row.custom_id) 
+                      }
+                      sx={{
+                        borderRadius: 16,
+                        textTransform: "none",
+                        minWidth: "auto",
+                        height: 32,
+                        py: 0,
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </TableCell>
+
+                  {/* order delivered */}
+                  <TableCell>
+                    <Chip
+                      label={row.delivered}
+                      color={
+                        row.delivered === "preparing" ? "warning" : "success"
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={row.delivered === "delivered"}
+                      onClick={() =>
+                        markAsDelivered(row.custom_id)
+                      }
+                      sx={{
+                        borderRadius: 16,
+                        textTransform: "none",
+                        minWidth: "auto",
+                        height: 32,
+                        py: 0,
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => deleteRequest(row.custom_id)}
+                      sx={{
+                        borderRadius: 16,
+                        textTransform: "none",
+                        minWidth: "auto",
+                        height: 32,
+                        py: 0,
+                      }}
+                    >
+                      Delete
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -199,30 +288,23 @@ export default function Orders() {
           <DialogContentText>
             Date: {selectedRow && selectedRow.created_at}
             <br />
+            User Name: {selectedRow && selectedRow.user_name}  
+            <br />
+            Contact Details: {selectedRow && selectedRow.user_contact}
+            <br />
             Description: {selectedRow && selectedRow.prod_description}
+            <br/>
+            {selectedRow && selectedRow.prod_image ? (
+              <>
+                <p>Image: </p>
+                <img
+                  src={selectedRow.prod_image}
+                  alt="Product"
+                  style={{ width: "50%" }}
+                />
+              </>
+            ) : null}
           </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialogs} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Image Dialog */}
-      <Dialog
-        open={imageDialogOpen}
-        onClose={handleCloseDialogs}
-        fullScreen={fullScreen}
-      >
-        <DialogTitle>About Product Image</DialogTitle>
-        <DialogContent>
-          {selectedRow && (
-            <img
-              src={selectedRow.prod_image}
-              alt="Product"
-              style={{ width: "50%" }}
-            />
-          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialogs} color="primary">
