@@ -19,6 +19,7 @@ const Stats = () => {
   const [customDelivered, setCustomDelivered] = useState(0);
   const [customPending, setCustomPending] = useState(0);
   const [customTotal, setCustomTotal] = useState(0);
+  const [customSum, setCustomSum] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -65,16 +66,27 @@ const Stats = () => {
         .eq("delivered", "preparing");
         setCustomPending(customPendings.length);
 
-        const { data: income } = await supabase
-          .from("order")
-          .select("total_price");
-        let sum = 0;
-        income.map((item) => {
-          sum += item.total_price;
-        });
-        setTotIncome(sum);
+        const { data: customIncomes, error } = await supabase
+        .from("custom")
+        .select("amount");
+      if (error) throw error;
+
+      const customSum = customIncomes.reduce((total, item) => total + item.amount, 0);
+      setCustomSum(customSum);
+
+      const { data: income } = await supabase
+        .from("order")
+        .select("total_price");
+
+      const totIncome = income.reduce((total, item) => total + item.total_price, 0) + customSum;
+      setTotIncome(totIncome);
+
+      console.log(totIncome);
+        setTotIncome(sum+customSum);
+        console.log(totIncome)
+        
       } catch (error) {
-        console.error("Error fetching data:", error.message);
+        null;
       }
     }
     fetchData();

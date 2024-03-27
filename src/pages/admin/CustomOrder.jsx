@@ -1,17 +1,17 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import supabase from "../../assets/config/SupabaseClient";
-import { Button } from "@mui/material";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import { FormControl } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -20,12 +20,26 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  success: {
+    backgroundColor: theme.palette.success.light,
+  },
+  warning: {
+    backgroundColor: theme.palette.warning.light,
+  },
+  select: {
+    width: 160, 
+  }
+}));
+
 export default function Orders() {
   const [orderData, setOrderData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [productDialogOpen, setProductDialogOpen] = useState(false);
-  const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const classes = useStyles();
 
   const fetchOrderData = async () => {
     try {
@@ -46,52 +60,37 @@ export default function Orders() {
     }
   };
 
-  const markAsContacted = async (customID) => {
+  const updateStatus = async (customID, statusType, statusValue) => {
     try {
       const { error } = await supabase
         .from("custom")
-        .update({ status: "in contact" })
+        .update({ [statusType]: statusValue })
         .eq("custom_id", customID);
       if (error) {
         throw error;
       }
-      console.log("Contacted user");
+      console.log("Status updated successfully");
       fetchOrderData();
     } catch (error) {
-      console.error("Error marking contacting user:", error.message);
+      console.error("Error updating status:", error.message);
     }
   };
 
-  const markAsOrdered = async (customID) => {
-    try {
-      const { error } = await supabase
-        .from("custom")
-        .update({ orderplaced: "placed" }) 
-        .eq("custom_id", customID);
-      if (error) {
-        throw error;
-      }
-      console.log("Order marked as placed");
-      fetchOrderData();
-    } catch (error) {
-      console.error("Error marking order as placed:", error.message);
-    }
+  useEffect(() => {
+    fetchOrderData();
+  }, []);
+
+  const handleClickProductDialogOpen = (row) => {
+    setSelectedRow(row);
+    setProductDialogOpen(true);
   };
 
-  const markAsDelivered = async (customID) => {
-    try {
-      const { error } = await supabase
-        .from("custom")
-        .update({ delivered: "delivered" })
-        .eq("custom_id", customID);
-      if (error) {
-        throw error;
-      }
-      console.log("Order marked as delivered");
-      fetchOrderData();
-    } catch (error) {
-      console.error("Error marking order as delivered:", error.message);
-    }
+  const handleCloseDialogs = () => {
+    setProductDialogOpen(false);
+  };
+
+  const handleStatusChange = (event, customID, statusType) => {
+    updateStatus(customID, statusType, event.target.value);
   };
 
   const deleteRequest = async (customID) => {
@@ -110,19 +109,32 @@ export default function Orders() {
     }
   };
 
-  useEffect(() => {
-    fetchOrderData();
-  }, []);
-
-  const handleClickProductDialogOpen = (row) => {
-    setSelectedRow(row);
-    setProductDialogOpen(true);
+  const handleAmountChange = (event, customID) => {
+    const { value } = event.target;
+    const newValue = value < 0 ? 0 : value;
+    setOrderData((prevData) =>
+      prevData.map((row) =>
+        row.custom_id === customID ? { ...row, amount: newValue } : row
+      )
+    );
   };
 
-
-  const handleCloseDialogs = () => {
-    setProductDialogOpen(false);
-    setImageDialogOpen(false);
+  const saveAmount = async (customID) => {
+    try {
+      const { error } = await supabase
+        .from("custom")
+        .update({
+          amount: orderData.find((row) => row.custom_id === customID).amount,
+        })
+        .eq("custom_id", customID);
+      if (error) {
+        throw error;
+      }
+      console.log("Amount updated successfully");
+      fetchOrderData();
+    } catch (error) {
+      console.error("Error updating amount:", error.message);
+    }
   };
 
   const theme = useTheme();
@@ -150,11 +162,9 @@ export default function Orders() {
                 <TableCell>Request ID</TableCell>
                 <TableCell>Product</TableCell>
                 <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Action</TableCell>
                 <TableCell align="center">Ordered</TableCell>
-                <TableCell align="center">Action</TableCell>
                 <TableCell align="center">Delivered</TableCell>
-                <TableCell align="center">Action</TableCell>
+                <TableCell align="center">Amount</TableCell>
                 <TableCell align="center">Delete Request</TableCell>
               </TableRow>
             </TableHead>
@@ -171,89 +181,76 @@ export default function Orders() {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      label={row.status}
-                      color={
-                        row.status === "in contact" ? "success" : "warning"
+                    <FormControl variant="outlined" className={classes.select}>
+                      <Select
+                        value={row.status}
+                        onChange={(event) =>
+                          handleStatusChange(event, row.custom_id, "status")
+                        }
+                        className={
+                          row.status === "in contact"
+                            ? classes.success
+                            : classes.warning
+                        }
+                      >
+                        <MenuItem value="in contact">In Contact</MenuItem>
+                        <MenuItem value="yet to contact">
+                          Not Contacted
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </TableCell>
+                  <TableCell>
+                    <FormControl variant="outlined" className={classes.select}>
+                      <Select
+                        value={row.orderplaced}
+                        onChange={(event) =>
+                          handleStatusChange(
+                            event,
+                            row.custom_id,
+                            "orderplaced"
+                          )
+                        }
+                        className={
+                          row.orderplaced === "placed"
+                            ? classes.success
+                            : classes.warning
+                        }
+                      >
+                        <MenuItem value="placed">Placed</MenuItem>
+                        <MenuItem value="not placed">Not Placed</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </TableCell>
+                  <TableCell>
+                    <FormControl variant="outlined" className={classes.select}>
+                      <Select
+                        value={row.delivered}
+                        onChange={(event) =>
+                          handleStatusChange(event, row.custom_id, "delivered")
+                        }
+                        className={
+                          row.delivered === "delivered"
+                            ? classes.success
+                            : classes.warning
+                        }
+                      >
+                        <MenuItem value="delivered">Delivered</MenuItem>
+                        <MenuItem value="preparing">Preparing</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      value={row.amount}
+                      onChange={(event) =>
+                        handleAmountChange(event, row.custom_id)
                       }
+                      onBlur={() => saveAmount(row.custom_id)}
+                      variant="outlined"
+                      size="small"
+                      type="number"
                     />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={row.status === "in contact"}
-                      onClick={() =>
-                        markAsContacted(row.custom_id)
-                      }
-                      sx={{
-                        borderRadius: 16,
-                        textTransform: "none",
-                        minWidth: "auto",
-                        height: 32,
-                        py: 0,
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </TableCell>
-
-                  {/* order placed */}
-                  <TableCell>
-                    <Chip
-                      label={row.orderplaced}
-                      color={
-                        row.orderplaced === "placed" ? "success" : "warning" 
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                     color="primary"
-                      variant="contained"
-                      disabled={row.orderplaced === "placed"} 
-                      onClick={() =>
-                        markAsOrdered(row.custom_id) 
-                      }
-                      sx={{
-                        borderRadius: 16,
-                        textTransform: "none",
-                        minWidth: "auto",
-                        height: 32,
-                        py: 0,
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </TableCell>
-
-                  {/* order delivered */}
-                  <TableCell>
-                    <Chip
-                      label={row.delivered}
-                      color={
-                        row.delivered === "preparing" ? "warning" : "success"
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={row.delivered === "delivered"}
-                      onClick={() =>
-                        markAsDelivered(row.custom_id)
-                      }
-                      sx={{
-                        borderRadius: 16,
-                        textTransform: "none",
-                        minWidth: "auto",
-                        height: 32,
-                        py: 0,
-                      }}
-                    >
-                      Update
-                    </Button>
                   </TableCell>
                   <TableCell>
                     <Button
@@ -288,12 +285,12 @@ export default function Orders() {
           <DialogContentText>
             Date: {selectedRow && selectedRow.created_at}
             <br />
-            User Name: {selectedRow && selectedRow.user_name}  
+            User Name: {selectedRow && selectedRow.user_name}
             <br />
             Contact Details: {selectedRow && selectedRow.user_contact}
             <br />
             Description: {selectedRow && selectedRow.prod_description}
-            <br/>
+            <br />
             {selectedRow && selectedRow.prod_image ? (
               <>
                 <p>Image: </p>
