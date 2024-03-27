@@ -16,6 +16,9 @@ const Stats = () => {
   const [totOrder, setTotOrder] = useState(0);
   const [pendDel, setPendDel] = useState(0);
   const [delivered, setDelivered] = useState(0);
+  const [customDelivered, setCustomDelivered] = useState(0);
+  const [customPending, setCustomPending] = useState(0);
+  const [customTotal, setCustomTotal] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,6 +47,23 @@ const Stats = () => {
           .select("order_uuid")
           .eq("status", "Delivered");
         setDelivered(delivered.length);
+
+        const { data: customTotals } = await supabase
+        .from("custom")
+        .select("custom_id")
+        setCustomTotal(customTotals.length);
+
+        const { data: customDelivereds } = await supabase
+        .from("custom")
+        .select("custom_id")
+        .eq("delivered", "delivered");
+        setCustomDelivered(customDelivereds.length);
+
+        const { data: customPendings } = await supabase
+        .from("custom")
+        .select("custom_id")
+        .eq("delivered", "preparing");
+        setCustomPending(customPendings.length);
 
         const { data: income } = await supabase
           .from("order")
@@ -262,6 +282,109 @@ const Stats = () => {
               }}
             >
               {delivered}
+            </Typography>
+            <Typography variant="body1" color="white" fontFamily="monospace">
+              Delivered
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={4}>
+          <Box
+            sx={{
+              backgroundColor: "#1E1E1E",
+              boxShadow: "0px 0px 10px 0px #000000",
+              width: "100%",
+              height: 200,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "10px",
+            }}
+          >
+            <ShoppingBasketIcon
+              style={{ color: "#be9269", marginBottom: "10px" }}
+            />
+            <Typography
+              variant="body1"
+              color="white"
+              style={{
+                marginBottom: "15px",
+                fontFamily: "monospace",
+                fontWeight: "bold",
+                fontSize: "40px",
+              }}
+            >
+              {customTotal}
+            </Typography>
+            <Typography variant="body1" color="white" fontFamily="monospace">
+              Total Custom Orders
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={4}>
+          <Box
+            sx={{
+              backgroundColor: "#1E1E1E",
+              boxShadow: "0px 0px 10px 0px #000000",
+              width: "100%",
+              height: 200,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "10px",
+            }}
+          >
+            <PendingIcon style={{ color: "#be9269", marginBottom: "10px" }} />
+            <Typography
+              variant="body1"
+              color="white"
+              style={{
+                marginBottom: "15px",
+                fontFamily: "monospace",
+                fontWeight: "bold",
+                fontSize: "40px",
+              }}
+            >
+              {customPending}
+            </Typography>
+            <Typography variant="body1" color="white" fontFamily="monospace">
+              Pending Orders
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={4}>
+          <Box
+            sx={{
+              backgroundColor: "#1E1E1E",
+              boxShadow: "0px 0px 10px 0px #000000",
+              width: "100%",
+              height: 200,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "10px",
+            }}
+          >
+            <LibraryAddCheckIcon
+              style={{ color: "#be9269", marginBottom: "10px" }}
+            />
+            <Typography
+              variant="body1"
+              color="white"
+              style={{
+                marginBottom: "15px",
+                fontFamily: "monospace",
+                fontWeight: "bold",
+                fontSize: "40px",
+              }}
+            >
+              {customDelivered}
             </Typography>
             <Typography variant="body1" color="white" fontFamily="monospace">
               Delivered
