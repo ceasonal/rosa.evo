@@ -43,6 +43,42 @@ const topComments = [
     comment: "AMAZING QUALITY AND THE PACKAGING IS SUPERB!!",
     value: 5,
   },
+  {
+    id: 5,
+    user: {
+      name: "Tejas Vartak",
+      avatar: "https://avatars.githubusercontent.com/u/83665497?v=4",
+      social: {
+        instagram: "https://www.instagram.com/kurizu_taz/",
+      },
+    },
+    comment: "Absolutely captivating! Your jewelry exudes timeless elegance and craftsmanship in every piece.",
+    value: 5,
+  },
+  {
+    id: 6,
+    user: {
+      name: "Kasutubh Bhosale",
+      avatar:"https://i.ibb.co/3mWXm72/kaus.jpg",
+      social: {
+        instagram: "https://www.instagram.com/_kaustubh0630_/",
+      },
+    },
+    comment: "Amazing product my sister loved it!!",
+    value: 5,
+  },
+  {
+    id: 7,
+    user: {
+      name: "Srinivas",
+      avatar: "https://i.ibb.co/JkzVXXK/srini.jpg",
+      social: {
+        instagram: "https://www.instagram.com/srinivasbhavigaddi/",
+      },
+    },
+    comment: "Loved the collection, specially the necklaces. I bought two, one for my sister & one for my mother. They absolutely loved it!! It's just so elegant.",
+    value: 5,
+  },
 ];
 
 const CommentSlider = () => {
