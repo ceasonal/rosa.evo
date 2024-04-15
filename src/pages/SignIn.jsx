@@ -157,7 +157,7 @@ const SignInSide = ({ setToken }) => {
               Sign In
             </Button>
             <Grid container spacing={1}>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link
                   href="#/forgotpassword"
                   variant="body2"
@@ -172,6 +172,10 @@ const SignInSide = ({ setToken }) => {
                 >
                   Forgot password?
                 </Link>
+              </Grid> */}
+              {/* empty to make below on the right */}
+              <Grid item xs>            
+              {""} 
               </Grid>
               <Grid item>
                 <Link

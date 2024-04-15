@@ -3,7 +3,6 @@ import {
   HashRouter as Router,
   Routes,
   Route,
-  Navigate,
   Outlet,
 } from "react-router-dom";
 import Navbar from "./components/navbar";
@@ -11,8 +10,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Signin from "./pages/SignIn";
 import Signup from "./pages/SignUp";
-import Forgotpass from "./pages/ForgotPass";
-import Updatepss from "./pages/UpdatePass";
 import Blogs from "./pages/Blogs";
 import Product from "./pages/Product";
 import ProductDisplay from "./pages/ProductDisplay";
@@ -30,6 +27,8 @@ import UpdateProd from "./pages/admin/updateProd";
 import AdminWelcome from "./pages/admin/AdminWelcome";
 import Stats from "./pages/admin/Stats";
 import ErrorPage from "./pages/404";
+// import Forgotpass from "./pages/ForgotPass";
+// import Updatepss from "./pages/UpdatePass";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -63,8 +62,8 @@ function App() {
         <Route path="/" element={<Home token={token} />} />
         <Route path="/signin" element={<Signin setToken={setToken} />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgotpassword" element={<Forgotpass />} />
-        <Route path="/updatepassword" element={<Updatepss />} />
+        {/* <Route path="/forgotpassword" element={<Forgotpass />} />
+        <Route path="/updatepassword" element={<Updatepss />} /> */}
         <Route path="/about" element={<About />} />
         <Route
           path="/products/:id"
