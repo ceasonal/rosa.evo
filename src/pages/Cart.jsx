@@ -30,17 +30,6 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCartItems();
-    supabase
-      .channel("room1")
-      .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-        console.log("Change received!", payload);
-        fetchCartItems();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel("room1");
-    };
   }, []);
 
   const fetchCartItems = async () => {
@@ -63,17 +52,6 @@ const Cart = () => {
   };
   useEffect(() => {
     fetchShippingAddress();
-    supabase
-      .channel("room2")
-      .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-        console.log("Change received!", payload);
-        fetchShippingAddress();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel("room2");
-    };
   }, []);
   const fetchShippingAddress = async () => {
     try {

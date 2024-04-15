@@ -67,17 +67,6 @@ export default function Orders() {
 
   useEffect(() => {
     markAsDelivered();
-    supabase
-      .channel("room1")
-      .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-        console.log("Change received!", payload);
-        markAsDelivered();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel("room1");
-    };
   }, []);
 
   const handleClickOpen = () => {
